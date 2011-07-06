@@ -86,6 +86,10 @@ namespace Scrabble.Player
 		public ComputerPlayer(string n, object ai) : base ( n ) {
 			this.AI = ai;	
 		}
+		
+		public void Play() {
+			
+		}
 	}
 }
 

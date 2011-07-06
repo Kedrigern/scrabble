@@ -89,7 +89,7 @@ namespace Scrabble.GUI
 		}
 		
 		private bool setWord(bool d, uint x, uint y, string s) {
-			if( s = "" ) return false;
+			if( s == "" ) return false;
 			
 			Console.WriteLine("Mam zapsat \"{0}\" s delkou {4} na {1},{2}, down: {3}", s, x, y, d, s.Length);
 			
@@ -97,10 +97,10 @@ namespace Scrabble.GUI
 			
 			if( ! Pdesk.AnalyzeMove( m ) ) return false;
 			
-			/*if( ! Pdesk.Connect( m ) ) {
+			if( ! Pdesk.Connect( m ) ) {
 				Console.WriteLine( "[no] Špatné napojení" );
 				return false; 
-			}*/
+			}
 			
 			if( ! Pdesk.Play( m ) ) return false;
 			

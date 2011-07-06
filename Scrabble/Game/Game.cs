@@ -100,9 +100,9 @@ namespace Scrabble.Game
 			
 			if( typeof( ComputerPlayer ) == players[ OnTurn ].GetType() ) {
 				window.DisableButtons();	
-			}
-			
-			GUI.StaticWindows.NextPlayer( players[OnTurn].Name );
+				
+			} else 		
+				GUI.StaticWindows.NextPlayer( players[OnTurn].Name );
 		}
 		
 		/// <summary>

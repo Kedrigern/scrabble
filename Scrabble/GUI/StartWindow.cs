@@ -244,7 +244,7 @@ namespace Scrabble.GUI
 		protected void LoadDictionary() {
 			lock( dicLoc ) {				
 				dic = new Scrabble.Lexicon.GADDAG();
-				if( File.Exists( "./dic.txt" ) && false) {
+				if( File.Exists( "./dic.txt" ) ) {
 					StreamReader sr = new StreamReader ( "./dic.txt" );
 					dic = new Scrabble.Lexicon.GADDAG(sr);	
 

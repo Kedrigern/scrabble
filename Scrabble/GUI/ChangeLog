@@ -1,6 +1,12 @@
 2011-07-06  Ondřej Profant  <ondrej.profant@gmail.com>
 
 	* desk.cs:
+	* StartWindow.cs:
+	* staticWindows.cs: 
+
+2011-07-06  Ondřej Profant  <ondrej.profant@gmail.com>
+
+	* desk.cs:
 	* rack.cs:
 	* MainWindow.cs:
 	* StartWindow.cs:
