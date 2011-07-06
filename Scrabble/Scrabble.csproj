@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="3.5" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{EE38A164-4F21-40A7-B311-B9F8872A820D}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>Scrabble</RootNamespace>
+    <AssemblyName>Scrabble</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <DebugType>none</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="gtk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="System" />
+    <Reference Include="gdk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="gtk-dotnet, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Compile Include="Lexicon\desk.cs" />
+    <Compile Include="Lexicon\GADDAG.cs" />
+    <Compile Include="Lexicon\move.cs" />
+    <Compile Include="Lexicon\searchalgorihm.cs" />
+    <Compile Include="Lexicon\trie.cs" />
+    <Compile Include="Lexicon\node.cs" />
+    <Compile Include="Game\MainClass.cs" />
+    <Compile Include="GUI\rack.cs" />
+    <Compile Include="GUI\info.cs" />
+    <Compile Include="GUI\MainWindow.cs" />
+    <Compile Include="GUI\desk.cs" />
+    <Compile Include="GUI\menu.cs" />
+    <Compile Include="Game\Game.cs" />
+    <Compile Include="Player\Player.cs" />
+    <Compile Include="Lexicon\PlayStone.cs" />
+    <Compile Include="GUI\StartGameWindow.cs" />
+    <Compile Include="Game\InitialConfig.cs" />
+    <Compile Include="Game\StonesBag.cs" />
+    <Compile Include="GUI\staticWindows.cs" />
+    <Compile Include="GUI\StartWindow.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Lexicon\" />
+    <Folder Include="Game\" />
+    <Folder Include="GUI\" />
+    <Folder Include="Player\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="GUI\menu.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+</Project>
