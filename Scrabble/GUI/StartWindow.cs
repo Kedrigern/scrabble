@@ -61,6 +61,8 @@ namespace Scrabble.GUI
 		{
 			this.Title = "Scrabble - Základní nastavení";
 			this.DeleteEvent += new global::Gtk.DeleteEventHandler (this.OnDeleteEvent);
+			this.SetPosition(WindowPosition.Center);
+			this.DefaultWidth = 400;
 			numberOfPlayers = 2;
 		
 			// Own thread for loading dictionary
@@ -77,15 +79,17 @@ namespace Scrabble.GUI
 			upperHbox = new HBox (false, 5);
 			l1 = new Label ("Počet hráčů");
 			upperHbox.PackStart (l1);
-			l2 = new Label (", nebo");
+			l2 = new Label (", nebo:");
 			entryNum = new SpinButton (2, 5, 1);
 			entryNum.Changed += OnNumberOfPlayerChange;
 			client = new CheckButton ();
 			client.Clicked += IamClient;
-			client.Label = "Jsem client";
+			client.Label = "připojit se ke vzdálené hře";
+			client.TooltipText = "Pokud zaškrnete, tak se program bude chovat pouze jako client a připojí se k hře vedené na jiném PC.";
 			upperHbox.Add (entryNum);
 			upperHbox.Add (l2);
 			upperHbox.PackEnd (client);
+			upperHbox.BorderWidth = 10;
 			upperHbox.WidthRequest = 20;
 				
 			// table
@@ -107,13 +111,16 @@ namespace Scrabble.GUI
 				table.Attach (labels [i], 0, 1, (uint)i + 1, (uint)i + 2);
 				entryes [i] = new Gtk.Entry (12);
 				entryes [i].Text = "Hráč " + (i+1).ToString();
+				entryes [i].TooltipText = "Vložte jméno hráče.";
 				table.Attach (entryes [i], 1, 2, (uint)i + 1, (uint)i + 2);
 				CPUchecks [i] = new Gtk.CheckButton ();
 				CPUchecks [i].Name = string.Format ("c {0}", i);
+				CPUchecks [i].TooltipText = "Pokud je zaškrtnuto, tak za hráče bude hrát počítač.";
 				((Gtk.CheckButton)CPUchecks [i]).Clicked += OnCpuChange;
 				table.Attach (CPUchecks [i], 2, 3, (uint)i + 1, (uint)i + 2);
 				MPchecks [i] = new Gtk.CheckButton ();
 				MPchecks [i].Name = string.Format ("n {0}", i);
+				MPchecks [i].TooltipText = "Pokud je zaškrtnuto, tak se počítá s tím, že se tento hráč připojí vzdáleně. ";
 				((Gtk.CheckButton)MPchecks [i]).Clicked += OnNetChange;
 				table.Attach (MPchecks [i], 3, 4, (uint)i + 1, (uint)i + 2);
 				IPs [i] = new Gtk.Entry (15);
@@ -125,16 +132,19 @@ namespace Scrabble.GUI
 		
 			ok = new Button ("Hotovo");
 			ok.Clicked += Done;
+			ok.BorderWidth = 5;
+			ok.TooltipText = "Potvrzením začne hra. Může se stát, že program bude ještě chvíli načítat slovník.";
 			table.Attach (ok, 0, 5, 6, 7);
 
 			// Main vbox
 			mainVbox = new Gtk.VBox (false, 5);
-		
+			
 			mainVbox.PackStart (infoText);
 			mainVbox.Add (upperHbox);
 			mainVbox.Spacing = 5;
 			mainVbox.PackEnd (table);
 		
+			mainVbox.BorderWidth = 10;
 			this.Add (mainVbox);
 			mainVbox.ShowAll ();	
 		
@@ -234,7 +244,7 @@ namespace Scrabble.GUI
 		protected void LoadDictionary() {
 			lock( dicLoc ) {				
 				dic = new Scrabble.Lexicon.GADDAG();
-				if( File.Exists( "./dic.txt" ) ) {
+				if( File.Exists( "./dic.txt" ) && false) {
 					StreamReader sr = new StreamReader ( "./dic.txt" );
 					dic = new Scrabble.Lexicon.GADDAG(sr);	
 

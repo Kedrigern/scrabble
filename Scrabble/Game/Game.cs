@@ -37,34 +37,22 @@ namespace Scrabble.Game
 			get {return window;}
 		}
 		int OnTurn = 0;
-		
-		public Game ()
-		{	
+			
+		public Game( Player.Player[] pls, Scrabble.Lexicon.GADDAG dic ) {
+			this.dictionary	= dic;	
+			
 			// Initialization of play desk (logic component, not gtk)
 			desk = new Scrabble.Lexicon.PlayDesk ( this );
 			// Initialization of bag for game stones
 			stonesBag = new StonesBag();
 			
-			if( InitialConfig.gui ) {	
-				Gtk.Application.Init ();
-				
-				// Window with game options
-				GUI.StartGameWindow sw = new GUI.StartGameWindow( this );
-				sw.Show();
-				Gtk.Application.Run();
+			this.players = pls;
+			foreach( Scrabble.Player.Player p in players ) {
+				p.SetGame( this );
+				p.ReloadRack();
 			}
 			
-			
-		}
 		
-		public Game( Player.Player[] pls, Scrabble.Lexicon.GADDAG dic ) {
-			this.dictionary	= dic;
-			this.players = pls;
-			
-			// Initialization of play desk (logic component, not gtk)
-			desk = new Scrabble.Lexicon.PlayDesk ( this );
-			// Initialization of bag for game stones
-			stonesBag = new StonesBag();
 			
 			CreateMainWindowLoop();	
 		}
@@ -109,6 +97,10 @@ namespace Scrabble.Game
 			OnTurn++;
 			if( OnTurn >= players.Length ) OnTurn =0;
 			Window.changePlayer( players[OnTurn] );
+			
+			if( typeof( ComputerPlayer ) == players[ OnTurn ].GetType() ) {
+				window.DisableButtons();	
+			}
 			
 			GUI.StaticWindows.NextPlayer( players[OnTurn].Name );
 		}

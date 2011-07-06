@@ -55,9 +55,9 @@ namespace Scrabble.Lexicon
 			}
 			
 			byte[,] tripleW = {{0,0},{7,0},{14,0},{0,7},{7,14},{0,14},{14,0},{14,7},{14,14}};
-			byte[,] doubleW = {{1,1},{2,2},{3,3},{4,4},{7,7},{13,1},{12,2},{11,3},{10,4}};
-			byte[,] tripleCh = {{5,1},{9,1},{5,5},{9,5},{2,5}};
-			byte[,] doubleCh = {{3,0},{11,0}};
+			byte[,] doubleW = {{1,1},{2,2},{3,3},{4,4},{7,7},{13,1},{12,2},{11,3},{10,4},{4,10},{3,11},{2,12},{1,13},{10,10},{11,11},{12,12},{13,13} };
+			byte[,] tripleCh = {{5,1},{9,1},{5,5},{9,5},{1,5},{13,5},{5,9},{9,9},{5,13},{9,13},{9,1},{9,13} };
+			byte[,] doubleCh = {{3,0},{11,0},{6,6},{8,6},{6,8},{8,8} };
 			
 			LoadFromMemory(wordBonus,tripleW,3);
 			LoadFromMemory(wordBonus,doubleW,2);
@@ -143,7 +143,7 @@ namespace Scrabble.Lexicon
 				// Prepare to new iteration or break
 				n++;
 				if( M.Down ) j++; else i++;
-				if( j > desk.GetLength(1) || i > desk.GetLength(0) ) break;
+				if( j >= desk.GetLength(1) || i >= desk.GetLength(0) ) break;
 				if( n == M.Word.Length ) {
 					if( desk[i,j] == '_' ) break;
 					else {
@@ -187,7 +187,7 @@ namespace Scrabble.Lexicon
 				
 			if( ! down ) { 	
 				// 1. find start of crossing word
-				while( j >= 0 && desk[i,j] != '_' ) {
+				while( j > 0 && desk[i,j] != '_' ) {
 					j--;	
 				}
 				if( desk[i,j] == '_' ) j++;
@@ -203,7 +203,7 @@ namespace Scrabble.Lexicon
 				}
 			} else { 
 				// 1. find start of crossing word
-				while( i >= 0 && desk[i,j] != '_' ) {
+				while( i > 0 && desk[i,j] != '_' ) {
 					i--;	
 				}
 				if( desk[i,j] == '_' ) i++;

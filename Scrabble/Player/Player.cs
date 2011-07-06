@@ -50,6 +50,10 @@ namespace Scrabble.Player
 		{
 			return string.Format ("[Player: ID={0}, Name={1}, Score={2}]", ID, Name, Score);
 		}
+		
+		public void SetGame( Game.Game g ) {
+			this.game = g;	
+		}
 	}
 	
 	public static class Uniqe {

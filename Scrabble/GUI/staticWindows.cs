@@ -118,7 +118,17 @@ namespace Scrabble.GUI
 		}
 		
 		public static void NextPlayer(string name) {
-			var but = new Gtk.Button( "Na tahu je hráč: " + name + "\n\nOK");
+			var but = new Gtk.Button( );
+			but.TooltipMarkup = "Po kliknutí bude hrát další hráč";
+			//but.CreatePangoLayout("Na tahu je hráč: <b>" + name + "</b>\n\nOK");
+			HBox hbox = new HBox();
+			global::Gtk.Image im = new global::Gtk.Image ();
+			//im.Pixbuf = G global::Stetic.IconLoader.LoadIcon (this, "stock_refresh", global::Gtk.IconSize.Menu);
+			Label l = new Label();
+			l.Markup = "Na tahu je hráč:\n <b>" + name + "</b>\n\nOK";
+			hbox.PackStart( im );
+			hbox.PackEnd( l );
+			but.Add( hbox );
 			var win = new Gtk.Window( WindowType.Toplevel );	
 			
 			but.Clicked += delegate {
@@ -140,7 +150,7 @@ namespace Scrabble.GUI
 			aboutWin.Documenters = new string[] {"Ondřej Profant"};
 			aboutWin.ProgramName = "Scrabble";
 			aboutWin.Authors = new string[] {"Ondřej Profant"};
-			aboutWin.Website = "http://anilinux.org/~keddie";
+			aboutWin.Website = "https://github.com/Kedrigern/scrabble";
 			aboutWin.Title = "O programu Scrabble";
 			aboutWin.WebsiteLabel = "Projekt na GitHubu";
 			aboutWin.WrapLicense = true;

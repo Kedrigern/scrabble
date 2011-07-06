@@ -45,12 +45,12 @@ namespace Scrabble.GUI
 				fields[p.X,p.Y].setBonus( level, word );
 		}
 		
-		private void DisableButtons() {
+		public void DisableButtons() {
 			foreach(Gtk.Button b in	fields )
 				b.Clicked -= PushButton;
 		}
 		
-		private void ActiveButtons() {
+		public void ActiveButtons() {
 			foreach(Gtk.Button b in	fields )
 				b.Clicked += PushButton;
 		}
@@ -89,16 +89,18 @@ namespace Scrabble.GUI
 		}
 		
 		private bool setWord(bool d, uint x, uint y, string s) {
+			if( s = "" ) return false;
+			
 			Console.WriteLine("Mam zapsat \"{0}\" s delkou {4} na {1},{2}, down: {3}", s, x, y, d, s.Length);
 			
 			Lexicon.Move m = new Lexicon.Move(new System.Drawing.Point((int)x,(int)y), s.ToUpperInvariant(), d );
 			
 			if( ! Pdesk.AnalyzeMove( m ) ) return false;
 			
-			if( ! Pdesk.Connect( m ) ) {
+			/*if( ! Pdesk.Connect( m ) ) {
 				Console.WriteLine( "[no] Špatné napojení" );
 				return false; 
-			}
+			}*/
 			
 			if( ! Pdesk.Play( m ) ) return false;
 			

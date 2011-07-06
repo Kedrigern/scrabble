@@ -56,6 +56,14 @@ namespace Scrabble.GUI
 			}
 		}
 		
+		public void DisableButtons() {
+			reload.Clicked -= ReloadRack;	
+		}
+		
+		public void ActiveButtons() {
+			reload.Clicked += ReloadRack;
+		}
+		
 		private void ReloadRack(object sender, EventArgs e) {
 			this.game.ReloadRackAndChange();
 		}

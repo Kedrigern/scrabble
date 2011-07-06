@@ -1,29 +1,28 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Scrabble/GUI/desk.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Scrabble/GUI/staticWindows.cs">
     <Files>
       <File FileName="Scrabble/Player/PlayerRack.cs" Line="28" Column="3" />
       <File FileName="Scrabble/GUI/menu.cs" Line="1" Column="1" />
       <File FileName="Scrabble/GUI/info.cs" Line="1" Column="1" />
-      <File FileName="Scrabble/Game/Game.cs" Line="91" Column="6" />
+      <File FileName="Scrabble/Game/Game.cs" Line="1" Column="1" />
       <File FileName="Scrabble/GUI/MainWindow.cs" Line="1" Column="1" />
-      <File FileName="Scrabble/Player/Player.cs" Line="64" Column="29" />
+      <File FileName="Scrabble/Player/Player.cs" Line="1" Column="1" />
       <File FileName="Scrabble/Lexicon/PlayStone.cs" Line="1" Column="1" />
       <File FileName="Scrabble/Lexicon/searchalgorihm.cs" Line="1" Column="1" />
       <File FileName="Scrabble/GUI/rack.cs" Line="1" Column="1" />
-      <File FileName="Scrabble/Game/InitialConfig.cs" Line="27" Column="36" />
-      <File FileName="Scrabble/Game/MainClass.cs" Line="37" Column="7" />
-      <File FileName="Scrabble/GUI/desk.cs" Line="55" Column="16" />
+      <File FileName="Scrabble/Game/InitialConfig.cs" Line="1" Column="1" />
+      <File FileName="Scrabble/Game/MainClass.cs" Line="1" Column="1" />
+      <File FileName="Scrabble/GUI/desk.cs" Line="1" Column="1" />
       <File FileName="Scrabble/Lexicon/desk.cs" Line="1" Column="1" />
       <File FileName="Scrabble/Lexicon/GADDAG.cs" Line="1" Column="1" />
       <File FileName="Scrabble/Lexicon/trie.cs" Line="1" Column="1" />
-      <File FileName="Scrabble/GUI/StartGameWindow.cs" Line="101" Column="13" />
       <File FileName="Scrabble/Lexicon/move.cs" Line="1" Column="1" />
       <File FileName="Scrabble/Game/StonesBag.cs" Line="1" Column="1" />
       <File FileName="Scrabble/Lexicon/node.cs" Line="1" Column="1" />
       <File FileName="Scrabble/GUI/menu.xml" Line="1" Column="1" />
-      <File FileName="Scrabble/GUI/staticWindows.cs" Line="1" Column="1" />
-      <File FileName="Scrabble/GUI/StartWindow.cs" Line="262" Column="1" />
+      <File FileName="Scrabble/GUI/staticWindows.cs" Line="126" Column="37" />
+      <File FileName="Scrabble/GUI/StartWindow.cs" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -32,7 +31,7 @@
             <Node name="References" expanded="True" />
             <Node name="Game" expanded="True" />
             <Node name="GUI" expanded="True">
-              <Node name="desk.cs" selected="True" />
+              <Node name="staticWindows.cs" selected="True" />
             </Node>
             <Node name="Lexicon" expanded="True" />
             <Node name="Player" expanded="True" />
@@ -43,7 +42,10 @@
         <State expanded="True" selected="True" />
       </Pad>
       <Pad Id="MonoDevelop.Debugger.WatchPad">
-        <State />
+        <State>
+          <Value>Scrabble.Game.InitialConfig.players</Value>
+          <Value>Scrabble.Game.InitialConfig.dictionary</Value>
+        </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
