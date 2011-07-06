@@ -45,6 +45,16 @@ namespace Scrabble.GUI
 				fields[p.X,p.Y].setBonus( level, word );
 		}
 		
+		private void DisableButtons() {
+			foreach(Gtk.Button b in	fields )
+				b.Clicked -= PushButton;
+		}
+		
+		private void ActiveButtons() {
+			foreach(Gtk.Button b in	fields )
+				b.Clicked += PushButton;
+		}
+		
 		private void PushButton( object sender, EventArgs e) {
 			Gtk.CheckButton check = new Gtk.CheckButton("Down");
 			Gtk.Entry input = new Gtk.Entry(15);

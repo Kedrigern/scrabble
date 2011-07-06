@@ -33,23 +33,13 @@ namespace Scrabble.Player
 		public int Score { get; set; }
 		public List<char> Rack;
 		protected Game.Game game;
-		bool cpu;
 		
-		public Player (string n, Game.Game g, bool isCpu = false)
+		public Player (string n)
 		{
-			this.cpu = isCpu;
-			this.game = g;
 			this.name = n;
 			this.Score = 0;
 			Rack = new List<char>( Scrabble.Game.InitialConfig.sizeOfRack );
-			game.stonesBag.CompleteRack( Rack );
 			this.id = Uniqe.GetFreeID();
-			
-			//DEBUG
-			Console.Write( "Hrac {0} má v racku: ", id );
-			foreach(char c in Rack )
-				Console.Write(c);
-			Console.WriteLine();
 		}
 		
 		public void ReloadRack() {
@@ -71,11 +61,26 @@ namespace Scrabble.Player
 		}
 	}
 	
+	
 	public class NetworkPlayer : Player {
 		protected IPEndPoint ep;
 		
-		public NetworkPlayer(string n, Game.Game g, IPAddress ip) : base( n, g) {
-			ep = new IPEndPoint( ip, Scrabble.Game.InitialConfig.port );	
+		public NetworkPlayer(string n, string ipt) : base( n ) {
+			IPAddress ip;
+			if( ! IPAddress.TryParse( ipt,out ip ) ) {
+				// TODO: Opakované zeptání se na adresu
+				Console.WriteLine("[ERROR] Parsong IP adress");
+				Environment.Exit(1);
+			}
+			this.ep = new IPEndPoint( ip, Scrabble.Game.InitialConfig.port );	
+		}
+	}
+	
+	public class ComputerPlayer : Player {
+		protected object AI;	
+		
+		public ComputerPlayer(string n, object ai) : base ( n ) {
+			this.AI = ai;	
 		}
 	}
 }

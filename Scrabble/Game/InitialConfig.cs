@@ -24,12 +24,13 @@ namespace Scrabble.Game
 {
 	public static class InitialConfig
 	{
+		// TODO : Loading for config file
+		public static bool allDone = false;
 		public static bool gui = true;
 		public static bool network = false;
 		public static int numberOfStones = 100;
 		public static int sizeOfRack = 7;
 		public static int port = 6541;
-		public static Player.Player[] players;
 		public static char[] stones = {
 			'A', 'A', 'A', 'A', 'A',
 			'Á',
@@ -61,6 +62,10 @@ namespace Scrabble.Game
 			'Y',
 			'Z'
 		} ;
+		
+		/* Usually complete start window */
+		public static Lexicon.GADDAG dictionary;	
+		public static Player.Player[] players;
 	}
 }
 

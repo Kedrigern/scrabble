@@ -27,7 +27,17 @@ namespace Scrabble.Game
 	{
 		public static void Main ()
 		{
-			new Game();
+			Gtk.Application.Init();
+			var startwin = new Scrabble.GUI.StartWindow();
+			startwin.Show();
+			Gtk.Application.Run();
+			
+			if( Scrabble.Game.InitialConfig.allDone ) {
+				var game = new Scrabble.Game.Game( Scrabble.Game.InitialConfig.players, Scrabble.Game.InitialConfig.dictionary);
+			}
+#if DEBUG
+			Console.WriteLine("BYE");
+#endif
 		}
 	}
 }

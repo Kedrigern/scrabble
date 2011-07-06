@@ -53,6 +53,20 @@ namespace Scrabble.Game
 				sw.Show();
 				Gtk.Application.Run();
 			}
+			
+			
+		}
+		
+		public Game( Player.Player[] pls, Scrabble.Lexicon.GADDAG dic ) {
+			this.dictionary	= dic;
+			this.players = pls;
+			
+			// Initialization of play desk (logic component, not gtk)
+			desk = new Scrabble.Lexicon.PlayDesk ( this );
+			// Initialization of bag for game stones
+			stonesBag = new StonesBag();
+			
+			CreateMainWindowLoop();	
 		}
 		
 		public void PrepareDictionary(string path = "./dic.txt") {
@@ -67,14 +81,14 @@ namespace Scrabble.Game
 			// Init of search algorithm
 			Scrabble.Lexicon.SearchAlgorithm.Init( desk.Desk , dictionary );	
 		}
-		
+		/*
 		public void SetPlayers( Scrabble.GUI.PlayerInit[] pls ) {
 			players = new Scrabble.Player.Player [ pls.Length ];
 			for(int i=0;i< pls.Length; i++) {
 				players[i] = new Scrabble.Player.Player( pls[i].entry.Text, this );
 			}
 			//TODO: CPU
-		}
+		}*/
 		
 		public Scrabble.Player.Player GetActualPlayer() {
 			return players[ OnTurn ];	
@@ -116,8 +130,6 @@ namespace Scrabble.Game
 				
 			//win.RackChange( ((Scrabble.Player.Player) players[0]).Rack );
 			Window.changePlayer( players[OnTurn] );
-
-			Window.Show ();
 			Gtk.Application.Run ();
 			Window.Destroy();	
 			Window.Dispose();

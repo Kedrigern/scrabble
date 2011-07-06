@@ -19,18 +19,20 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using System;
+using System.IO;
 using System.Threading;
-
-// TODO: Implementovat načítání slovníku v dalším threadu
 using Gtk;
 
 namespace Scrabble.GUI
 {
-	public partial class MainWindow: Gtk.Window
+	public partial class StartWindow: Gtk.Window
 	{	
+		// Dictionary loading (in own thread)
+		static object dicLoc = new System.Object();
+		Scrabble.Lexicon.GADDAG dic;
+		Scrabble.Player.Player[] players;
 		int numberOfPlayers;
-		Scrabble.Game.Game game;
-		Scrabble.GUI.PlayerInit[] players;
+		System.Threading.Thread tdic;
 		
 		// TOP
 		Gtk.VBox mainVbox;
@@ -55,14 +57,16 @@ namespace Scrabble.GUI
 		// infoText
 		Gtk.Label infoText;
 	
-		public MainWindow (Game.Game g): base (Gtk.WindowType.Toplevel)
+		public StartWindow (): base (Gtk.WindowType.Toplevel)
 		{
-			this.game = g;
-			Build ();
-			this.Title = "Scrabble - základní nastavení";
-		
+			this.Title = "Scrabble - Základní nastavení";
+			this.DeleteEvent += new global::Gtk.DeleteEventHandler (this.OnDeleteEvent);
 			numberOfPlayers = 2;
 		
+			// Own thread for loading dictionary
+			tdic = new Thread( LoadDictionary );
+			tdic.Start();
+			
 			// infoText
 			infoText = new Gtk.Label ("Základní nastavení hry.\n" +
 			"Nastavte prosím počet hráčů, jejich jména a určete zda za ně bude hrát umělá inteligence. " +
@@ -102,6 +106,7 @@ namespace Scrabble.GUI
 				labels [i].Name = string.Format ("l {0}", i);
 				table.Attach (labels [i], 0, 1, (uint)i + 1, (uint)i + 2);
 				entryes [i] = new Gtk.Entry (12);
+				entryes [i].Text = "Hráč " + (i+1).ToString();
 				table.Attach (entryes [i], 1, 2, (uint)i + 1, (uint)i + 2);
 				CPUchecks [i] = new Gtk.CheckButton ();
 				CPUchecks [i].Name = string.Format ("c {0}", i);
@@ -225,24 +230,58 @@ namespace Scrabble.GUI
 				//TODO: Deactivation of button (all implementation)
 			}
 		}
+		
+		protected void LoadDictionary() {
+			lock( dicLoc ) {				
+				dic = new Scrabble.Lexicon.GADDAG();
+				if( File.Exists( "./dic.txt" ) ) {
+					StreamReader sr = new StreamReader ( "./dic.txt" );
+					dic = new Scrabble.Lexicon.GADDAG(sr);	
+
+				} 
+			}
+#if DEBUG
+			Console.WriteLine("[INFO] Slovník obsahuje {0} slov.", dic.WordCount);
+#endif
+		}
 	
 		protected void Done (object sender, EventArgs e)
 		{		
 			this.HideAll ();
-			if (client.Active) {
-				
-			} else {
 			
-				for (int i=0; i < numberOfPlayers; i++) {
-					
+			if (client.Active) {
+				players = new Player.Player[1];
+				players[0] = new Scrabble.Player.Player( entryes[0].Text);
+			} else {
+				players = new Player.Player[ numberOfPlayers ];
+				for( int i=0; i < numberOfPlayers; i++) {
+					if( CPUchecks[i].Active ) {
+						players[i] = new Scrabble.Player.ComputerPlayer( entryes[i].Text, null );
+						continue;
+					}
+					if( MPchecks[i].Active ) {
+						players[i] = new Scrabble.Player.NetworkPlayer( entryes[i].Text, IPs[i].Text );
+						continue;
+					}
+					players[i] = new Scrabble.Player.Player( entryes[i].Text );	
 				}
-					
-				((Scrabble.Game.Game)game).SetPlayers (players);
-				((Scrabble.Game.Game)game).PrepareDictionary ();
-				((Scrabble.Game.Game)game).CreateMainWindowLoop ();	
 			}
+						
+			Scrabble.Game.InitialConfig.players = this.players;
+			
+			tdic.Join();
+			lock( dicLoc ) {
+				Scrabble.Game.InitialConfig.dictionary = this.dic;
+			}			
+			
+			Scrabble.Game.InitialConfig.allDone = true;
+#if DEBUG
+			Console.WriteLine("[INFO] Nastavení parametrů dokončeno.");
+#endif
+			
 			this.Destroy ();
 			this.Dispose ();						
+			Gtk.Application.Quit();
 		}
 	
 		protected void OnDeleteEvent (object sender, DeleteEventArgs a)

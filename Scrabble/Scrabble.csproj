@@ -57,7 +57,6 @@
     <Compile Include="Game\Game.cs" />
     <Compile Include="Player\Player.cs" />
     <Compile Include="Lexicon\PlayStone.cs" />
-    <Compile Include="GUI\StartGameWindow.cs" />
     <Compile Include="Game\InitialConfig.cs" />
     <Compile Include="Game\StonesBag.cs" />
     <Compile Include="GUI\staticWindows.cs" />

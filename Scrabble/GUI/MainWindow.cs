@@ -21,7 +21,8 @@ namespace 	Scrabble.GUI {
 		{
 			this.game = g;
 			this.BorderWidth = 0;
-			this.Name = "Scrabble";
+			this.Name = "Scrabble - hrací deska";
+			this.DeleteEvent += new global::Gtk.DeleteEventHandler (this.OnDeleteEvent);
 			
 			menu = new MenuHover( this );
 			desk = new Desk( g.desk );
@@ -30,7 +31,7 @@ namespace 	Scrabble.GUI {
 				
 			horizont = new VPaned();
 			vertical = new HPaned();
-			forMenu = new VBox(false,5);
+			forMenu = new VBox(false, 5);
 			forMenu.PackStart( menu.menuBar , false, false, 0 );
 			forMenu.PackEnd( desk );
 			this.Add( horizont );
@@ -57,7 +58,7 @@ namespace 	Scrabble.GUI {
 		protected void OnDeleteEvent (object sender, DeleteEventArgs a)
 		{
 			this.Dispose();
-			Application.Quit ();
+			Gtk.Application.Quit();
 			a.RetVal = true;
 		}
 	}
