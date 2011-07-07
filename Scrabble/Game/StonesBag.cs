@@ -42,6 +42,9 @@ namespace Scrabble.Game
 				try {
 					r.Add( getOneStone() );
 				} catch {
+#if DEBUG
+					Console.WriteLine("[INFO]\tJiž došly kameny.");
+#endif
 					break;
 				}
 			}
@@ -50,22 +53,11 @@ namespace Scrabble.Game
 		public List<char> ReloadAll( List<char> r) {
 			List<char> newRack = new List<char>( Scrabble.Game.InitialConfig.sizeOfRack );
 			CompleteRack( newRack );
-#if DEBUG
-			Console.WriteLine("Do vaku vkládám:");
-#endif	
+
 			foreach( char c in r) {
 				content.Add( c );
-#if DEBUG
-				Console.Write(c);
-#endif
 			}
-#if DEBUG
-			Console.WriteLine();
-			Console.WriteLine("Nový rack:");
-			foreach(char c in newRack)
-				Console.Write(c);
-			Console.WriteLine();
-#endif
+
 			return newRack;
 		}
 		

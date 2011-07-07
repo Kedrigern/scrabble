@@ -21,7 +21,6 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
- // for class Point
 
 namespace Scrabble.Lexicon
 { 

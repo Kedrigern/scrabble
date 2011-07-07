@@ -21,6 +21,8 @@
 using System;
 using System.Net;
 using System.Collections.Generic;
+using Scrabble.Game;
+using Scrabble.Lexicon;
 
 namespace Scrabble.Player
 {
@@ -54,6 +56,26 @@ namespace Scrabble.Player
 		public void SetGame( Game.Game g ) {
 			this.game = g;	
 		}
+		
+		public bool DoMove( Lexicon.Move m ) {
+#if DEBUG
+			Console.WriteLine("[INFO]\tChci položit {0} na [{1},{2}]", m.Word, m.Start.X, m.Start.Y);
+#endif
+			/* Check cross check 
+			 * Calcul score */
+			if( ! game.desk.AnalyzeMove( m ) ) return false;
+			
+			/* Is connected with rest of stone? */
+			if( ! game.desk.Connect( m ) ) {
+#if DEBUG
+				Console.WriteLine( "[NO] \tŠpatné napojení" );
+#endif
+				return false; 
+			}
+			
+			if( ! game.desk.Play( m ) ) return false;	
+			else return true;	
+		}
 	}
 	
 	public static class Uniqe {
@@ -73,7 +95,7 @@ namespace Scrabble.Player
 			IPAddress ip;
 			if( ! IPAddress.TryParse( ipt,out ip ) ) {
 				// TODO: Opakované zeptání se na adresu
-				Console.WriteLine("[ERROR] Parsong IP adress");
+				Console.WriteLine("[ERROR] Parsing IP adress");
 				Environment.Exit(1);
 			}
 			this.ep = new IPEndPoint( ip, Scrabble.Game.InitialConfig.port );	
@@ -88,7 +110,13 @@ namespace Scrabble.Player
 		}
 		
 		public void Play() {
-			
+			int j = 7;
+			Stack<Lexicon.Move> tahy;
+			for(int i = 0; i < game.desk.Desk.GetLength(0); i++) {
+				tahy = Lexicon.SearchAlgorithm.Search(i,j,Rack);
+				if( tahy.Count > 0 ) break;
+			}
+			Console.WriteLine( tahy.Pop().Word );
 		}
 	}
 }

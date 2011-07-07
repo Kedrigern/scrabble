@@ -46,12 +46,12 @@ namespace Scrabble.Game
 			'K', 'K',
 			'L', 'L',
 			'M', 'M',
-			'N', 'N',
+			'N', 'N', 'N',
 			'O', 'O', 'O', 'O',
 			'P', 'P',
-			'Q',
+//			'Q',
 			'R', 'R',
-			'S', 'S',
+			'S', 'S', 'S',
 			'Š',
 			'T', 'T',
 			'U', 'U', 'U', 
@@ -59,8 +59,8 @@ namespace Scrabble.Game
 			'Ů',
 			'V', 'V',
 			'X',
-			'Y',
-			'Z'
+			'Y', 'Y',
+			'Z', 'Z'
 		} ;
 		
 		/* Usually complete start window */

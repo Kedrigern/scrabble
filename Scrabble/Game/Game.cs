@@ -46,18 +46,16 @@ namespace Scrabble.Game
 			// Initialization of bag for game stones
 			stonesBag = new StonesBag();
 			
+			Lexicon.SearchAlgorithm.Init( desk.Desk, dictionary );
+			
 			this.players = pls;
 			foreach( Scrabble.Player.Player p in players ) {
 				p.SetGame( this );
 				p.ReloadRack();
 			}
-			
-		
-			
-			CreateMainWindowLoop();	
 		}
 		
-		public void PrepareDictionary(string path = "./dic.txt") {
+		/*public void PrepareDictionary(string path = "./dic.txt") {
 			if( File.Exists( path ) ) {
 				StreamReader sr = new StreamReader ( path );
 				dictionary = new Scrabble.Lexicon.GADDAG( sr );	
@@ -68,7 +66,7 @@ namespace Scrabble.Game
 			}			
 			// Init of search algorithm
 			Scrabble.Lexicon.SearchAlgorithm.Init( desk.Desk , dictionary );	
-		}
+		}*/
 		/*
 		public void SetPlayers( Scrabble.GUI.PlayerInit[] pls ) {
 			players = new Scrabble.Player.Player [ pls.Length ];
@@ -88,19 +86,15 @@ namespace Scrabble.Game
 		
 		public void changePlayer () {
 			this.stonesBag.CompleteRack( ((Scrabble.Player.Player) players[OnTurn]).Rack );
-#if DEBUG
-			Console.WriteLine("Zásobník ({0})",((Scrabble.Player.Player) players[OnTurn]).Name );
-			foreach(char c in ((Scrabble.Player.Player) players[OnTurn]).Rack )
-				Console.Write("{0}, ", c);
-			Console.WriteLine();
-#endif
+
 			OnTurn++;
 			if( OnTurn >= players.Length ) OnTurn =0;
 			Window.changePlayer( players[OnTurn] );
 			
 			if( typeof( ComputerPlayer ) == players[ OnTurn ].GetType() ) {
 				window.DisableButtons();	
-				
+				((ComputerPlayer) players[OnTurn]).Play();
+				changePlayer();
 			} else 		
 				GUI.StaticWindows.NextPlayer( players[OnTurn].Name );
 		}

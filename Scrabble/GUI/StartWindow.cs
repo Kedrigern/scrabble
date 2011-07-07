@@ -244,14 +244,14 @@ namespace Scrabble.GUI
 		protected void LoadDictionary() {
 			lock( dicLoc ) {				
 				dic = new Scrabble.Lexicon.GADDAG();
-				if( File.Exists( "./dic.txt" ) ) {
+				if( File.Exists( "./dic.txt" ) /*&& false*/ ) {
 					StreamReader sr = new StreamReader ( "./dic.txt" );
 					dic = new Scrabble.Lexicon.GADDAG(sr);	
 
 				} 
 			}
 #if DEBUG
-			Console.WriteLine("[INFO] Slovník obsahuje {0} slov.", dic.WordCount);
+			Console.WriteLine("[INFO]\tSlovník obsahuje {0} slov.", dic.WordCount);
 #endif
 		}
 	
@@ -286,7 +286,7 @@ namespace Scrabble.GUI
 			
 			Scrabble.Game.InitialConfig.allDone = true;
 #if DEBUG
-			Console.WriteLine("[INFO] Nastavení parametrů dokončeno.");
+			Console.WriteLine("[INFO]\tNastavení parametrů dokončeno.");
 #endif
 			
 			this.Destroy ();

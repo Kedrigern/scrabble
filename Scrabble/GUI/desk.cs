@@ -10,39 +10,57 @@ namespace Scrabble.GUI
 		public const uint sizeY = 15;
 		private Stone[,] fields;
 		private Scrabble.Lexicon.PlayDesk Pdesk;
+		private Game.Game game;
 		
-		public Desk (Scrabble.Lexicon.PlayDesk desk) : base ( sizeX , sizeY , true )
+		public Desk (Game.Game g) : base ( sizeX , sizeY , true )
 		{
-			fields = new Stone[ sizeX , sizeY ];
-			Pdesk = desk;
+			fields = new Stone[ sizeX+1, sizeY+1 ];
+			game = g;
+			Pdesk = ((Game.Game) game).desk;
+			
+			/* inicialization of labels */
+			for( uint i = 1; i < fields.GetLength(0); i++) {
+				fields[i,0] = new Stone();
+				this.Attach( fields[i,0], i,i+1,0,1);
+				fields[i,0].Sensitive = false;
+				fields[i,0].Show();
+				fields[i,0].setChar(i.ToString());
+				
+				fields[0,i] = new Stone();
+				this.Attach( fields[0,i], 0,1,i,i+1);
+				fields[0,i].Sensitive = false;
+				fields[0,i].Show();
+				fields[0,i].setChar(i.ToString());
+			}
 			
 			/* initialization of Buttons (letters) */
-			for(uint j=0; j < fields.GetLength(1) ; j++)
-				for(uint i=0; i < fields.GetLength(0) ; i++) {
+			for(uint j=1; j < fields.GetLength(1) ; j++)
+				for(uint i=1; i < fields.GetLength(0) ; i++) {
 					fields[i,j] = new Stone();
 					this.Attach( fields[i,j] , i, i+1, j, j+1);
-					fields[i,j].Name = "B " + i + " " + j;
+					fields[i,j].Name = "B " + i + " " + j;	// name is +1 oposite the logic desk
+					fields[i,j].TooltipText = "["+i+","+j+"]";
 					fields[i,j].Show();	
 					fields[i,j].Clicked += PushButton;
 				}
 			
 			/* initialization of charBonus */
-			for(int j=0; j < fields.GetLength(1) ; j++)
-				for(int i=0; i < fields.GetLength(0) ; i++) {
-					if( desk.CharBonus[i,j] == 1 ) continue;
-					else SetBonus(new System.Drawing.Point(i,j), desk.CharBonus[i,j], false);
+			for(int j=0; j < fields.GetLength(1)-1 ; j++)
+				for(int i=0; i < fields.GetLength(0)-1 ; i++) {
+					if( Pdesk.CharBonus[i,j] == 1 ) continue;
+					else SetBonus(new System.Drawing.Point(i,j), Pdesk.CharBonus[i,j], false);
 				}
 			
 			/* initialization of wordBonus */
-			for(int j=0; j < fields.GetLength(1) ; j++)
-				for(int i=0; i < fields.GetLength(0) ; i++) {
-					if( desk.WordBonus[i,j] == 1 ) continue;
-					else SetBonus(new System.Drawing.Point(i,j), desk.WordBonus[i,j], true);
+			for(int j=0; j < fields.GetLength(1)-1 ; j++)
+				for(int i=0; i < fields.GetLength(0)-1 ; i++) {
+					if( Pdesk.WordBonus[i,j] == 1 ) continue;
+					else SetBonus(new System.Drawing.Point(i,j), Pdesk.WordBonus[i,j], true);
 				}
 		}
 		
 		public void SetBonus(System.Drawing.Point p, short level, bool word) {
-				fields[p.X,p.Y].setBonus( level, word );
+				fields[p.X+1,p.Y+1].setBonus( level, word );
 		}
 		
 		public void DisableButtons() {
@@ -56,17 +74,19 @@ namespace Scrabble.GUI
 		}
 		
 		private void PushButton( object sender, EventArgs e) {
+			
 			Gtk.CheckButton check = new Gtk.CheckButton("Down");
 			Gtk.Entry input = new Gtk.Entry(15);
 			Gtk.HBox divide = new Gtk.HBox(false, 0);
 			Gtk.Button but = new Gtk.Button("OK");
+			
 			divide.PackStart( input );
 			divide.Add( check );
 			divide.PackEnd( but );
 			
 			Gtk.Window w = new Gtk.Window( Gtk.WindowType.Popup );
 			w.SetPosition ( WindowPosition.Mouse );
-			
+
 			w.Add( divide );			
 			
 			w.BorderWidth = 0;
@@ -75,46 +95,49 @@ namespace Scrabble.GUI
 			w.ShowAll();
 			
 			but.Clicked += delegate {
+				if( input.Text == "" ) return;
 				int i, j;
-				string[] name = ((Gtk.Button) sender).Name.Split(new char[] {' '}, StringSplitOptions.RemoveEmptyEntries );
-				i = int.Parse(name[1]);
-				j = int.Parse(name[2]);
-				setWord( check.Active, (uint) i, (uint) j, input.Text);
+				string[] name = ((Gtk.Button)sender).Name.Split (new char[] {' '}, StringSplitOptions.RemoveEmptyEntries);
+				i = int.Parse (name [1]);
+				j = int.Parse (name [2]);
 				
-				Console.WriteLine( 			 );
-				w.HideAll();
-				w.Dispose();
-				w.Destroy();				
+				if( game.GetActualPlayer().DoMove(
+								new Lexicon.Move( new System.Drawing.Point(i-1,j-1), input.Text.ToUpperInvariant(), check.Active )	)
+					) setWord (check.Active, (uint)i, (uint)j, input.Text);
+
+				Console.WriteLine ();
+				w.HideAll ();
+				w.Dispose ();
+				w.Destroy ();
 			};
+				
+			w.KeyPressEvent += delegate(object o, KeyPressEventArgs args) {
+				switch( args.Event.Key ) {
+				case Gdk.Key.Escape :	
+					w.HideAll ();
+					w.Dispose ();
+					w.Destroy ();	
+					break;
+				case Gdk.Key.ISO_Enter:
+				case Gdk.Key.Key_3270_Enter:
+				case Gdk.Key.KP_Enter:
+					but.Click();
+					break;
+				}
+			};
+				
 		}
 		
-		private bool setWord(bool d, uint x, uint y, string s) {
-			if( s == "" ) return false;
-			
-			Console.WriteLine("Mam zapsat \"{0}\" s delkou {4} na {1},{2}, down: {3}", s, x, y, d, s.Length);
-			
-			Lexicon.Move m = new Lexicon.Move(new System.Drawing.Point((int)x,(int)y), s.ToUpperInvariant(), d );
-			
-			if( ! Pdesk.AnalyzeMove( m ) ) return false;
-			
-			if( ! Pdesk.Connect( m ) ) {
-				Console.WriteLine( "[no] Špatné napojení" );
-				return false; 
-			}
-			
-			if( ! Pdesk.Play( m ) ) return false;
-			
+		private void setWord(bool d, uint x, uint y, string s) {			
 			if( d ) {
 				for( uint j=y; j< y+s.Length; j++) {
-					fields[x,j].setChar(s[(int)(j-y)].ToString().ToUpper());
+					fields[x,j].setChar(s[(int)(j-y)].ToString().ToUpper() );
 				}
 			} else {
 				for( uint i=x; i< x+s.Length; i++)	{
 					fields[i,y].setChar( s[(int)(i -x)].ToString().ToUpper() );
 				}
 			}
-						
-			return true;
 		}	
 	}
 	
@@ -155,11 +178,3 @@ namespace Scrabble.GUI
 		}
 	}
 }
-
-		/*
-		 * table1.Attach ( Widget            child,
-                       		int              leftAttach,	// vzdálenost levého okraje tlačítka od lev. ok. tabulky
-                       		int              rightAttach,	// vzdálenost pravého okraje tlačítka od lev. ok. tabulky
-                       		int              topAttach,		// vzdálenost od horního okraje tabulky
-                       		int              bottomAttach,
-         */

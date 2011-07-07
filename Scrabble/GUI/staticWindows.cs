@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using Gtk;
+using Gdk;
 
 namespace Scrabble.GUI
 {
@@ -86,6 +87,19 @@ namespace Scrabble.GUI
 				checkWin.Dispose();
 				checkWin.Destroy();				
 			};
+			
+			checkWin.KeyPressEvent += delegate(object o, KeyPressEventArgs args) {
+				switch( args.Event.Key ) {
+				case Gdk.Key.Escape:
+					checkWin.HideAll();
+					checkWin.Dispose();
+					checkWin.Destroy();
+					break;
+				case Gdk.Key.ISO_Enter:
+					but.Click();
+					break;
+				}
+			};	
 		}
 	
 		public static void LoadNewDictionaryDialog(object sender, EventArgs e ) {
@@ -120,16 +134,14 @@ namespace Scrabble.GUI
 		public static void NextPlayer(string name) {
 			var but = new Gtk.Button( );
 			but.TooltipMarkup = "Po kliknutí bude hrát další hráč";
-			//but.CreatePangoLayout("Na tahu je hráč: <b>" + name + "</b>\n\nOK");
 			HBox hbox = new HBox();
 			global::Gtk.Image im = new global::Gtk.Image ();
-			//im.Pixbuf = G global::Stetic.IconLoader.LoadIcon (this, "stock_refresh", global::Gtk.IconSize.Menu);
 			Label l = new Label();
 			l.Markup = "Na tahu je hráč:\n <b>" + name + "</b>\n\nOK";
 			hbox.PackStart( im );
 			hbox.PackEnd( l );
 			but.Add( hbox );
-			var win = new Gtk.Window( WindowType.Toplevel );	
+			var win = new Gtk.Window( Gtk.WindowType.Toplevel );	
 			
 			but.Clicked += delegate {
 				win.HideAll();

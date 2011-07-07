@@ -26,7 +26,7 @@ namespace 	Scrabble.GUI {
 			this.SetPosition( WindowPosition.Center );
 			
 			menu = new MenuHover( this );
-			desk = new Desk( g.desk );
+			desk = new Desk( g );
 			rack = new Rack( g );
 			info = new Info( g );
 				

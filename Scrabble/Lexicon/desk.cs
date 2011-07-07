@@ -128,7 +128,9 @@ namespace Scrabble.Lexicon
 					
 					int k = Cross(i,j,M.Down);
 					if( k < 0 ) {
-						Console.WriteLine("[NO] Špatné křížení slov.");
+#if DEBUG
+						Console.WriteLine("[NO] \tŠpatné křížení slov na [{0},{j}]");
+#endif
 						return false; } 	// Crossword is wrong
 					if( k == 0) {} 				// No crossword (only this stone)
 					score += k;					// K > 0 : K is score for crossword
@@ -163,7 +165,9 @@ namespace Scrabble.Lexicon
 			
 			if( game.dictionary.Content( M.Word ) )	return true;
 			else { 
-				Console.WriteLine("[NO] Slovo není ve slovníku.");
+#if DEBUG
+				Console.WriteLine("[NO] \tSlovo {0} není ve slovníku.", M.Word);
+#endif
 				return false;
 			}
 		}
@@ -252,112 +256,28 @@ namespace Scrabble.Lexicon
 			
 			var rack = game.GetActualPlayer().Rack;
 			
+			// All stones are in rack ? 
 			foreach(MovedStone ms in move.PutedStones ) {
 				if( ! rack.Contains( ms.c ) ) return false;
 			}
 			
+			// Put!
 			foreach(MovedStone ms in move.PutedStones ) {
 				desk[ms.i, ms.j] = ms.c;
 				rack.Remove( ms.c );
 			}
 			
+			// Increase score
 			game.IncActualPlayerScore( move.Score );
 			
-			DisplayTerminal();
+#if DEBUG
+			//DisplayTerminal();
+#endif
 			
 			game.changePlayer();
 			
 			return true;
 		}
-		
-		/*
-		/// <summary>
-		/// Checks the position at desk. Pouze konrola zda tam slovo pasuje)
-		/// </summary>
-		/// <returns>
-		/// The position at desk.
-		/// </returns>
-		/// <param name='m'>
-		/// If set to <c>true</c> m.
-		/// </param>
-		private bool CheckPositionAtDesk(Move m) {
-			bool possible = true;
-			if( m.Down ) {
-				try{
-				for( int i=0; i<m.Word.Length; i++)
-					if( desk[m.Start.X, m.Start.Y + i] != '_' &&
-						desk[m.Start.X, m.Start.Y + i] != m.Word[i] ) possible = false;
-				} catch { possible = false;	}
-				if( ! possible ) return false;
-			} else {
-				try {
-				for( int i=0; i<m.Word.Length; i++)
-					if( desk[m.Start.X +i,m.Start.Y] != '_' &&
-						desk[m.Start.X +i,m.Start.Y] !=	m.Word[i] ) possible = false;
-				} catch { possible = false; }
-				if( !possible ) return false;
-			}
-			return true;
-		}
-		
-		private bool CheckCrossCheck(Move m) {
-			//TODO
-			int startIndex;
-			int i = m.Start.X;
-			int j = m.Start.Y;
-			
-			if( m.Down ) {
-				/* Check Prefix and Sufix */
-				/*int j = m.Start.Y;
-				while(desk[m.Start.X, j-1] != '_' ) {
-					j--; 
-					// go up
-				}
-				/* Now in j is first 
-				
-				for( int i=0; i<m.Word.Length;i++) {
-					int j =m.Start.X;
-					while( desk[i-1,j] != '_' ) {
-						if( ! CheckWordAcross( i, j ) ) return false;
-					}
-				}*/
-			/*} else {
-				// Go to prefix's first letter
-				while( i-1 >= 0 && desk[i,j] != '_' ) i--;
-				if( desk[i-1,j] != '_' ) i--;
-				startIndex = i;
-				
-				// Check
-				if( ! game.dictionary.Content(desk, i, j, false ) ) return false;
-				
-				// Cross
-				// all width of word
-				while( i < desk.GetLength(0) && desk[i,j] != '_' ) {
-					//TODO: Kurna to slovo tam není!!!	
-				}
-				for( int i=0; i<m.Word.Length;i++) {
-					int j =m.Start.Y;
-					while( desk[i,j+1] != '_' ) {
-						if( ! CheckWordDown( i, j ) ) return false;	
-					}
-				}
-			}
-			return true;
-		}
-		
-		private bool CheckWordAcross( int i, int j ) {
-			return false;
-		}
-		private bool CheckWordDown( int i, int j ) {
-			/* again searching in trie, safe construct string */
-			/*Node tmp = game.dictionary.Root;
-			while( tmp.isSon( desk[i,j] ) ) {
-				tmp = tmp.getSon( desk[i,j] );	
-				j++;
-			}
-			if( desk[i,j] == '_' ) return true;
-			else return false;			
-		}*/
 		
 		/// <summary>
 		/// Loads bonuses from memory (array in memory)

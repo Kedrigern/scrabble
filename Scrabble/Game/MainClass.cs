@@ -34,9 +34,10 @@ namespace Scrabble.Game
 			
 			if( Scrabble.Game.InitialConfig.allDone ) {
 				var game = new Scrabble.Game.Game( Scrabble.Game.InitialConfig.players, Scrabble.Game.InitialConfig.dictionary);
+				game.CreateMainWindowLoop();			
 			}
 #if DEBUG
-			Console.WriteLine("BYE");
+			Console.WriteLine("[INFO]\tBYE");
 #endif
 		}
 	}

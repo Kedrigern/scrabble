@@ -46,19 +46,13 @@ namespace Scrabble.GUI
 			turn.Text = name;	
 			scoresTable.HideAll();
 			for( int i=0; i < game.players.Length; i++) {
-				scoreValues[ i ] = new Label( game.players[i].Name );
+				if( typeof( Player.ComputerPlayer ) == game.players[i].GetType() )
+					scoreValues[ i ].Text = game.players[i].Name + "(CPU)";
+				else
+					scoreValues[ i ].Text = game.players[i].Name;
 				scoreValues[ i+game.players.Length ].Text = string.Format( "{0}", game.players[i].Score );
-#if DEBUG
-				Console.WriteLine("Hrac {0} má skore: {1}", game.players[i].Name, game.players[i].Score);
-#endif
 			}
 			scoresTable.ShowAll();
-			/*
-			for( int i=game.players.Length; i < scoreValues.Length; i++) {
-				scoreValues[i].Hide();
-				scoreValues[i].Text = game.players[i].Score.ToString();
-				scoreValues[i].Show();
-			}*/
 		}
 	}
 }
