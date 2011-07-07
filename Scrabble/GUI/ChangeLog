@@ -1,5 +1,11 @@
 2011-07-07  Ondřej Profant  <ondrej.profant@gmail.com>
 
+	* menu.cs:
+	* menu.xml:
+	* staticWindows.cs: 
+
+2011-07-07  Ondřej Profant  <ondrej.profant@gmail.com>
+
 	* desk.cs:
 	* info.cs:
 	* MainWindow.cs:

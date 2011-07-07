@@ -30,7 +30,8 @@ namespace Scrabble.GUI {
 		Gtk.Action endG;
 		
 		Gtk.Action infoD;
-		Gtk.Action checkD;
+		Gtk.Action checkD;	
+		Gtk.Action addD;
 		Gtk.Action loadD;
 		
 		Gtk.Action optionS;
@@ -62,6 +63,8 @@ namespace Scrabble.GUI {
 			this.endG.Activated += (sender, e) => Application.Quit();
 			this.infoD = new Gtk.Action("infoD", "Info", null, null);
 			this.infoD.Activated += StaticWindows.DictionaryInfoDialog;
+			this.addD = new Gtk.Action("addD", "Přidat slovo", null, null);
+			this.addD.Activated += StaticWindows.AddNewWordToDic;
 			this.checkD = new Gtk.Action( "checkD", "Ověř slovo", null, null);
 			this.checkD.Activated += StaticWindows.CheckWordDialog;
 			this.loadD = new Gtk.Action( "loadD", "Načti slovník", null, null);
@@ -74,6 +77,7 @@ namespace Scrabble.GUI {
 			this.ag.Add( saveG, null);
 			this.ag.Add( endG, null);
 			this.ag.Add( infoD, null);
+			this.ag.Add( addD , null );
 			this.ag.Add( checkD, null );
 			this.ag.Add( loadD, null);
 			this.ag.Add( optionS, null);

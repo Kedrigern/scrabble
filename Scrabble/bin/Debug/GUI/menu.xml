@@ -9,6 +9,7 @@
 		<menu name='dictionary' action='dictionary'>
 			<menuitem name='checDk' action='checkD' />
 			<menuitem name='infoD' action='infoD'/>
+			<menuitem name='addD' action='addD' />
 			<menuitem name='loadD' action='loadD' />
 		</menu>
 		<menu name='settings' action='settings'>

@@ -101,6 +101,36 @@ namespace Scrabble.GUI
 				}
 			};	
 		}
+		
+		public static void AddNewWordToDic(object sender, EventArgs e) {
+			var win = new Gtk.Window("Přidej slovo");
+			win.SetPosition( WindowPosition.Mouse );
+			Label l = new Label();
+			l.Text = "Vloží slovo do aktuálně načteného slovníku, avšak nezmění zdroj (např. soubor dic.txt )";
+
+			Entry entry = new Entry();
+			Button b = new Button("Přidej");
+			VBox vbox = new VBox();
+			HBox hbox = new HBox();
+			vbox.BorderWidth = 10;
+			
+			vbox.PackStart( l );
+			vbox.PackEnd( hbox );
+			
+			hbox.PackStart( entry );
+			hbox.PackEnd( b );
+			
+			b.Clicked += delegate {
+				game.dictionary.Add( entry.Text );
+				win.HideAll();
+				win.Destroy();
+				win.Dispose();
+			};
+			
+			win.Add(vbox);
+			win.ShowAll();
+			
+		}
 	
 		public static void LoadNewDictionaryDialog(object sender, EventArgs e ) {
 			var fch = new Gtk.FileChooserDialog( "Vyberte slovník", null, FileChooserAction.Open, 
