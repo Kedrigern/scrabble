@@ -1,0 +1,24 @@
+-------
+CONTENT
+-------
+1. install
+2. compile
+3. licence
+4. dictionary
+5. homepage
+
+-------
+INSTALL
+-------
+Install isn't required. Just click at scrabble.exe or write:
+mono scrabble.exe
+
+COMPILE
+Directories structures etc. is mono project. You can open in monodevelop and compile.
+
+LICENCE
+Is GPL.
+
+HOMEPAGE
+Project: https://github.com/Kedrigern/scrabble
+Author homepage: http://anilinux.org/~keddie
