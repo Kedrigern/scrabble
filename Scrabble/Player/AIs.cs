@@ -1,5 +1,5 @@
 //  
-//  MainClass.cs
+//  AIs.cs
 //  
 //  Author:
 //       Ondřej Profant <ondrej.profant@gmail.com>
@@ -18,29 +18,25 @@
 // 
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
 using System;
-using Gtk;
+using System.Collections.Generic;
+using Scrabble.Lexicon;
 
-namespace Scrabble.Game
-{
-	public static class MainClass
-	{
-		public static void Main ()
-		{
-			Gtk.Application.Init();
-			var startwin = new Scrabble.GUI.StartWindow();
-			startwin.Show();
-			Gtk.Application.Run();
-			/*
-			if( Scrabble.Game.InitialConfig.allDone ) {
-				var game = new Scrabble.Game.Game( Scrabble.Game.InitialConfig.players, Scrabble.Game.InitialConfig.dictionary);
-				game.CreateMainWindowLoop();			
-			}*/
-#if DEBUG
-			Console.WriteLine("[INFO]\tBYE");
-#endif
-			Gtk.Application.Quit();
-		}
+namespace Scrabble.Player {
+
+	public abstract class AI {		
+		public abstract Move Decide( HashSet<Move> pool  );	
 	}
+	
+	public class standartAI : AI {
+		public override Move Decide (HashSet<Move> pool)
+		{
+			foreach( Move m in pool ) {
+				return m;	
+			}
+			throw new NotImplementedException ();
+		}	
+	}
+	
 }
-

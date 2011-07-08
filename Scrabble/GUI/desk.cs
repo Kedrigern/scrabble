@@ -19,6 +19,8 @@ namespace Scrabble.GUI
 			Pdesk = ((Game.Game) game).desk;
 			
 			/* inicialization of labels */
+			fields[0,0] = new Stone();
+			fields[0,0].Sensitive = false;
 			for( uint i = 1; i < fields.GetLength(0); i++) {
 				fields[i,0] = new Stone();
 				this.Attach( fields[i,0], i,i+1,0,1);

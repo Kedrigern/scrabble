@@ -34,16 +34,26 @@ namespace Scrabble.Lexicon
 			SearchAlgorithm.gaddag = g;
 		}
 		
-		public static Stack<Move> Search( int x, int y, List<char> rack)	{
+		public static void Search( int x, int y, List<char> rack, HashSet<Move> pool)	{
 			Node root = gaddag.ReverseRoot;
-			Stack<Move> st = new Stack<Move>(40);
 			
-			StartOfRecursionLeftRight( st, root, x, y, rack );
-			StartOfRecursionDownUp( st, root, x, y, rack );
-			return st;
+			try{
+			if( desk[x,y]   != '_' &&
+				desk[x+1,y] == '_' 	) { 
+#if DEBUG
+					Console.WriteLine("[DBG]\tSpouštím samotný vyhledávácí algoritmus na {0},{1}", x, y);
+#endif
+					StartOfRecursionLeftRight( pool, root, x, y, rack );
+				} } catch {}
+			
+			try {
+			if( desk[x,y]   != ' ' &&
+				desk[x,y+1] == ' ' ) 
+				{}//StartOfRecursionDownUp( pool, root, x, y, rack );
+			} catch {}
 		}
 		
-		private static void StartOfRecursionLeftRight(Stack<Move> st, Node root, int x, int y, List<char> rack ) {	
+		private static void StartOfRecursionLeftRight(HashSet<Move> pool, Node root, int x, int y, List<char> rack ) {	
 			string s = "";
 			int actual = x;
 			try {
@@ -56,10 +66,11 @@ namespace Scrabble.Lexicon
 			TmpMove tmp = new TmpMove( new Point(x,y), new Point(actual+1,y), 
 												Direction.left, 
 												s,root, rack );
-			SearchRek( st, tmp );
+			SearchRek( pool, tmp );
+			pool.Remove( new Move(new System.Drawing.Point(actual+1,y), s, false ) ); 		// položené slovo
 		}
 		
-		private static void StartOfRecursionDownUp(Stack<Move> st, Node root, int x, int y, List<char> rack  ) {
+		private static void StartOfRecursionDownUp(HashSet<Move> pool, Node root, int x, int y, List<char> rack  ) {
 			string s = "";
 			int actual = y;
 			try {
@@ -73,31 +84,43 @@ namespace Scrabble.Lexicon
 												Direction.up, 
 												s,root, rack );
 			
-			SearchRek( st, tmp );
+			SearchRek( pool, tmp );
 		}
 		
-		private static void SearchRek(Stack<Move> st, TmpMove m ) {
-			if( m.node.Finite ) {
-				st.Push ( m.Convert2Move()	); 
+		private static void SearchRek(HashSet<Move> pool, TmpMove m ) {
+			// 1. check cross
+			if( ! cross( m ) ) {
+				return;
 			}
+			
+			// 2. this is full word - add
+			if( m.node.Finite ) {
+				pool.Add( m.Convert2Move()	); 
+			}
+			
+			// 3. turn direction of movement
 			if( m.node.isSon('>') ) {
 				if( m.direct == Direction.left )
-					SearchRek( st, m.TurnRight( ) );
+					SearchRek( pool, m.TurnRight( ) );
 				else 
-					SearchRek( st, m.TurnDown( ) );
+					SearchRek( pool, m.TurnDown( ) );
 			}
+			
+			// 4. End of desk
 			if( EndOfDesk( m ) ) {
-				return;			// nothing to do
+				return;		// nothing to do
 			}
+			
+			// 5. Go to next char
 			char ch = NextChar(m);
 			if( '_' !=  ch ) {	// there are already puted some stone
 				if( m.node.isSon( ch ) )	{
-					SearchRek( st, m.Copy( ch ) );	
+					SearchRek( pool, m.Copy( ch ) );	
 				}
 			} else {			// blank desk (I can put own stone)
 				foreach( char c in m.rack ) {
 					if( m.node.isSon( c ) ) {
-						SearchRek( st, m.Copy( c ) );	
+						SearchRek( pool, m.Copy( c ) );	
 					}
 				}
 			}
@@ -141,6 +164,20 @@ namespace Scrabble.Lexicon
 				return '_';
 			}			
 		}
+		
+		private static bool cross(TmpMove m) {
+			int x = m.ActualPoint.X;
+			int y = m.ActualPoint.Y;
+			switch( m.direct ) {
+			case Direction.left :
+			case Direction.right :
+				return true;
+			case Direction.up :
+			case Direction.down :
+			default :
+				return true;
+			}
+		}
 	}
 	
 	/// <summary>
@@ -151,7 +188,7 @@ namespace Scrabble.Lexicon
 		public Point StartPoint {get; set; }	// start point of searching posibilities
 		public Point ActualPoint {get; set; }	// actual position in searching
 		public Direction direct {get; set; }	// direction of searching (one times change in passing GADDAG)
-		public string Word { get; set; }		// created word
+		public string Word {get; set; }			// created word
 		public Node node {get; set; }			// node in lexicon represented by GADDAG
 		public List<char> rack;
 		

@@ -47,9 +47,9 @@ namespace Scrabble.GUI
 			scoresTable.HideAll();
 			for( int i=0; i < game.players.Length; i++) {
 				if( typeof( Player.ComputerPlayer ) == game.players[i].GetType() )
-					scoreValues[ i ].Text = game.players[i].Name + "(CPU)";
+					scoreValues[ i ].Text = game.players[i].Name + " (CPU)";
 				else
-					scoreValues[ i ].Text = game.players[i].Name;
+					scoreValues[ i ].Text = game.players[i].Name + "  ";
 				scoreValues[ i+game.players.Length ].Text = string.Format( "{0}", game.players[i].Score );
 			}
 			scoresTable.ShowAll();

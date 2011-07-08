@@ -65,6 +65,7 @@
     <Compile Include="Game\StonesBag.cs" />
     <Compile Include="GUI\staticWindows.cs" />
     <Compile Include="GUI\StartWindow.cs" />
+    <Compile Include="Player\AIs.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Lexicon\" />

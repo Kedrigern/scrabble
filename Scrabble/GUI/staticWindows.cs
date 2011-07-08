@@ -60,7 +60,6 @@ namespace Scrabble.GUI
 			checkWin.CanFocus = true;
 			checkWin.ShowAll();			
 			but.Clicked += delegate {
-				// TODO: submit with enter
 				if( game.dictionary.Content( ent.Text ) ) {
 					Gtk.MessageDialog ans = new Gtk.MessageDialog(
 							game.Window,

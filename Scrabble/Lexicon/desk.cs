@@ -74,12 +74,12 @@ namespace Scrabble.Lexicon
 		/// </param>
 		public PlayDesk (StreamReader sr)
 		{
-			//TODO: Implementation	
+			//TODO: Loading dictionary via stream reader
 		}
 		
 		public void Display(UI ui) {
 			if( ui == UI.Terminal ) DisplayTerminal();
-			//TODO: Implementation
+			//TODO: Implementation ? Maybe obsolete
 		}
 		
 		private void DisplayTerminal() {
@@ -150,7 +150,7 @@ namespace Scrabble.Lexicon
 					if( desk[i,j] == '_' ) break;
 					else {
 						// problem
-						throw new Exception("Unexpected Sufix");
+						throw new Exception("[ERR]\tUnexpected Sufix");
 					}
 				}
 			}

@@ -55,27 +55,6 @@ namespace Scrabble.Game
 			}
 		}
 		
-		/*public void PrepareDictionary(string path = "./dic.txt") {
-			if( File.Exists( path ) ) {
-				StreamReader sr = new StreamReader ( path );
-				dictionary = new Scrabble.Lexicon.GADDAG( sr );	
-			} else {
-				dictionary = new Scrabble.Lexicon.GADDAG( 
-						new string[] {"po", "do", "to", "lo", "dům", "doupě", "dole", "dolejší", "dort", "kolo", "molo", "na", "pa", "ba", "ma"}	// for testing purpose
-					);
-			}			
-			// Init of search algorithm
-			Scrabble.Lexicon.SearchAlgorithm.Init( desk.Desk , dictionary );	
-		}*/
-		/*
-		public void SetPlayers( Scrabble.GUI.PlayerInit[] pls ) {
-			players = new Scrabble.Player.Player [ pls.Length ];
-			for(int i=0;i< pls.Length; i++) {
-				players[i] = new Scrabble.Player.Player( pls[i].entry.Text, this );
-			}
-			//TODO: CPU
-		}*/
-		
 		public Scrabble.Player.Player GetActualPlayer() {
 			return players[ OnTurn ];	
 		}
@@ -94,6 +73,7 @@ namespace Scrabble.Game
 			if( typeof( ComputerPlayer ) == players[ OnTurn ].GetType() ) {
 				window.DisableButtons();	
 				((ComputerPlayer) players[OnTurn]).Play();
+				window.ActiveButtons();
 				changePlayer();
 			} else 		
 				GUI.StaticWindows.NextPlayer( players[OnTurn].Name );
@@ -108,14 +88,16 @@ namespace Scrabble.Game
 		}
 		
 		public void CreateMainWindowLoop() {
+			//Gtk.Application.Init();
 			window = new Scrabble.GUI.ScrabbleWindow( this );			
-			Window.SetPosition( Gtk.WindowPosition.Center );
+			window.SetPosition( Gtk.WindowPosition.Center );
 			
 			// Inicialize dialogs from menu (like checkword, about etc.)
 			Scrabble.GUI.StaticWindows.Init( this );
 				
 			//win.RackChange( ((Scrabble.Player.Player) players[0]).Rack );
-			Window.changePlayer( players[OnTurn] );
+			window.changePlayer( players[OnTurn] );
+			window.Show();
 			Gtk.Application.Run ();
 			Window.Destroy();	
 			Window.Dispose();

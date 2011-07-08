@@ -59,7 +59,7 @@ namespace Scrabble.Player
 		
 		public bool DoMove( Lexicon.Move m ) {
 #if DEBUG
-			Console.WriteLine("[INFO]\tChci položit {0} na [{1},{2}]", m.Word, m.Start.X, m.Start.Y);
+			Console.WriteLine("[info]\tChci položit {0} na [{1},{2}]", m.Word, m.Start.X, m.Start.Y);
 #endif
 			/* Check cross check 
 			 * Calcul score */
@@ -94,7 +94,7 @@ namespace Scrabble.Player
 		public NetworkPlayer(string n, string ipt) : base( n ) {
 			IPAddress ip;
 			if( ! IPAddress.TryParse( ipt,out ip ) ) {
-				// TODO: Opakované zeptání se na adresu
+				// TODO: Opakované zeptání se na IP adresu
 				Console.WriteLine("[ERROR] Parsing IP adress");
 				Environment.Exit(1);
 			}
@@ -103,20 +103,28 @@ namespace Scrabble.Player
 	}
 	
 	public class ComputerPlayer : Player {
-		protected object AI;	
+		protected AI ais;	
 		
-		public ComputerPlayer(string n, object ai) : base ( n ) {
-			this.AI = ai;	
+		public ComputerPlayer(string n, AI ai) : base ( n ) {
+			this.ais = ai;	
 		}
 		
 		public void Play() {
-			int j = 7;
-			Stack<Lexicon.Move> tahy;
-			for(int i = 0; i < game.desk.Desk.GetLength(0); i++) {
-				tahy = Lexicon.SearchAlgorithm.Search(i,j,Rack);
-				if( tahy.Count > 0 ) break;
+			HashSet<Move> movePool = new HashSet<Move>(); 
+			for(int j=0; j < game.desk.Desk.GetLength(1); j++)
+				for(int i=0; i < game.desk.Desk.GetLength(0); i++)
+					SearchAlgorithm.Search(i,j, this.Rack,movePool );
+#if DEBUG
+			Console.Write( "[info]\tMůj zasobník:");
+			foreach( char c in Rack ) {
+				Console.Write("{0} ", c);	
 			}
-			Console.WriteLine( tahy.Pop().Word );
+			Console.Write( "\n[info]\tNašel jsem {0} tahů:\t", movePool.Count );
+			foreach( Move m in movePool ) {
+				Console.Write("{0} ", m.Word);	
+			}
+			Console.WriteLine();
+#endif
 		}
 	}
 }

@@ -1,28 +1,16 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Scrabble/Player/Player.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Scrabble/Lexicon/searchalgorihm.cs">
     <Files>
-      <File FileName="Scrabble/Player/PlayerRack.cs" Line="28" Column="3" />
-      <File FileName="Scrabble/GUI/menu.cs" Line="1" Column="1" />
-      <File FileName="Scrabble/GUI/info.cs" Line="1" Column="1" />
-      <File FileName="Scrabble/Game/Game.cs" Line="106" Column="20" />
-      <File FileName="Scrabble/GUI/MainWindow.cs" Line="1" Column="1" />
-      <File FileName="Scrabble/Player/Player.cs" Line="93" Column="34" />
-      <File FileName="Scrabble/Lexicon/PlayStone.cs" Line="1" Column="1" />
-      <File FileName="Scrabble/Lexicon/searchalgorihm.cs" Line="33" Column="24" />
-      <File FileName="Scrabble/GUI/rack.cs" Line="1" Column="1" />
-      <File FileName="Scrabble/Game/InitialConfig.cs" Line="1" Column="1" />
-      <File FileName="Scrabble/Game/MainClass.cs" Line="1" Column="1" />
-      <File FileName="Scrabble/GUI/desk.cs" Line="1" Column="1" />
-      <File FileName="Scrabble/Lexicon/desk.cs" Line="1" Column="1" />
-      <File FileName="Scrabble/Lexicon/GADDAG.cs" Line="1" Column="1" />
-      <File FileName="Scrabble/Lexicon/trie.cs" Line="1" Column="1" />
+      <File FileName="Scrabble/GUI/info.cs" Line="52" Column="57" />
+      <File FileName="Scrabble/Game/Game.cs" Line="90" Column="1" />
+      <File FileName="Scrabble/GUI/MainWindow.cs" Line="59" Column="1" />
+      <File FileName="Scrabble/Player/Player.cs" Line="120" Column="22" />
+      <File FileName="Scrabble/Lexicon/searchalgorihm.cs" Line="39" Column="7" />
+      <File FileName="Scrabble/GUI/desk.cs" Line="69" Column="1" />
       <File FileName="Scrabble/Lexicon/move.cs" Line="1" Column="1" />
-      <File FileName="Scrabble/Game/StonesBag.cs" Line="1" Column="1" />
-      <File FileName="Scrabble/Lexicon/node.cs" Line="1" Column="1" />
-      <File FileName="Scrabble/GUI/menu.xml" Line="1" Column="1" />
-      <File FileName="Scrabble/GUI/staticWindows.cs" Line="1" Column="1" />
-      <File FileName="Scrabble/GUI/StartWindow.cs" Line="270" Column="16" />
+      <File FileName="Scrabble/Lexicon/desk.cs" Line="162" Column="46" />
+      <File FileName="Scrabble/GUI/StartWindow.cs" Line="269" Column="96" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -31,10 +19,10 @@
             <Node name="References" expanded="True" />
             <Node name="Game" expanded="True" />
             <Node name="GUI" expanded="True" />
-            <Node name="Lexicon" expanded="True" />
-            <Node name="Player" expanded="True">
-              <Node name="Player.cs" selected="True" />
+            <Node name="Lexicon" expanded="True">
+              <Node name="searchalgorihm.cs" selected="True" />
             </Node>
+            <Node name="Player" expanded="True" />
           </Node>
         </State>
       </Pad>
@@ -50,9 +38,7 @@
     </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore>
-      <Breakpoint file="/home/keddie/Projects/Scrabble/Scrabble/GUI/info.cs" line="57" />
-    </BreakpointStore>
+    <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches>
     <Watch file="Scrabble/Lexicon/trie.cs" line="32" offsetX="110" offsetY="153" expression="Trie" liveUpdate="False" />

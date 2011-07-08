@@ -59,7 +59,7 @@ namespace 	Scrabble.GUI {
 			desk.DisableButtons();
 		}
 		
-		public void ActiveBttons() {
+		public void ActiveButtons() {
 			rack.ActiveButtons();
 			desk.ActiveButtons();
 		}

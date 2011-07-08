@@ -237,7 +237,7 @@ namespace Scrabble.GUI
 					MPchecks [i].Hide ();
 				}
 			} else {
-				//TODO: Deactivation of button (all implementation)
+				//TODO: Deactivation of button (full implementation)
 			}
 		}
 		
@@ -246,8 +246,7 @@ namespace Scrabble.GUI
 				dic = new Scrabble.Lexicon.GADDAG();
 				if( File.Exists( "./dic.txt" ) /*&& false*/ ) {
 					StreamReader sr = new StreamReader ( "./dic.txt" );
-					dic = new Scrabble.Lexicon.GADDAG(sr);	
-
+					dic = new Scrabble.Lexicon.GADDAG(sr);
 				} 
 			}
 #if DEBUG
@@ -266,7 +265,7 @@ namespace Scrabble.GUI
 				players = new Player.Player[ numberOfPlayers ];
 				for( int i=0; i < numberOfPlayers; i++) {
 					if( CPUchecks[i].Active ) {
-						players[i] = new Scrabble.Player.ComputerPlayer( entryes[i].Text, null );
+						players[i] = new Scrabble.Player.ComputerPlayer( entryes[i].Text, new Player.standartAI() );
 						continue;
 					}
 					if( MPchecks[i].Active ) {
@@ -290,14 +289,17 @@ namespace Scrabble.GUI
 #endif
 			
 			this.Destroy ();
-			this.Dispose ();						
-			Gtk.Application.Quit();
+			this.Dispose ();
+			
+			if( Scrabble.Game.InitialConfig.allDone ) {
+				var game = new Scrabble.Game.Game( Scrabble.Game.InitialConfig.players, Scrabble.Game.InitialConfig.dictionary);
+				game.CreateMainWindowLoop();			
+			}
 		}
 	
 		protected void OnDeleteEvent (object sender, DeleteEventArgs a)
 		{
-			Application.Quit ();
-			a.RetVal = true;
+			Done(null,null);
 		}
 	}
 
