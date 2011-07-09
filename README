@@ -13,12 +13,22 @@ INSTALL
 Install isn't required. Just click at scrabble.exe or write:
 mono scrabble.exe
 
+Warrning: In actual develop versions is problem with standalone open (by click from graphic environment). 
+From MonoDevelop or terminal everything works great. 
+Please use terminal: mono Scrabble.exe
+
+-------
 COMPILE
+-------
 Directories structures etc. is mono project. You can open in monodevelop and compile.
 
+-------
 LICENCE
+-------
 Is GPL.
 
+--------
 HOMEPAGE
+--------
 Project: https://github.com/Kedrigern/scrabble
 Author homepage: http://anilinux.org/~keddie
