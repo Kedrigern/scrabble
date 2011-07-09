@@ -1,21 +1,23 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Scrabble/GUI/desk.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Scrabble/GUI/menu.cs">
     <Files>
-      <File FileName="Scrabble/GUI/info.cs" Line="52" Column="57" />
+      <File FileName="README" Line="17" Column="1" />
+      <File FileName="Scrabble/GUI/info.cs" Line="1" Column="1" />
       <File FileName="Scrabble/Game/Game.cs" Line="1" Column="1" />
       <File FileName="Scrabble/GUI/ScrabbleWindow.cs" Line="1" Column="1" />
-      <File FileName="Scrabble/Player/Player.cs" Line="151" Column="4" />
+      <File FileName="Scrabble/Player/Player.cs" Line="1" Column="1" />
       <File FileName="Scrabble/Lexicon/searchalgorihm.cs" Line="1" Column="1" />
-      <File FileName="Scrabble/GUI/desk.cs" Line="109" Column="4" />
+      <File FileName="Scrabble/GUI/desk.cs" Line="1" Column="1" />
       <File FileName="Scrabble/Lexicon/move.cs" Line="1" Column="1" />
-      <File FileName="Scrabble/Lexicon/desk.cs" Line="287" Column="7" />
+      <File FileName="Scrabble/Lexicon/desk.cs" Line="1" Column="1" />
       <File FileName="Scrabble/GUI/StartWindow.cs" Line="1" Column="1" />
       <File FileName="Scrabble/Player/AIs.cs" Line="1" Column="1" />
-      <File FileName="Scrabble/GUI/staticWindows.cs" Line="1" Column="1" />
+      <File FileName="Scrabble/GUI/staticWindows.cs" Line="38" Column="26" />
       <File FileName="Scrabble/Game/MainClass.cs" Line="1" Column="1" />
       <File FileName="Scrabble/Game/InitialConfig.cs" Line="1" Column="1" />
       <File FileName="Scrabble/Game/StonesBag.cs" Line="1" Column="1" />
+      <File FileName="Scrabble/GUI/menu.cs" Line="64" Column="85" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -24,7 +26,7 @@
             <Node name="References" expanded="True" />
             <Node name="Game" expanded="True" />
             <Node name="GUI" expanded="True">
-              <Node name="desk.cs" selected="True" />
+              <Node name="menu.cs" selected="True" />
             </Node>
             <Node name="Lexicon" expanded="True" />
             <Node name="Player" expanded="True" />

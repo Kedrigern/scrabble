@@ -13,8 +13,8 @@ namespace Scrabble.GUI {
 	
 	public class MenuHover {
 		
-		UIManager uim;
-		ActionGroup ag;
+		UIManager uim;							// 
+		ActionGroup ag;							// ActionGroup - some important GTK stuf (group menu widget)
 		Scrabble.GUI.ScrabbleWindow parrent;
 		
 		/* Popdown menu */
@@ -57,32 +57,32 @@ namespace Scrabble.GUI {
 			
 			this.newG  = new Gtk.Action("newG", "Nová",   null, "gtk-open");
 			this.newG.ShortLabel = "Nová";
-			this.loadG = new Gtk.Action("loadG","Načíst", "gtk-load" , "gtk-load");
-			this.saveG = new Gtk.Action("saveG","Uložit", null, "gtk-save");
-			this.endG  = new Gtk.Action("endG", "Konec",  null, null);
+			this.loadG = new Gtk.Action("loadG","Načíst", "Načíst hru" , "gtk-load");
+			this.saveG = new Gtk.Action("saveG","Uložit", "Uložit hru", "gtk-save");
+			this.endG  = new Gtk.Action("endG", "Konec",  "Ukončí program", "gtk-quit");
 			this.endG.Activated += (sender, e) => Application.Quit();
-			this.infoD = new Gtk.Action("infoD", "Info", null, null);
+			this.infoD = new Gtk.Action("infoD", "Info", "Informace o slovníku", "gtk-info");
 			this.infoD.Activated += StaticWindows.DictionaryInfoDialog;
-			this.addD = new Gtk.Action("addD", "Přidat slovo", null, null);
+			this.addD = new Gtk.Action("addD", "Přidat slovo", null, "gtk-add");
 			this.addD.Activated += StaticWindows.AddNewWordToDic;
-			this.checkD = new Gtk.Action( "checkD", "Ověř slovo", null, null);
+			this.checkD = new Gtk.Action( "checkD", "Ověř slovo", "Ověří zda je slovo v aktuálním slovníku.", "gtk-load");
 			this.checkD.Activated += StaticWindows.CheckWordDialog;
-			this.loadD = new Gtk.Action( "loadD", "Načti slovník", null, null);
+			this.loadD = new Gtk.Action( "loadD", "Načti slovník", "Načti slovník" , "gtk-load");
 			this.loadD.Activated += StaticWindows.LoadNewDictionaryDialog;
-			this.optionS = new Gtk.Action("optionS", "Volby", null, null);
-			this.about = new Gtk.Action("about", "O aplikaci", null, null);
+			this.optionS = new Gtk.Action("optionS", "Volby", null, "gtk-prefernces");
+			this.about = new Gtk.Action("about", "O aplikaci", null, "gtk-info");
 			this.about.Activated += StaticWindows.AboutProgramDialog;
+			
 			this.ag.Add( newG, null);
 			this.ag.Add( loadG, null);
 			this.ag.Add( saveG, null);
-			this.ag.Add( endG, null);
-			this.ag.Add( infoD, null);
-			this.ag.Add( addD , null );
-			this.ag.Add( checkD, null );
+			this.ag.Add( endG, "<Control><Mod2>q");
+			this.ag.Add( infoD, "<Control><Mod2>i");
+			this.ag.Add( addD , "<Control><Mod2>a" );
+			this.ag.Add( checkD, "<Mod2>F5" );
 			this.ag.Add( loadD, null);
 			this.ag.Add( optionS, null);
 			this.ag.Add( about, null);
-					
 					
 			this.uim.InsertActionGroup( ag, 0);
 			parrent.AddAccelGroup( uim.AccelGroup );

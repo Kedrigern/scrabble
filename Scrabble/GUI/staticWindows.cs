@@ -58,15 +58,21 @@ namespace Scrabble.GUI
 			checkWin.BorderWidth = 0;
 			checkWin.Modal = true;
 			checkWin.CanFocus = true;
-			checkWin.ShowAll();			
-			but.Clicked += delegate {
-				if( game.dictionary.Content( ent.Text ) ) {
+			checkWin.SetPosition( WindowPosition.Mouse );
+			checkWin.ShowAll();	
+			ent.Activated += delegate {
+				but.Click();
+			}; 
+			but.Clicked += delegate {	
+				checkWin.HideAll();
+
+				if( game.dictionary.Content( ent.Text ) ) {	
 					Gtk.MessageDialog ans = new Gtk.MessageDialog(
 							game.Window,
 							DialogFlags.DestroyWithParent,
 							MessageType.Info,
 							ButtonsType.Close,
-							"Slovo \""+ent.Text+"\" je ve slovníku"
+							"Slovo \""+ent.Text+"\" <b>je</b> ve slovníku"
 						);
 					ans.Run();
 					ans.Destroy();
@@ -77,12 +83,11 @@ namespace Scrabble.GUI
 							DialogFlags.DestroyWithParent,
 							MessageType.Info,
 							ButtonsType.Close,
-							"Slovo \""+ent.Text+"\" není ve slovníku"
+							"Slovo \""+ent.Text+"\" <b>není</b> ve slovníku"
 						);					
 					ans.Run();
 					ans.Destroy();
 				}
-				checkWin.HideAll();
 				checkWin.Dispose();
 				checkWin.Destroy();				
 			};
