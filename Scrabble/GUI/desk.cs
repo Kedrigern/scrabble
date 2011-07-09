@@ -105,7 +105,9 @@ namespace Scrabble.GUI
 				
 				if( game.GetActualPlayer().DoMove(
 								new Lexicon.Move( new System.Drawing.Point(i-1,j-1), input.Text.ToUpperInvariant(), check.Active )	)
-					) setWord (check.Active, (uint)i, (uint)j, input.Text);
+					) { 
+					game.changePlayer();
+				}
 
 				Console.WriteLine ();
 				w.HideAll ();
@@ -130,17 +132,11 @@ namespace Scrabble.GUI
 				
 		}
 		
-		private void setWord(bool d, uint x, uint y, string s) {			
-			if( d ) {
-				for( uint j=y; j< y+s.Length; j++) {
-					fields[x,j].setChar(s[(int)(j-y)].ToString().ToUpper() );
-				}
-			} else {
-				for( uint i=x; i< x+s.Length; i++)	{
-					fields[i,y].setChar( s[(int)(i -x)].ToString().ToUpper() );
-				}
-			}
-		}	
+		public void UpdateDesk(char[,] d) {
+			for(uint j=1; j < d.GetLength(1); j++)
+				for(uint i=1; i < d.GetLength(0); i++)
+					if( d[i-1,j-1] != '_' ) fields[i,j].setChar( d[i-1,j-1] .ToString());
+		}
 	}
 	
 	class Stone : Gtk.Button {
@@ -158,7 +154,7 @@ namespace Scrabble.GUI
 			this.done = false;
 		}
 	
-		public void setBonus(short s, bool wBonus) {
+		public void setBonus(short s, bool wBonus ) {
 			switch(s) {
 			case 2:
 				this.ModifyBg( StateType.Normal, wBonus ? pink : navy );

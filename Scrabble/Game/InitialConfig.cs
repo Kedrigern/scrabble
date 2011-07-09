@@ -66,6 +66,7 @@ namespace Scrabble.Game
 		/* Usually complete start window */
 		public static Lexicon.GADDAG dictionary;	
 		public static Player.Player[] players;
+		public static Scrabble.Game.Game game;
 	}
 }
 

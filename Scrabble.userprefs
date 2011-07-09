@@ -1,16 +1,21 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Scrabble/Lexicon/searchalgorihm.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Scrabble/GUI/desk.cs">
     <Files>
       <File FileName="Scrabble/GUI/info.cs" Line="52" Column="57" />
-      <File FileName="Scrabble/Game/Game.cs" Line="90" Column="1" />
-      <File FileName="Scrabble/GUI/MainWindow.cs" Line="59" Column="1" />
-      <File FileName="Scrabble/Player/Player.cs" Line="120" Column="22" />
-      <File FileName="Scrabble/Lexicon/searchalgorihm.cs" Line="39" Column="7" />
-      <File FileName="Scrabble/GUI/desk.cs" Line="69" Column="1" />
+      <File FileName="Scrabble/Game/Game.cs" Line="1" Column="1" />
+      <File FileName="Scrabble/GUI/ScrabbleWindow.cs" Line="1" Column="1" />
+      <File FileName="Scrabble/Player/Player.cs" Line="151" Column="4" />
+      <File FileName="Scrabble/Lexicon/searchalgorihm.cs" Line="1" Column="1" />
+      <File FileName="Scrabble/GUI/desk.cs" Line="109" Column="4" />
       <File FileName="Scrabble/Lexicon/move.cs" Line="1" Column="1" />
-      <File FileName="Scrabble/Lexicon/desk.cs" Line="162" Column="46" />
-      <File FileName="Scrabble/GUI/StartWindow.cs" Line="269" Column="96" />
+      <File FileName="Scrabble/Lexicon/desk.cs" Line="287" Column="7" />
+      <File FileName="Scrabble/GUI/StartWindow.cs" Line="1" Column="1" />
+      <File FileName="Scrabble/Player/AIs.cs" Line="1" Column="1" />
+      <File FileName="Scrabble/GUI/staticWindows.cs" Line="1" Column="1" />
+      <File FileName="Scrabble/Game/MainClass.cs" Line="1" Column="1" />
+      <File FileName="Scrabble/Game/InitialConfig.cs" Line="1" Column="1" />
+      <File FileName="Scrabble/Game/StonesBag.cs" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -18,10 +23,10 @@
           <Node name="Scrabble" expanded="True">
             <Node name="References" expanded="True" />
             <Node name="Game" expanded="True" />
-            <Node name="GUI" expanded="True" />
-            <Node name="Lexicon" expanded="True">
-              <Node name="searchalgorihm.cs" selected="True" />
+            <Node name="GUI" expanded="True">
+              <Node name="desk.cs" selected="True" />
             </Node>
+            <Node name="Lexicon" expanded="True" />
             <Node name="Player" expanded="True" />
           </Node>
         </State>

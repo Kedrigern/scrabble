@@ -56,16 +56,22 @@ namespace Scrabble.GUI
 
 		// infoText
 		Gtk.Label infoText;
+		
+		// StatusBar
+		Gtk.Statusbar statusb;
 	
 		public StartWindow (): base (Gtk.WindowType.Toplevel)
 		{
 			this.Title = "Scrabble - Základní nastavení";
-			this.DeleteEvent += new global::Gtk.DeleteEventHandler (this.OnDeleteEvent);
+			this.DeleteEvent += OnDeleteEvent; 
 			this.SetPosition(WindowPosition.Center);
 			this.DefaultWidth = 400;
+			this.DefaultHeight = 280;
 			numberOfPlayers = 2;
 		
 			// Own thread for loading dictionary
+			statusb = new Gtk.Statusbar();
+			statusb.Push( statusb.GetContextId( "Slovník" ), "Načítám slovník");
 			tdic = new Thread( LoadDictionary );
 			tdic.Start();
 			
@@ -142,7 +148,8 @@ namespace Scrabble.GUI
 			mainVbox.PackStart (infoText);
 			mainVbox.Add (upperHbox);
 			mainVbox.Spacing = 5;
-			mainVbox.PackEnd (table);
+			mainVbox.Add( table );
+			mainVbox.PackEnd (statusb);
 		
 			mainVbox.BorderWidth = 10;
 			this.Add (mainVbox);
@@ -159,6 +166,8 @@ namespace Scrabble.GUI
 		
 			foreach (Gtk.Entry e in IPs)
 				e.Hide ();
+			
+			
 		}
 	
 		protected void OnNumberOfPlayerChange (object sender, EventArgs e)
@@ -252,12 +261,11 @@ namespace Scrabble.GUI
 #if DEBUG
 			Console.WriteLine("[INFO]\tSlovník obsahuje {0} slov.", dic.WordCount);
 #endif
+			statusb.Push( statusb.GetContextId( "Slovník" ), "Slovník načten");
 		}
 	
 		protected void Done (object sender, EventArgs e)
-		{		
-			this.HideAll ();
-			
+		{				
 			if (client.Active) {
 				players = new Player.Player[1];
 				players[0] = new Scrabble.Player.Player( entryes[0].Text);
@@ -284,22 +292,18 @@ namespace Scrabble.GUI
 			}			
 			
 			Scrabble.Game.InitialConfig.allDone = true;
+			Scrabble.Game.InitialConfig.game = new Scrabble.Game.Game();
 #if DEBUG
 			Console.WriteLine("[INFO]\tNastavení parametrů dokončeno.");
 #endif
-			
-			this.Destroy ();
-			this.Dispose ();
-			
-			if( Scrabble.Game.InitialConfig.allDone ) {
-				var game = new Scrabble.Game.Game( Scrabble.Game.InitialConfig.players, Scrabble.Game.InitialConfig.dictionary);
-				game.CreateMainWindowLoop();			
-			}
+			this.HideAll();
+			OnDeleteEvent(this, new DeleteEventArgs());
 		}
 	
 		protected void OnDeleteEvent (object sender, DeleteEventArgs a)
 		{
-			Done(null,null);
+			Gtk.Application.Quit();
+			a.RetVal = true;
 		}
 	}
 

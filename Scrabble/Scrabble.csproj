@@ -55,7 +55,6 @@
     <Compile Include="Game\MainClass.cs" />
     <Compile Include="GUI\rack.cs" />
     <Compile Include="GUI\info.cs" />
-    <Compile Include="GUI\MainWindow.cs" />
     <Compile Include="GUI\desk.cs" />
     <Compile Include="GUI\menu.cs" />
     <Compile Include="Game\Game.cs" />
@@ -66,6 +65,7 @@
     <Compile Include="GUI\staticWindows.cs" />
     <Compile Include="GUI\StartWindow.cs" />
     <Compile Include="Player\AIs.cs" />
+    <Compile Include="GUI\ScrabbleWindow.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Lexicon\" />

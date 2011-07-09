@@ -103,6 +103,18 @@ namespace Scrabble.Lexicon
 			Console.ForegroundColor = ConsoleColor.White;
 		}
 		
+		/// <summary>
+		/// Analyzes the move: which letter are need to put, calcul score
+		/// </summary>
+		/// <returns>
+		/// Is move correct?.
+		/// </returns>
+		/// <param name='M'>
+		/// If set to <c>true</c> m.
+		/// </param>
+		/// <exception cref='Exception'>
+		/// Represents errors that occur during application execution.
+		/// </exception>
 		public bool AnalyzeMove(Move M) {
 			int i = M.Start.X - (M.Down ? 0 : 1);
 			int j = M.Start.Y - (M.Down ? 1 : 0);
@@ -272,10 +284,7 @@ namespace Scrabble.Lexicon
 			
 #if DEBUG
 			//DisplayTerminal();
-#endif
-			
-			game.changePlayer();
-			
+#endif			
 			return true;
 		}
 		

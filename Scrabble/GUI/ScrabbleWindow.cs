@@ -17,18 +17,20 @@ namespace 	Scrabble.GUI {
 		
 		public Scrabble.Game.Game game;
 		
-		public ScrabbleWindow ( Game.Game g  ): base (Gtk.WindowType.Toplevel)
-		{
-			this.game = g;
-			this.BorderWidth = 0;
-			this.Name = "Scrabble - Hrací deska";
+		public ScrabbleWindow ( ): base (Gtk.WindowType.Toplevel)
+		{		
+			this.Title = "Scrabble - Hrací deska";
 			this.DeleteEvent += new global::Gtk.DeleteEventHandler (this.OnDeleteEvent);
 			this.SetPosition( WindowPosition.Center );
+			this.DefaultWidth = 550;
+			this.DefaultHeight = 650;
 			
+			this.game = Scrabble.Game.InitialConfig.game;	
+
 			menu = new MenuHover( this );
-			desk = new Desk( g );
-			rack = new Rack( g );
-			info = new Info( g );
+			desk = new Desk( this.game );
+			rack = new Rack( this.game );
+			info = new Info( this.game );
 				
 			horizont = new VPaned();
 			vertical = new HPaned();
@@ -42,7 +44,8 @@ namespace 	Scrabble.GUI {
 			horizont.Add2( vertical );
 			vertical.Add1( rack );
 			vertical.Add2( info );
-			this.ShowAll();
+				
+			this.changePlayer( game.GetActualPlayer() );			
 		}
 		
 		public void RackChange( List<char> l ) {
@@ -50,6 +53,7 @@ namespace 	Scrabble.GUI {
 		}
 		
 		public void changePlayer( Player.Player p ) {
+			desk.UpdateDesk( game.desk.Desk );
 			rack.Change( ((Player.Player) p).Rack );
 			info.Change( p.Name , game.players);
 		}
@@ -66,7 +70,6 @@ namespace 	Scrabble.GUI {
 		
 		protected void OnDeleteEvent (object sender, DeleteEventArgs a)
 		{
-			this.Dispose();
 			Gtk.Application.Quit();
 			a.RetVal = true;
 		}

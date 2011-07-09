@@ -32,27 +32,30 @@ namespace Scrabble.Game
 		public Scrabble.Lexicon.PlayDesk desk;
 		public Player.Player[] players;		
 		public StonesBag stonesBag;
-		private Scrabble.GUI.ScrabbleWindow window;
+		public Scrabble.GUI.ScrabbleWindow window;
 		public Scrabble.GUI.ScrabbleWindow Window {
 			get {return window;}
 		}
 		int OnTurn = 0;
 			
-		public Game( Player.Player[] pls, Scrabble.Lexicon.GADDAG dic ) {
-			this.dictionary	= dic;	
+		public Game( ) {
+			this.dictionary	= Scrabble.Game.InitialConfig.dictionary;
 			
 			// Initialization of play desk (logic component, not gtk)
 			desk = new Scrabble.Lexicon.PlayDesk ( this );
 			// Initialization of bag for game stones
 			stonesBag = new StonesBag();
 			
-			Lexicon.SearchAlgorithm.Init( desk.Desk, dictionary );
+			Lexicon.SearchAlgorithm.Init( desk.Desk, this.dictionary );
 			
-			this.players = pls;
+			this.players = Scrabble.Game.InitialConfig.players;
 			foreach( Scrabble.Player.Player p in players ) {
 				p.SetGame( this );
 				p.ReloadRack();
 			}
+			
+			// Inicialize dialogs from menu (like checkword, about etc.)
+			Scrabble.GUI.StaticWindows.Init( this );
 		}
 		
 		public Scrabble.Player.Player GetActualPlayer() {
@@ -64,6 +67,7 @@ namespace Scrabble.Game
 		}
 		
 		public void changePlayer () {
+			
 			this.stonesBag.CompleteRack( ((Scrabble.Player.Player) players[OnTurn]).Rack );
 
 			OnTurn++;
@@ -85,22 +89,6 @@ namespace Scrabble.Game
 		public void ReloadRackAndChange () {
 			((Scrabble.Player.Player) players[OnTurn]).ReloadRack();
 			changePlayer();
-		}
-		
-		public void CreateMainWindowLoop() {
-			//Gtk.Application.Init();
-			window = new Scrabble.GUI.ScrabbleWindow( this );			
-			window.SetPosition( Gtk.WindowPosition.Center );
-			
-			// Inicialize dialogs from menu (like checkword, about etc.)
-			Scrabble.GUI.StaticWindows.Init( this );
-				
-			//win.RackChange( ((Scrabble.Player.Player) players[0]).Rack );
-			window.changePlayer( players[OnTurn] );
-			window.Show();
-			Gtk.Application.Run ();
-			Window.Destroy();	
-			Window.Dispose();
 		}
 	}
 }

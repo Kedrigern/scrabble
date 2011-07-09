@@ -102,6 +102,9 @@ namespace Scrabble.Player
 		}
 	}
 	
+	/// <summary>
+	/// Basic computer player (artificial inteligence), use greedy algorithm (czech: "hladový")
+	/// </summary>
 	public class ComputerPlayer : Player {
 		protected AI ais;	
 		
@@ -112,8 +115,26 @@ namespace Scrabble.Player
 		public void Play() {
 			HashSet<Move> movePool = new HashSet<Move>(); 
 			for(int j=0; j < game.desk.Desk.GetLength(1); j++)
-				for(int i=0; i < game.desk.Desk.GetLength(0); i++)
+				for(int i=0; i < game.desk.Desk.GetLength(0); i++) {
 					SearchAlgorithm.Search(i,j, this.Rack,movePool );
+				}
+			
+			HashSet<Move> toDel = new HashSet<Move>();
+			Move max = new Move(new System.Drawing.Point(0,0),"",true);
+			max.Score = -1;
+			foreach( Move m in movePool ) {
+				game.desk.AnalyzeMove( m );
+				if( m.PutedStones.Count == 0 )
+					toDel.Add( m );
+				else {
+					if( max.Score < m.Score	)
+						max = m;
+				}
+			}																																																																												
+			foreach( Move m in toDel ) {
+				movePool.Remove( m );	
+			}
+							
 #if DEBUG
 			Console.Write( "[info]\tMůj zasobník:");
 			foreach( char c in Rack ) {
@@ -121,10 +142,18 @@ namespace Scrabble.Player
 			}
 			Console.Write( "\n[info]\tNašel jsem {0} tahů:\t", movePool.Count );
 			foreach( Move m in movePool ) {
-				Console.Write("{0} ", m.Word);	
+				Console.Write("[{1},{2}]{0}(3) ", m.Word, m.Start.X, m.Start.Y, m.Score);	
 			}
 			Console.WriteLine();
+			Console.WriteLine("[info]\tIdeáal:[{1},{2}]{0}(3) ", max.Word, max.Start.X, max.Start.Y, max.Score);
 #endif
+			if( movePool.Count == 0 ) {
+				this.ReloadRack();
+				return ;
+			}
+				
+			game.desk.Play( max );																																																																																																																																																																																																																																																																								game.desk.Play( max );
+			
 		}
 	}
 }

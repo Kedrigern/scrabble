@@ -127,6 +127,27 @@ namespace Scrabble.Lexicon
 			return tmp.Finite;	
 		}
 		
+			public bool Content( char[,] de, int i, int j, bool down, int i2, int j2, char c ) {
+			Node tmp = root;
+			
+			while( de[i,j] != '_' ) {
+				if( tmp.isSon( de[i,j] ) ) tmp = tmp.getSon( de[i,j] );
+				else return false;
+				
+				if( down ) j++; else i++;
+				
+				if( i == i2 && j == j2 ) {
+					if( tmp.isSon( c ) ) tmp = tmp.getSon( c );
+					else return false;	
+					
+					if( down ) j++; else i++;
+				}
+				if( i >= de.GetLength(0) ) return tmp.Finite;
+				if( j >= de.GetLength(1) ) return tmp.Finite;
+			}
+			return tmp.Finite;	
+		}
+		
 		public Node Find( string s ) {
 			string s2 = s.ToUpperInvariant();
 			

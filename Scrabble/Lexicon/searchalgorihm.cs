@@ -40,22 +40,20 @@ namespace Scrabble.Lexicon
 			try{
 			if( desk[x,y]   != '_' &&
 				desk[x+1,y] == '_' 	) { 
-#if DEBUG
-					Console.WriteLine("[DBG]\tSpouštím samotný vyhledávácí algoritmus na {0},{1}", x, y);
-#endif
 					StartOfRecursionLeftRight( pool, root, x, y, rack );
 				} } catch {}
 			
 			try {
 			if( desk[x,y]   != ' ' &&
 				desk[x,y+1] == ' ' ) 
-				{}//StartOfRecursionDownUp( pool, root, x, y, rack );
+					StartOfRecursionDownUp( pool, root, x, y, rack );
 			} catch {}
 		}
 		
 		private static void StartOfRecursionLeftRight(HashSet<Move> pool, Node root, int x, int y, List<char> rack ) {	
 			string s = "";
 			int actual = x;
+			// Go over the already puted stone to first '_'
 			try {
 				while( desk[actual,y] != '_' ) {
 					root = root.getSon( desk[actual,y] );
@@ -73,6 +71,7 @@ namespace Scrabble.Lexicon
 		private static void StartOfRecursionDownUp(HashSet<Move> pool, Node root, int x, int y, List<char> rack  ) {
 			string s = "";
 			int actual = y;
+			// Go over the already puted stone to first '_'
 			try {
 				while( desk[x,actual] != '_' ) {
 					root = root.getSon( desk[x,actual] );
@@ -83,19 +82,18 @@ namespace Scrabble.Lexicon
 			TmpMove tmp = new TmpMove( new Point(x,y), new Point(x,actual+1), 
 												Direction.up, 
 												s,root, rack );
-			
 			SearchRek( pool, tmp );
 		}
 		
 		private static void SearchRek(HashSet<Move> pool, TmpMove m ) {
 			// 1. check cross
-			if( ! cross( m ) ) {
+			if( ! cross( m , m.node.Content) ) {
 				return;
 			}
 			
 			// 2. this is full word - add
 			if( m.node.Finite ) {
-				pool.Add( m.Convert2Move()	); 
+				pool.Add( m.Convert2Move() ); 
 			}
 			
 			// 3. turn direction of movement
@@ -165,15 +163,42 @@ namespace Scrabble.Lexicon
 			}			
 		}
 		
-		private static bool cross(TmpMove m) {
+		private static bool cross(TmpMove m, char c) {
 			int x = m.ActualPoint.X;
 			int y = m.ActualPoint.Y;
 			switch( m.direct ) {
 			case Direction.left :
 			case Direction.right :
-				return true;
+				// Alone stone
+				try {
+					if( desk[x,y+1] == 	'_' &&
+						desk[x,y-1] == 	'_' ) return true;
+				} catch{}
+				// Go to begin of word
+				while( true ) {
+					y--;
+					if( y < 0 || desk[x,y] == '_' ) {
+						y++;
+						break;
+					}
+				}
+				return gaddag.Content(desk, x, y, true, x, y,c);
 			case Direction.up :
 			case Direction.down :
+				// Alone stone
+				try {
+					if( desk[x+1,y] == 	'_' &&
+						desk[x-1,y] == 	'_' ) return true;
+				} catch{}
+				// Go to begin of word
+				while( true ) {
+					x--;
+					if( x < 0 || desk[x,y] == '_' ) {
+						x++;
+						break;
+					}
+				}
+				return gaddag.Content(desk, x, y, false, x, y,c);
 			default :
 				return true;
 			}

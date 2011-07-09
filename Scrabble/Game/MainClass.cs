@@ -31,15 +31,19 @@ namespace Scrabble.Game
 			var startwin = new Scrabble.GUI.StartWindow();
 			startwin.Show();
 			Gtk.Application.Run();
-			/*
-			if( Scrabble.Game.InitialConfig.allDone ) {
-				var game = new Scrabble.Game.Game( Scrabble.Game.InitialConfig.players, Scrabble.Game.InitialConfig.dictionary);
-				game.CreateMainWindowLoop();			
-			}*/
+
+			var w = new Scrabble.GUI.ScrabbleWindow();
+			Scrabble.Game.InitialConfig.game.window = w;
+			w.ShowAll();
+			Gtk.Application.Run();
+			
+//			var startwin2 = new Scrabble.GUI.StartWindow();
+//			startwin2.Show();
+//			Gtk.Application.Run();
+			
 #if DEBUG
 			Console.WriteLine("[INFO]\tBYE");
 #endif
-			Gtk.Application.Quit();
 		}
 	}
 }
