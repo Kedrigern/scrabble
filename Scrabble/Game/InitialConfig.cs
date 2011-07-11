@@ -24,36 +24,37 @@ namespace Scrabble.Game
 {
 	public static class InitialConfig
 	{
-		// TODO : Loading for config file
+		// TODO : Loading from config file
 		public static bool allDone = false;
 		public static bool gui = true;
 		public static bool network = false;
+		public static bool log = true;
 		public static int numberOfStones = 100;
 		public static int sizeOfRack = 7;
 		public static int port = 6541;
 		public static char[] stones = {
 			'A', 'A', 'A', 'A', 'A',
 			'Á',
-			'B', 'B',
-			'C', 'C',
+			'B', 'B', 'B',
+			'C', 'C', 'C',
 			'Č',
-			'D', 'D',
+			'D', 'D', 'D',
 			'E', 'E', 'E', 'E',
 			'F', 
 			'I', 'I', 'I',
 			'Í',
-			'J', 'J',
-			'K', 'K',
-			'L', 'L',
+			'J', 'J', 'K',
+			'K', 'K', 'K',
+			'L', 'L', 'L',
 			'M', 'M',
 			'N', 'N', 'N',
 			'O', 'O', 'O', 'O',
-			'P', 'P',
+			'P', 'P', 
 //			'Q',
 			'R', 'R',
 			'S', 'S', 'S',
 			'Š',
-			'T', 'T',
+			'T', 'T', 
 			'U', 'U', 'U', 
 			'Ú',
 			'Ů',
@@ -67,6 +68,10 @@ namespace Scrabble.Game
 		public static Lexicon.GADDAG dictionary;	
 		public static Player.Player[] players;
 		public static Scrabble.Game.Game game;
+		public static System.IO.StreamWriter logStream;
+#if DEBUG		
+		public static System.IO.StreamWriter logStreamAI;
+#endif
 	}
 }
 

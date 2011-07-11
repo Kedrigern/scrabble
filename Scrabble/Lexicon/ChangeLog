@@ -1,5 +1,13 @@
 2011-07-11  Ondřej Profant  <ondrej.profant@gmail.com>
 
+	* desk.cs:
+	* move.cs:
+	* trie.cs:
+	* deskPlus.cs:
+	* searchalgorihm.cs: 
+
+2011-07-11  Ondřej Profant  <ondrej.profant@gmail.com>
+
 	* node.cs:
 	* trie.cs:
 	* desk.cs:

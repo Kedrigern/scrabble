@@ -15,6 +15,7 @@ namespace Scrabble.GUI
 		public Rack ( Scrabble.Game.Game g ) : base ("Zásobník")
 		{
 			this.game = g;
+			this.HeightRequest = 99;
 			
 			vbox = new VBox();
 			

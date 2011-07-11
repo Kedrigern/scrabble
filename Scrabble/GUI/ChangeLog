@@ -1,5 +1,13 @@
 2011-07-11  Ondřej Profant  <ondrej.profant@gmail.com>
 
+	* rack.cs:
+	* info.cs:
+	* desk.cs:
+	* StartWindow.cs:
+	* ScrabbleWindow.cs: 
+
+2011-07-11  Ondřej Profant  <ondrej.profant@gmail.com>
+
 	* desk.cs:
 	* StartWindow.cs:
 	* staticWindows.cs:

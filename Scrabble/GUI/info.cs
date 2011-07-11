@@ -6,11 +6,13 @@ namespace Scrabble.GUI
 {
 	public class Info : Gtk.HBox
 	{	
-		Gtk.Label turn;
 		Gtk.Frame pla;
 		Gtk.Frame score;
 		Gtk.Table scoresTable;
 		Gtk.Label[] scoreValues;
+		
+		Pango.Layout layout;
+		Gtk.DrawingArea da;
 		
 		Scrabble.Game.Game game;
 		
@@ -22,6 +24,7 @@ namespace Scrabble.GUI
 			score.BorderWidth = 5;
 			game = g;
 			
+			this.HeightRequest = 99;
 			this.PackStart( pla );
 			this.PackEnd( score );
 			
@@ -36,14 +39,25 @@ namespace Scrabble.GUI
 			scoresTable.BorderWidth = 3;
 			score.Add( scoresTable );
 			
-			turn = new Label();
-			pla.Add(turn);
+			da = new Gtk.DrawingArea();
+			da.ExposeEvent += Expose_Event;	
+			pla.Add(da);
+			
+			layout = new Pango.Layout(this.PangoContext);
+			layout.Width = Pango.Units.FromPixels( 90 );
+			layout.Wrap = Pango.WrapMode.Word;
+			layout.Alignment = Pango.Alignment.Center;
+			layout.FontDescription = Pango.FontDescription. FromString("Ahafoni CLM Bold 18");
 			
 			this.ShowAll();
 		}
 		
-		public void Change(string name, Scrabble.Player.Player[] players) {
-			turn.Text = name;	
+		void Expose_Event(object obj, ExposeEventArgs args){
+			layout.SetText( game.GetActualPlayer().Name );
+			da.GdkWindow.DrawLayout (da.Style.TextGC (StateType.Normal), 5, 5, layout);
+		}
+		
+		public void Change(string name, Scrabble.Player.Player[] players) {		
 			scoresTable.HideAll();
 			for( int i=0; i < game.players.Length; i++) {
 				if( typeof( Player.ComputerPlayer ) == game.players[i].GetType() )
@@ -52,6 +66,7 @@ namespace Scrabble.GUI
 					scoreValues[ i ].Text = game.players[i].Name + "  ";
 				scoreValues[ i+game.players.Length ].Text = string.Format( "{0}", game.players[i].Score );
 			}
+
 			scoresTable.ShowAll();
 		}
 	}

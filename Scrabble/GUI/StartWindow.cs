@@ -258,6 +258,13 @@ namespace Scrabble.GUI
 					dic = new Scrabble.Lexicon.GADDAG(sr);
 				} 
 			}
+
+
+			if( Scrabble.Game.InitialConfig.log ) {
+				Scrabble.Game.InitialConfig.logStream = new StreamWriter("./last.log", false);
+				Scrabble.Game.InitialConfig.logStream.WriteLine("[INFO]\tSlovník obsahuje {0} slov.", dic.WordCount);
+			}	
+			
 			statusb.Push( statusb.GetContextId( "Slovník" ), "Slovník načten");
 		}
 	
@@ -283,13 +290,26 @@ namespace Scrabble.GUI
 						
 			Scrabble.Game.InitialConfig.players = this.players;
 			
+			// OPEN LOGS
+#if DEBUG
+			if( Scrabble.Game.InitialConfig.log )
+				Scrabble.Game.InitialConfig.logStreamAI = new StreamWriter("./lastAI.log", false);
+#endif	
+		
+			
+			// WAIT FOR DICTIONARY LOAD
 			tdic.Join();
 			lock( dicLoc ) {
 				Scrabble.Game.InitialConfig.dictionary = this.dic;
 			}			
 			
+			// ALL DONE
 			Scrabble.Game.InitialConfig.allDone = true;
 			Scrabble.Game.InitialConfig.game = new Scrabble.Game.Game();
+
+
+			if( Scrabble.Game.InitialConfig.log )
+				Scrabble.Game.InitialConfig.logStream.WriteLine("[INFO]\tNastavení parametrů dokončeno.");
 
 			this.HideAll();
 			OnDeleteEvent(this, new DeleteEventArgs());

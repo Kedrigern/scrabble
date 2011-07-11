@@ -58,9 +58,14 @@ namespace Scrabble.Lexicon
 			this.putedStones = new List<MovedStone>(4);
 		}
 		
+
 		public override string ToString ()
 		{
 			return string.Format ("Tah: na [{0},{1}] {2} {3}", start.X, Start.Y, Word, Down ? "↓" : "→");
+		}
+		
+		public Move( string s ) {
+			this.Word = s;	
 		}
 		
 		public void AddLetterToPut( MovedStone m ) {

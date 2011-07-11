@@ -36,6 +36,8 @@ namespace Scrabble.Player
 		public List<char> Rack;
 		protected Game.Game game;
 		
+		public Move bestMove = new Move("");
+		
 		public Player (string n)
 		{
 			this.name = n;
@@ -46,6 +48,8 @@ namespace Scrabble.Player
 		
 		public void ReloadRack() {
 			Rack = game.stonesBag.ReloadAll( Rack );
+			if( Scrabble.Game.InitialConfig.log ) 
+				Scrabble.Game.InitialConfig.logStream.WriteLine("PLAYER {0} REALOAD RACK", this.Name);	
 		}
 
 		public override string ToString ()
@@ -58,15 +62,43 @@ namespace Scrabble.Player
 		}
 		
 		public bool DoMove( Lexicon.Move m ) {
+
 			/* Check cross check 
 			 * Calcul score */
 			if( ! game.desk.AnalyzeMove( m ) ) return false;
 			
 			/* Is connected with rest of stone? */
-			if( ! game.desk.Connect( m ) ) return false; 
+			if( ! game.desk.Connect( m ) ) return false;
+			
+			// LOG
+			if( Scrabble.Game.InitialConfig.log ) {
+				Scrabble.Game.InitialConfig.logStream.Write("ROUND {1}\tPLAYER {0}\tRACK: ", this.Name, this.game.Round);
+				foreach( char c in this.Rack) {
+					Scrabble.Game.InitialConfig.logStream.Write("{0} ", c);				
+				}
+				Scrabble.Game.InitialConfig.logStream.WriteLine();
+			}
 			
 			if( ! game.desk.Play( m ) ) return false;	
-			else return true;	
+			else { 
+				game.lastMove = m;
+				if( m.Score > game.bestMove.Score ) game.bestMove = m;
+				WriteToLog( m );
+			}
+			return true;	
+		}
+		
+	
+		
+		protected void WriteToLog(Move m) {
+			if( Scrabble.Game.InitialConfig.log ) {
+				Scrabble.Game.InitialConfig.logStream.Write("ROUND {5}\tPLAYER {0}\tSCORE +{4}\tAT {2:00},{3:00}\tPUT {1} : ", 
+												this.Name, m.Word, m.Start.X, m.Start.Y, m.Score, this.game.Round);
+				foreach( MovedStone ms in m.PutedStones) {
+					Scrabble.Game.InitialConfig.logStream.Write(" [{1},{2}] -> {0} ;", ms.c, ms.i, ms.j);				
+				}
+				Scrabble.Game.InitialConfig.logStream.WriteLine();
+			}	
 		}
 	}
 	
@@ -87,6 +119,8 @@ namespace Scrabble.Player
 			IPAddress ip;
 			if( ! IPAddress.TryParse( ipt,out ip ) ) {
 				// TODO: Opakované zeptání se na IP adresu
+
+				//Console.WriteLine("[ERROR] Parsing IP adress");
 				Environment.Exit(1);
 			}
 			this.ep = new IPEndPoint( ip, Scrabble.Game.InitialConfig.port );	
@@ -104,19 +138,35 @@ namespace Scrabble.Player
 		}
 		
 		public void Play() {
+			// LOG
+			if( Scrabble.Game.InitialConfig.log ) {
+				Scrabble.Game.InitialConfig.logStream.Write("ROUND {1}\tPLAYER {0}\tRACK: ", this.Name, this.game.Round);
+				foreach( char c in this.Rack) {
+					Scrabble.Game.InitialConfig.logStream.Write("{0} ", c);				
+				}
+				Scrabble.Game.InitialConfig.logStream.WriteLine();
+			}
+			
+			// SEARCH ALGORITHM
 			HashSet<Move> movePool = new HashSet<Move>(); 
 			for(int j=0; j < game.desk.Desk.GetLength(1); j++)
 				for(int i=0; i < game.desk.Desk.GetLength(0); i++) {
 					SearchAlgorithm.Search(i,j, this.Rack,movePool );
 				}
 			
+			char[,] backUp = this.game.desk.Desk.DeepCopy();
+			
+			// ANALYZE AND CLEAN RESULTS
 			HashSet<Move> toDel = new HashSet<Move>();
 			
 			// Next analyze
 			Move max = new Move(new System.Drawing.Point(0,0),"",true);
 			max.Score = -1;
+	
+			
 			foreach( Move m in movePool ) {
-				game.desk.AnalyzeMove( m );
+				if( ! this.game.desk.AnalyzeMove( m ) )
+					toDel.Add( m );
 				if( m.PutedStones.Count == 0 )
 					toDel.Add( m );
 				else {
@@ -128,14 +178,34 @@ namespace Scrabble.Player
 				movePool.Remove( m );	
 			}
 			
-			// No moves
+			if( backUp.SameValues( this.game.desk.Desk ) ) {}
+			else {
+				Gtk.MessageDialog md = new Gtk.MessageDialog( this.game.Window, Gtk.DialogFlags.Modal, Gtk.MessageType.Error, Gtk.ButtonsType.Ok, false, "Narušena deska!");
+				md.Run();
+			}
+							
+#if DEBUG
+			Scrabble.Game.InitialConfig.logStreamAI.Write( "ROUND {2}\tPLAYER {1}\tNašel jsem {0} tahů:\t", movePool.Count, this.Name, this.game.Round );
+			foreach( Move m in movePool ) {
+				Scrabble.Game.InitialConfig.logStreamAI.Write("[{1},{2}]{0}(3) ", m.Word, m.Start.X, m.Start.Y, m.Score);	
+			}
+			Scrabble.Game.InitialConfig.logStreamAI.WriteLine();
+#endif
+
 			if( movePool.Count == 0 ) {
-				this.ReloadRack();
+				ReloadRack();
 				return ;
 			}
-				
-			game.desk.Play( max );																																																																																																																																																																																																																																																																								game.desk.Play( max );
 			
+			foreach( Move ac in movePool ) {
+				if( ! game.desk.Play( max ) ) break;
+				max = ac;	
+			}
+						
+			game.lastMove = max;
+			if( max.Score > game.bestMove.Score ) game.bestMove = max;
+			if( max.Score > this.bestMove.Score ) this.bestMove = max;
+			WriteToLog( max );
 		}
 	}
 }

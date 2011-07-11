@@ -28,6 +28,7 @@ namespace Scrabble.Game
 	public class Game
 	{
 		public const int MaxNumberOfPlayers = 4;
+		public int Round { get { return round; } }
 		public Scrabble.Lexicon.GADDAG dictionary;
 		public Scrabble.Lexicon.PlayDesk desk;
 		public Player.Player[] players;		
@@ -36,13 +37,20 @@ namespace Scrabble.Game
 		public Scrabble.GUI.ScrabbleWindow Window {
 			get {return window;}
 		}
+		
+		public Scrabble.Lexicon.Move lastMove = new Scrabble.Lexicon.Move("");
+		public Scrabble.Lexicon.Move bestMove = new Scrabble.Lexicon.Move("");
+		
 		int OnTurn = 0;
-			
+		int round;
+	
 		public Game( ) {
 			if( Scrabble.Game.InitialConfig.dictionary == null )
 				throw new NullReferenceException("During game initialization is Scrabble.Game.InitialConfig.dictionary == null");
 			else 
 				this.dictionary	= Scrabble.Game.InitialConfig.dictionary;
+		
+			this.round = 1;
 			
 			// Initialization of play desk (logic component, not gtk)
 			desk = new Scrabble.Lexicon.PlayDesk ( this );
@@ -70,11 +78,17 @@ namespace Scrabble.Game
 		}
 		
 		public void changePlayer () {
-			
 			this.stonesBag.CompleteRack( ((Scrabble.Player.Player) players[OnTurn]).Rack );
 
 			OnTurn++;
-			if( OnTurn >= players.Length ) OnTurn =0;
+			if( OnTurn >= players.Length ) {
+				OnTurn =0;
+				round++;
+				Scrabble.Game.InitialConfig.logStream.Flush();
+#if DEBUG
+				Scrabble.Game.InitialConfig.logStreamAI.Flush();
+#endif
+			}
 			Window.changePlayer( players[OnTurn] );
 			
 			if( typeof( ComputerPlayer ) == players[ OnTurn ].GetType() ) {

@@ -75,7 +75,11 @@ namespace Scrabble.Lexicon
 		public PlayDesk (StreamReader sr)
 		{
 			//TODO: Loading dictionary via stream reader
+
 		}		
+
+	
+	
 		
 		/// <summary>
 		/// Analyzes the move: which letter are need to put, calcul score
@@ -90,20 +94,30 @@ namespace Scrabble.Lexicon
 		/// Represents errors that occur during application execution.
 		/// </exception>
 		public bool AnalyzeMove(Move M) {
-			int i = M.Start.X - (M.Down ? 0 : 1);
-			int j = M.Start.Y - (M.Down ? 1 : 0);
+			int i = M.Start.X ;
+			int j = M.Start.Y ;
 			int n = 0;
 			int score = 0;
 			int ActualWordBonus = 1;
 			
 			// 1. Find real start of word (include prefix)
-			while( i >= 0 && j >= 0 && desk[i,j] != '_') {
+			// 1. Is this real start of word?
+			try {
+			if( M.Down ) {
+				if( desk[i,j-1] != '_' ) return false;
+			} else {
+				if( desk[i-1,j] != '_' ) return false;
+			} }
+			catch( System.ArgumentOutOfRangeException ) {}
+			/*while( i >= 0 && j >= 0 && desk[i,j] != '_') {
 				M.Word += desk[i,j].ToString();
 				if( M.Down ) j--; else	i--;
 			}
-			if( i < 0 || j < 0 || desk[i,j] == '_' ) if( M.Down ) j++; else i++;
+			if( i < 0 || j < 0 || desk[i,j] == '_' ) if( M.Down ) j++; else i++;*/
 			
 			
+			bool fail = false;
+				
 			// 2. Go through word, now I am at first letter of puted word
 			while( true ) {
 				
@@ -113,7 +127,13 @@ namespace Scrabble.Lexicon
 					desk[i,j] = M.Word[n];
 					
 					int k = Cross(i,j,M.Down);
+
 					if( k < 0 ) return false; 	// Crossword is wrong
+					if( k < 0 ) {
+
+						fail = true;
+						break; } 	// Crossword is wrong
+
 					if( k == 0) {} 				// No crossword (only this stone)
 					score += k;					// K > 0 : K is score for crossword
 					
@@ -130,24 +150,40 @@ namespace Scrabble.Lexicon
 				if( j >= desk.GetLength(1) || i >= desk.GetLength(0) ) break;
 				if( n == M.Word.Length ) {
 					if( desk[i,j] == '_' ) break;
-					else {
-						// problem
-						throw new Exception("[ERR]\tUnexpected Sufix");
+					else {		// Some unknow suffix
+						string s = M.Word;
+						while( i < desk.GetLength(0) && j < desk.GetLength(1) && desk[i,j] != '_') {
+							s += desk[i,j].ToString();
+							M.Score += desk[i,j].ToRank();
+							if( M.Down ) j++; else i++;
+						}
+						if( game.dictionary.Content( s ) ) {
+							M.Word = s;
+						} else {
+							M.Score = -1;
+							break;
+						}	
 					}
 				}
-			}
-			
-			score *= ActualWordBonus;
-			M.Score = score;
-			
+			} 
+
 			// 3. Delete puted stone (turn is not confirmed
 			foreach(MovedStone ms in M.PutedStones ) {
 				desk[ms.i, ms.j] = '_';
 			}
 			
+			if( fail ) return false;
+			
+			score *= ActualWordBonus;
+			M.Score = score;
+			
+		
+			
 			if( game.dictionary.Content( M.Word ) )	return true;
 			else return false;
 		}
+		
+		
 		
 		/// <summary>
 		/// Analyze crossword from position [i, j]. Return value: <0 error;; =0 no word;; <0 score
@@ -234,9 +270,11 @@ namespace Scrabble.Lexicon
 			var rack = game.GetActualPlayer().Rack;
 			
 			// All stones are in rack ? 
-			foreach(MovedStone ms in move.PutedStones ) {
-				if( ! rack.Contains( ms.c ) ) return false;
-			}
+			try {
+				foreach(MovedStone ms in move.PutedStones ) {
+					if( ! rack.Contains( ms.c ) ) return false;
+				}
+			} catch( System.NullReferenceException) { return false; }
 			
 			// Put!
 			foreach(MovedStone ms in move.PutedStones ) {
@@ -270,7 +308,49 @@ namespace Scrabble.Lexicon
 				to[ what1[n,0] , what1[n,1] ] = what2;	
 			}
 		}
+		
+		public bool CheckAllDesk() {
+			string w = "";
+			for( int j=0; j < this.desk.GetLength(1); j++) {
+				for( int i=0; i < this.desk.GetLength(0); i++) {
+					if( desk[i,j] == '_' ) {
+						if( w != "" ) {
+							if( ! this.game.dictionary.Content( w ) ) return false;
+							w = "";
+						}
+						continue;
+					}
+					else w += desk[i,j].ToString();
+				}
+				if( w != "" ) {
+					if( ! this.game.dictionary.Content( w ) ) return false;
+					w = "";
+				}
+			}
+			w="";
+			for( int i=0; i < this.desk.GetLength(0); i++) {
+				for( int j=0; j < this.desk.GetLength(1); j++) {
+					if( desk[i,j] == '_' ) {
+						if( w != "" ) {
+							if( ! this.game.dictionary.Content( w ) ) return false;
+							w = "";
+						}
+						continue;
+					}
+					else w += desk[i,j].ToString();
+				}
+				if( w != "" ) {
+					if( ! this.game.dictionary.Content( w ) ) return false;
+					w = "";
+				}
+			}
+			return true;
+		}
+		
+		public void FindWhichLetterIsNeed(Move m) {
+			
+		}
 	}
 	
-	public enum UI { Terminal, GTK }
+	public enum UI { Terminal, GTK, log }
 }

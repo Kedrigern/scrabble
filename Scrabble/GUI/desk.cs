@@ -71,8 +71,10 @@ namespace Scrabble.GUI
 		}
 		
 		public void ActiveButtons() {
-			foreach(Gtk.Button b in	fields )
+			foreach(Gtk.Button b in	fields ) {
 				b.Clicked += PushButton;
+				b.ButtonPressEvent += PushButton;
+			}
 		}
 		
 		private void PushButton( object sender, EventArgs e) {
@@ -81,6 +83,10 @@ namespace Scrabble.GUI
 			Gtk.Entry input = new Gtk.Entry(15);
 			Gtk.HBox divide = new Gtk.HBox(false, 0);
 			Gtk.Button but = new Gtk.Button("OK");
+			
+			input.Activated += delegate {
+				but.Click();
+			};
 			
 			divide.PackStart( input );
 			divide.Add( check );
@@ -121,19 +127,14 @@ namespace Scrabble.GUI
 					w.Dispose ();
 					w.Destroy ();	
 					break;
-				case Gdk.Key.ISO_Enter:
-				case Gdk.Key.Key_3270_Enter:
-				case Gdk.Key.KP_Enter:
-					but.Click();
-					break;
 				}
 			};
 				
 		}
 		
 		public void UpdateDesk(char[,] d) {
-			for(uint j=1; j < d.GetLength(1); j++)
-				for(uint i=1; i < d.GetLength(0); i++)
+			for(uint j=1; j <= d.GetLength(1); j++)
+				for(uint i=1; i <= d.GetLength(0); i++)
 					if( d[i-1,j-1] != '_' ) fields[i,j].setChar( d[i-1,j-1] .ToString());
 		}
 	}

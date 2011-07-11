@@ -38,10 +38,17 @@ namespace Scrabble.Game
 			 * Avšak chyba je někde v něm, jelikož pokud zkopirujeme kod nastavovacího okna pod něj, 
 			 * tak to se otevře normálně dvakrát
 			 * */
-			
-			Scrabble.Game.InitialConfig.game.window = new Scrabble.GUI.ScrabbleWindow();
-			Scrabble.Game.InitialConfig.game.window.ShowAll();
-			Gtk.Application.Run();
+			try {
+				Scrabble.Game.InitialConfig.game.window = new Scrabble.GUI.ScrabbleWindow();
+				Scrabble.Game.InitialConfig.game.window.ShowAll();
+				Gtk.Application.Run();
+			} finally {
+				Scrabble.Game.InitialConfig.logStream.Flush();
+				Scrabble.Game.InitialConfig.logStream.Close();
+#if DEBUG
+				Scrabble.Game.InitialConfig.logStreamAI.Close();
+#endif
+			}
 		}
 	}
 }

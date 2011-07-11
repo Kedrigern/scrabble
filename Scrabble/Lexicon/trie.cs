@@ -127,7 +127,7 @@ namespace Scrabble.Lexicon
 			return tmp.Finite;	
 		}
 		
-			public bool Content( char[,] de, int i, int j, bool down, int i2, int j2, char c ) {
+		public bool Content( char[,] de, int i, int j, bool down, int i2, int j2, char c ) {
 			Node tmp = root;
 			
 			while( de[i,j] != '_' ) {

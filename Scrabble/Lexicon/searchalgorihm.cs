@@ -40,6 +40,7 @@ namespace Scrabble.Lexicon
 			StartOfRecursionLeftRight( pool, root, x, y, rack );
 			
 			root = gaddag.ReverseRoot;
+	
 			StartOfRecursionDownUp( pool, root, x, y, rack );
 		}
 		

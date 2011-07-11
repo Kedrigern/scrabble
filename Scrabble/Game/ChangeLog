@@ -2,6 +2,13 @@
 
 	* Game.cs:
 	* StonesBag.cs:
+	* MainClass.cs:
+	* InitialConfig.cs: 
+
+2011-07-11  Ondřej Profant  <ondrej.profant@gmail.com>
+
+	* Game.cs:
+	* StonesBag.cs:
 	* MainClass.cs: 
 
 2011-07-09  Ondřej Profant  <ondrej.profant@gmail.com>
