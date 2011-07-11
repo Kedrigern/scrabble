@@ -119,8 +119,6 @@ namespace Scrabble.Player
 			IPAddress ip;
 			if( ! IPAddress.TryParse( ipt,out ip ) ) {
 				// TODO: Opakované zeptání se na IP adresu
-
-				//Console.WriteLine("[ERROR] Parsing IP adress");
 				Environment.Exit(1);
 			}
 			this.ep = new IPEndPoint( ip, Scrabble.Game.InitialConfig.port );	
@@ -180,16 +178,23 @@ namespace Scrabble.Player
 			
 			if( backUp.SameValues( this.game.desk.Desk ) ) {}
 			else {
-				Gtk.MessageDialog md = new Gtk.MessageDialog( this.game.Window, Gtk.DialogFlags.Modal, Gtk.MessageType.Error, Gtk.ButtonsType.Ok, false, "Narušena deska!");
+				Scrabble.Game.InitialConfig.logStreamAI.WriteLine("[ERROR]\tNarušena deska (běheme analýzy v AI");
+				Gtk.MessageDialog md = new Gtk.MessageDialog( 	this.game.Window, 
+																Gtk.DialogFlags.Modal, 
+																Gtk.MessageType.Error, 
+																Gtk.ButtonsType.Ok, 
+																false, 
+								"Chybou programátora narušena deska! Nejspíš počítač nyní zahrál nesmyslný tah.");
 				md.Run();
 			}
 							
 #if DEBUG
-			Scrabble.Game.InitialConfig.logStreamAI.Write( "ROUND {2}\tPLAYER {1}\tNašel jsem {0} tahů:\t", movePool.Count, this.Name, this.game.Round );
+			Scrabble.Game.InitialConfig.logStreamAI.Write( "\nROUND {2}\tPLAYER {1}\tNašel jsem {0} tahů:\t", movePool.Count, this.Name, this.game.Round );
 			foreach( Move m in movePool ) {
-				Scrabble.Game.InitialConfig.logStreamAI.Write("[{1},{2}]{0}(3) ", m.Word, m.Start.X, m.Start.Y, m.Score);	
+				Scrabble.Game.InitialConfig.logStreamAI.Write("[{1},{2}]{0}{3} ", m.Word, m.Start.X, m.Start.Y, m.Down ? "↓" : "→");	
 			}
 			Scrabble.Game.InitialConfig.logStreamAI.WriteLine();
+			Scrabble.Game.InitialConfig.logStreamAI.WriteLine("[info]\tVybral jsem: {0:00},{1:00} {2} {3}", max.Start.X, max.Start.Y, max.Word, max.Down ? "↓" : "→");
 #endif
 
 			if( movePool.Count == 0 ) {
@@ -198,7 +203,7 @@ namespace Scrabble.Player
 			}
 			
 			foreach( Move ac in movePool ) {
-				if( ! game.desk.Play( max ) ) break;
+				if( this.game.desk.Play( max ) ) break;
 				max = ac;	
 			}
 						

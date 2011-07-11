@@ -255,7 +255,7 @@ namespace Scrabble.GUI
 				dic = new Scrabble.Lexicon.GADDAG();
 				if( File.Exists( "./dic.txt" ) /*&& false*/ ) {
 					StreamReader sr = new StreamReader ( "./dic.txt" );
-					dic = new Scrabble.Lexicon.GADDAG(sr);
+					dic = new Scrabble.Lexicon.GADDAG( sr );
 				} 
 			}
 

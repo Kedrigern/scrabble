@@ -35,13 +35,37 @@ namespace Scrabble.Lexicon
 		}
 		
 		public static void Search( int x, int y, List<char> rack, HashSet<Move> pool)	{
-			Node root = gaddag.ReverseRoot;
+			Node root;
+			/* Run only at point:
+			 * 		....
+			 * 	 	word
+			 *		....
+			 * (and d)
+			 */
+			try {
+				if( desk[x,y+1] != '_' || 
+					desk[x,y-1] != '_' || 
+					( desk[x,y] != '_' && desk[x+1,y] == '_' )  ) {
+					root = gaddag.ReverseRoot;
+					StartOfRecursionLeftRight( pool, root, x, y, rack );
+				}
+			} catch ( System.IndexOutOfRangeException ) { }
 			
-			StartOfRecursionLeftRight( pool, root, x, y, rack );
-			
-			root = gaddag.ReverseRoot;
-	
-			StartOfRecursionDownUp( pool, root, x, y, rack );
+			/* Run only at point:
+			 * 		.w.
+			 * 		.o.
+			 * 		.r.
+			 * 		.d.
+			 * (and d)
+			 */
+			try {
+				if( desk[x+1,y] != '_' ||
+					desk[x-1,y] != '_' ||
+					( desk[x,y] != '_' && desk[x,y+1] == '_' ) ) {
+					root = gaddag.ReverseRoot;
+					StartOfRecursionDownUp( pool, root, x, y, rack );
+				}
+			} catch ( System.IndexOutOfRangeException ) { }
 		}
 		
 		private static void StartOfRecursionLeftRight(HashSet<Move> pool, Node root, int x, int y, List<char> rack ) {	
@@ -80,7 +104,7 @@ namespace Scrabble.Lexicon
 		
 		private static void SearchRek(HashSet<Move> pool, TmpMove m ) {
 			// 1. check cross
-			if( ! cross( m , m.node.Content) ) {
+			if( ! cross( m , m.node.Content ) ) {
 				return;
 			}
 			

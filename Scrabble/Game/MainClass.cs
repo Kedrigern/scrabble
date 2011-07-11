@@ -32,7 +32,7 @@ namespace Scrabble.Game
 			var startwin = new Scrabble.GUI.StartWindow();
 			startwin.Show();
 			Gtk.Application.Run();
- 
+			
 			/* ! ! ! BUG ! ! !
 			 * Při spuštění spuštění jinak než s MonoDevelop či terminalu se neotevře druhé okno.
 			 * Avšak chyba je někde v něm, jelikož pokud zkopirujeme kod nastavovacího okna pod něj, 
@@ -42,6 +42,14 @@ namespace Scrabble.Game
 				Scrabble.Game.InitialConfig.game.window = new Scrabble.GUI.ScrabbleWindow();
 				Scrabble.Game.InitialConfig.game.window.ShowAll();
 				Gtk.Application.Run();
+			} catch (Exception e) {
+				Gtk.MessageDialog md = new Gtk.MessageDialog( 
+					null, 
+					DialogFlags.Modal,
+					MessageType.Error,
+					ButtonsType.Ok, 
+					e.Message );	
+				md.Run();				
 			} finally {
 				Scrabble.Game.InitialConfig.logStream.Flush();
 				Scrabble.Game.InitialConfig.logStream.Close();

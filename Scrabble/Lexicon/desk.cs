@@ -100,7 +100,6 @@ namespace Scrabble.Lexicon
 			int score = 0;
 			int ActualWordBonus = 1;
 			
-			// 1. Find real start of word (include prefix)
 			// 1. Is this real start of word?
 			try {
 			if( M.Down ) {
@@ -108,17 +107,12 @@ namespace Scrabble.Lexicon
 			} else {
 				if( desk[i-1,j] != '_' ) return false;
 			} }
-			catch( System.ArgumentOutOfRangeException ) {}
-			/*while( i >= 0 && j >= 0 && desk[i,j] != '_') {
-				M.Word += desk[i,j].ToString();
-				if( M.Down ) j--; else	i--;
-			}
-			if( i < 0 || j < 0 || desk[i,j] == '_' ) if( M.Down ) j++; else i++;*/
-			
+			catch( System.IndexOutOfRangeException ) { /* ok */ }
+				
+			// 2. Go through word, now I am at first letter of puted word	
+			if( j < 0 || j >= desk.GetLength(1) || i < 0 || i >= desk.GetLength(0)) return false;
 			
 			bool fail = false;
-				
-			// 2. Go through word, now I am at first letter of puted word
 			while( true ) {
 				
 				// 2.a) Determinate which letter is need to put
@@ -127,13 +121,9 @@ namespace Scrabble.Lexicon
 					desk[i,j] = M.Word[n];
 					
 					int k = Cross(i,j,M.Down);
-
-					if( k < 0 ) return false; 	// Crossword is wrong
-					if( k < 0 ) {
-
+					if( k < 0 ) {				// Crossword is wrong
 						fail = true;
-						break; } 	// Crossword is wrong
-
+						break; } 	
 					if( k == 0) {} 				// No crossword (only this stone)
 					score += k;					// K > 0 : K is score for crossword
 					
@@ -159,13 +149,14 @@ namespace Scrabble.Lexicon
 						}
 						if( game.dictionary.Content( s ) ) {
 							M.Word = s;
+							break;
 						} else {
-							M.Score = -1;
+							fail = true;
 							break;
 						}	
 					}
 				}
-			} 
+			} // end of while cyklus 
 
 			// 3. Delete puted stone (turn is not confirmed
 			foreach(MovedStone ms in M.PutedStones ) {
@@ -278,16 +269,13 @@ namespace Scrabble.Lexicon
 			
 			// Put!
 			foreach(MovedStone ms in move.PutedStones ) {
-				desk[ms.i, ms.j] = ms.c;
+				this.desk[ms.i, ms.j] = ms.c;
 				rack.Remove( ms.c );
 			}
 			
 			// Increase score
 			game.IncActualPlayerScore( move.Score );
-			
-#if DEBUG
-			//DisplayTerminal();
-#endif			
+		
 			return true;
 		}
 		
