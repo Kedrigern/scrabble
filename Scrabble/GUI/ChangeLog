@@ -1,3 +1,10 @@
+2011-07-11  Ondřej Profant  <ondrej.profant@gmail.com>
+
+	* desk.cs:
+	* StartWindow.cs:
+	* staticWindows.cs:
+	* ScrabbleWindow.cs: 
+
 2011-07-09  Ondřej Profant  <ondrej.profant@gmail.com>
 
 	* menu.cs:

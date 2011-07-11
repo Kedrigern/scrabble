@@ -41,12 +41,7 @@ namespace Scrabble.Game
 			while( r.Count < Scrabble.Game.InitialConfig.sizeOfRack ) {
 				try {
 					r.Add( getOneStone() );
-				} catch {
-#if DEBUG
-					Console.WriteLine("[INFO]\tJiž došly kameny.");
-#endif
-					break;
-				}
+				} catch { break; }
 			}
 		}
 		

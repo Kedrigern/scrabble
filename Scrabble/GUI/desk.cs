@@ -109,7 +109,6 @@ namespace Scrabble.GUI
 					game.changePlayer();
 				}
 
-				Console.WriteLine ();
 				w.HideAll ();
 				w.Dispose ();
 				w.Destroy ();

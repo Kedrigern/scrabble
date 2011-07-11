@@ -75,33 +75,7 @@ namespace Scrabble.Lexicon
 		public PlayDesk (StreamReader sr)
 		{
 			//TODO: Loading dictionary via stream reader
-		}
-		
-		public void Display(UI ui) {
-			if( ui == UI.Terminal ) DisplayTerminal();
-			//TODO: Implementation ? Maybe obsolete
-		}
-		
-		private void DisplayTerminal() {
-			for(int j=0; j < desk.GetLength(1); j++) {
-				for(int i=0; i < desk.GetLength(1); i++) {
-					Console.BackgroundColor = ConsoleColor.Black;
-					Console.ForegroundColor = ConsoleColor.White;
-					if( wordBonus[i,j] == 2 ) Console.BackgroundColor = ConsoleColor.Red;
-					if( wordBonus[i,j] == 3 ) Console.BackgroundColor = ConsoleColor.DarkRed;
-					if( charBonus[i,j] == 2 ) Console.BackgroundColor = ConsoleColor.Blue;
-					if( charBonus[i,j] == 3 ) Console.BackgroundColor = ConsoleColor.DarkBlue;
-					if( desk[i,j] != '_' ) {
-						Console.BackgroundColor = ConsoleColor.Yellow;
-						Console.ForegroundColor = ConsoleColor.Black;
-					}
-					Console.Write( desk[i,j] );
-				}
-				Console.WriteLine();
-			}
-			Console.BackgroundColor = ConsoleColor.Black;
-			Console.ForegroundColor = ConsoleColor.White;
-		}
+		}		
 		
 		/// <summary>
 		/// Analyzes the move: which letter are need to put, calcul score
@@ -139,11 +113,7 @@ namespace Scrabble.Lexicon
 					desk[i,j] = M.Word[n];
 					
 					int k = Cross(i,j,M.Down);
-					if( k < 0 ) {
-#if DEBUG
-						Console.WriteLine("[NO] \tŠpatné křížení slov na [{0},{j}]");
-#endif
-						return false; } 	// Crossword is wrong
+					if( k < 0 ) return false; 	// Crossword is wrong
 					if( k == 0) {} 				// No crossword (only this stone)
 					score += k;					// K > 0 : K is score for crossword
 					
@@ -176,12 +146,7 @@ namespace Scrabble.Lexicon
 			}
 			
 			if( game.dictionary.Content( M.Word ) )	return true;
-			else { 
-#if DEBUG
-				Console.WriteLine("[NO] \tSlovo {0} není ve slovníku.", M.Word);
-#endif
-				return false;
-			}
+			else return false;
 		}
 		
 		/// <summary>

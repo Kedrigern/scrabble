@@ -39,7 +39,10 @@ namespace Scrabble.Game
 		int OnTurn = 0;
 			
 		public Game( ) {
-			this.dictionary	= Scrabble.Game.InitialConfig.dictionary;
+			if( Scrabble.Game.InitialConfig.dictionary == null )
+				throw new NullReferenceException("During game initialization is Scrabble.Game.InitialConfig.dictionary == null");
+			else 
+				this.dictionary	= Scrabble.Game.InitialConfig.dictionary;
 			
 			// Initialization of play desk (logic component, not gtk)
 			desk = new Scrabble.Lexicon.PlayDesk ( this );

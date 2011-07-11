@@ -19,6 +19,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using System;
+using System.IO;
 using System.Collections.Generic;
 
 namespace Scrabble.Lexicon
@@ -90,13 +91,14 @@ namespace Scrabble.Lexicon
 			else return false;
 		}
 		
-		public void print(string s) {
+
+		public void print(string s, StreamWriter sw) {
 			string sn = s + (content == '~' ? "" : this.content.ToString() );
-			if( this.Finite ) Console.Write( "{0} ", sn );
+			if( this.Finite ) sw.Write( "{0} ", sn );
 
 			foreach( Node n in sons ) {
-				n.print( sn );	
-			}			
+				n.print( sn , sw );	
+			}	
 		}
 	}
 }

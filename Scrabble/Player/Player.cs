@@ -58,20 +58,12 @@ namespace Scrabble.Player
 		}
 		
 		public bool DoMove( Lexicon.Move m ) {
-#if DEBUG
-			Console.WriteLine("[info]\tChci položit {0} na [{1},{2}]", m.Word, m.Start.X, m.Start.Y);
-#endif
 			/* Check cross check 
 			 * Calcul score */
 			if( ! game.desk.AnalyzeMove( m ) ) return false;
 			
 			/* Is connected with rest of stone? */
-			if( ! game.desk.Connect( m ) ) {
-#if DEBUG
-				Console.WriteLine( "[NO] \tŠpatné napojení" );
-#endif
-				return false; 
-			}
+			if( ! game.desk.Connect( m ) ) return false; 
 			
 			if( ! game.desk.Play( m ) ) return false;	
 			else return true;	
@@ -95,7 +87,6 @@ namespace Scrabble.Player
 			IPAddress ip;
 			if( ! IPAddress.TryParse( ipt,out ip ) ) {
 				// TODO: Opakované zeptání se na IP adresu
-				Console.WriteLine("[ERROR] Parsing IP adress");
 				Environment.Exit(1);
 			}
 			this.ep = new IPEndPoint( ip, Scrabble.Game.InitialConfig.port );	
@@ -120,6 +111,8 @@ namespace Scrabble.Player
 				}
 			
 			HashSet<Move> toDel = new HashSet<Move>();
+			
+			// Next analyze
 			Move max = new Move(new System.Drawing.Point(0,0),"",true);
 			max.Score = -1;
 			foreach( Move m in movePool ) {
@@ -134,19 +127,8 @@ namespace Scrabble.Player
 			foreach( Move m in toDel ) {
 				movePool.Remove( m );	
 			}
-							
-#if DEBUG
-			Console.Write( "[info]\tMůj zasobník:");
-			foreach( char c in Rack ) {
-				Console.Write("{0} ", c);	
-			}
-			Console.Write( "\n[info]\tNašel jsem {0} tahů:\t", movePool.Count );
-			foreach( Move m in movePool ) {
-				Console.Write("[{1},{2}]{0}(3) ", m.Word, m.Start.X, m.Start.Y, m.Score);	
-			}
-			Console.WriteLine();
-			Console.WriteLine("[info]\tIdeáal:[{1},{2}]{0}(3) ", max.Word, max.Start.X, max.Start.Y, max.Score);
-#endif
+			
+			// No moves
 			if( movePool.Count == 0 ) {
 				this.ReloadRack();
 				return ;

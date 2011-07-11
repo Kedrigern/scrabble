@@ -258,9 +258,6 @@ namespace Scrabble.GUI
 					dic = new Scrabble.Lexicon.GADDAG(sr);
 				} 
 			}
-#if DEBUG
-			Console.WriteLine("[INFO]\tSlovník obsahuje {0} slov.", dic.WordCount);
-#endif
 			statusb.Push( statusb.GetContextId( "Slovník" ), "Slovník načten");
 		}
 	
@@ -293,9 +290,7 @@ namespace Scrabble.GUI
 			
 			Scrabble.Game.InitialConfig.allDone = true;
 			Scrabble.Game.InitialConfig.game = new Scrabble.Game.Game();
-#if DEBUG
-			Console.WriteLine("[INFO]\tNastavení parametrů dokončeno.");
-#endif
+
 			this.HideAll();
 			OnDeleteEvent(this, new DeleteEventArgs());
 		}

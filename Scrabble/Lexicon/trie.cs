@@ -179,8 +179,8 @@ namespace Scrabble.Lexicon
 			this.wordCount++;
 		}
 		
-		public virtual void Print() {
-			root.print("");	
+		public virtual void Print(StreamWriter sw) {
+			root.print("",sw);	
 		}
 	}
 }

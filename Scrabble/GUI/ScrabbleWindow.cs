@@ -6,9 +6,8 @@ namespace 	Scrabble.GUI {
 	
 	public partial class 	ScrabbleWindow: Gtk.Window
 	{						
-		private VPaned horizont;	// first vertical line 
 		private HPaned vertical;
-		private VBox forMenu;
+		private VBox mainVbox;
 
 		private Scrabble.GUI.Desk desk;
 		private Scrabble.GUI.Rack rack;
@@ -25,6 +24,8 @@ namespace 	Scrabble.GUI {
 			this.DefaultWidth = 550;
 			this.DefaultHeight = 650;
 			
+			if( Scrabble.Game.InitialConfig.game == null ) 
+				throw new System.NullReferenceException("During Scrabble main widow initialization is Scrabble.Game.InitialConfig.game == null");
 			this.game = Scrabble.Game.InitialConfig.game;	
 
 			menu = new MenuHover( this );
@@ -32,19 +33,16 @@ namespace 	Scrabble.GUI {
 			rack = new Rack( this.game );
 			info = new Info( this.game );
 				
-			horizont = new VPaned();
-			vertical = new HPaned();
-			forMenu = new VBox(false, 5);
-			forMenu.PackStart( menu.menuBar , false, false, 0 );
-			forMenu.PackEnd( desk );
-			this.Add( horizont );
-			
-			/* Four main GUI components */
-			horizont.Add1( forMenu );
-			horizont.Add2( vertical );
+			vertical = new HPaned();		
+			vertical.HeightRequest = 100;
 			vertical.Add1( rack );
 			vertical.Add2( info );
-				
+			mainVbox = new VBox(false, 5);
+			mainVbox.PackStart( menu.menuBar , false, false, 0 );
+			mainVbox.Add( desk );
+			mainVbox.PackEnd( vertical );
+							
+			this.Add( mainVbox );
 			this.changePlayer( game.GetActualPlayer() );			
 		}
 		

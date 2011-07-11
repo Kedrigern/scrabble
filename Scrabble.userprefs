@@ -1,33 +1,38 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Scrabble/GUI/menu.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release|x86" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Scrabble/Game/MainClass.cs">
     <Files>
-      <File FileName="README" Line="17" Column="1" />
-      <File FileName="Scrabble/GUI/info.cs" Line="1" Column="1" />
-      <File FileName="Scrabble/Game/Game.cs" Line="1" Column="1" />
-      <File FileName="Scrabble/GUI/ScrabbleWindow.cs" Line="1" Column="1" />
-      <File FileName="Scrabble/Player/Player.cs" Line="1" Column="1" />
-      <File FileName="Scrabble/Lexicon/searchalgorihm.cs" Line="1" Column="1" />
-      <File FileName="Scrabble/GUI/desk.cs" Line="1" Column="1" />
-      <File FileName="Scrabble/Lexicon/move.cs" Line="1" Column="1" />
-      <File FileName="Scrabble/Lexicon/desk.cs" Line="1" Column="1" />
-      <File FileName="Scrabble/GUI/StartWindow.cs" Line="1" Column="1" />
+      <File FileName="Scrabble/GUI/info.cs" Line="13" Column="3" />
+      <File FileName="Scrabble/Game/Game.cs" Line="61" Column="33" />
+      <File FileName="Scrabble/GUI/ScrabbleWindow.cs" Line="29" Column="131" />
+      <File FileName="Scrabble/Player/Player.cs" Line="115" Column="19" />
+      <File FileName="Scrabble/Lexicon/searchalgorihm.cs" Line="9" Column="72" />
+      <File FileName="Scrabble/GUI/desk.cs" Line="112" Column="1" />
+      <File FileName="Scrabble/Lexicon/move.cs" Line="61" Column="37" />
+      <File FileName="Scrabble/GUI/StartWindow.cs" Line="293" Column="1" />
       <File FileName="Scrabble/Player/AIs.cs" Line="1" Column="1" />
-      <File FileName="Scrabble/GUI/staticWindows.cs" Line="38" Column="26" />
-      <File FileName="Scrabble/Game/MainClass.cs" Line="1" Column="1" />
+      <File FileName="Scrabble/GUI/staticWindows.cs" Line="30" Column="22" />
+      <File FileName="Scrabble/Game/MainClass.cs" Line="37" Column="51" />
       <File FileName="Scrabble/Game/InitialConfig.cs" Line="1" Column="1" />
-      <File FileName="Scrabble/Game/StonesBag.cs" Line="1" Column="1" />
-      <File FileName="Scrabble/GUI/menu.cs" Line="64" Column="85" />
+      <File FileName="Scrabble/Game/StonesBag.cs" Line="44" Column="22" />
+      <File FileName="Scrabble/GUI/menu.cs" Line="1" Column="1" />
+      <File FileName="Scrabble/Lexicon/PlayStone.cs" Line="1" Column="1" />
+      <File FileName="Scrabble/Lexicon/trie.cs" Line="183" Column="20" />
+      <File FileName="Scrabble/GUI/rack.cs" Line="1" Column="1" />
+      <File FileName="Scrabble/Lexicon/GADDAG.cs" Line="1" Column="1" />
+      <File FileName="Scrabble/GUI/menu.xml" Line="1" Column="1" />
+      <File FileName="Scrabble/Lexicon/node.cs" Line="94" Column="1" />
+      <File FileName="Scrabble/Lexicon/desk.cs" Line="78" Column="4" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
           <Node name="Scrabble" expanded="True">
             <Node name="References" expanded="True" />
-            <Node name="Game" expanded="True" />
-            <Node name="GUI" expanded="True">
-              <Node name="menu.cs" selected="True" />
+            <Node name="Game" expanded="True">
+              <Node name="MainClass.cs" selected="True" />
             </Node>
+            <Node name="GUI" expanded="True" />
             <Node name="Lexicon" expanded="True" />
             <Node name="Player" expanded="True" />
           </Node>
@@ -40,12 +45,16 @@
         <State>
           <Value>Scrabble.Game.InitialConfig.players</Value>
           <Value>Scrabble.Game.InitialConfig.dictionary</Value>
+          <Value>Scrabble.Game.InitialConfig.game</Value>
         </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
+    <BreakpointStore>
+      <Breakpoint file="/home/keddie/Projects/Scrabble/Scrabble/Player/Player.cs" line="113" />
+      <Breakpoint file="/home/keddie/Projects/Scrabble/Scrabble/Game/Game.cs" line="82" />
+    </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches>
     <Watch file="Scrabble/Lexicon/trie.cs" line="32" offsetX="110" offsetY="153" expression="Trie" liveUpdate="False" />

@@ -19,6 +19,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Drawing;
 
@@ -57,8 +58,9 @@ namespace Scrabble.Lexicon
 			this.putedStones = new List<MovedStone>(4);
 		}
 		
-		public void Print() {
-			Console.WriteLine("Tah: na [{0},{1}] {2} {3}", start.X, Start.Y, Word, Down ? "↓" : "→");	
+		public override string ToString ()
+		{
+			return string.Format ("Tah: na [{0},{1}] {2} {3}", start.X, Start.Y, Word, Down ? "↓" : "→");
 		}
 		
 		public void AddLetterToPut( MovedStone m ) {

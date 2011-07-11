@@ -37,17 +37,10 @@ namespace Scrabble.Lexicon
 		public static void Search( int x, int y, List<char> rack, HashSet<Move> pool)	{
 			Node root = gaddag.ReverseRoot;
 			
-			try{
-			if( desk[x,y]   != '_' &&
-				desk[x+1,y] == '_' 	) { 
-					StartOfRecursionLeftRight( pool, root, x, y, rack );
-				} } catch {}
+			StartOfRecursionLeftRight( pool, root, x, y, rack );
 			
-			try {
-			if( desk[x,y]   != ' ' &&
-				desk[x,y+1] == ' ' ) 
-					StartOfRecursionDownUp( pool, root, x, y, rack );
-			} catch {}
+			root = gaddag.ReverseRoot;
+			StartOfRecursionDownUp( pool, root, x, y, rack );
 		}
 		
 		private static void StartOfRecursionLeftRight(HashSet<Move> pool, Node root, int x, int y, List<char> rack ) {	
@@ -59,13 +52,11 @@ namespace Scrabble.Lexicon
 					root = root.getSon( desk[actual,y] );
 					s = desk[actual,y].ToString() + s;
 					actual--;
-			} } catch {}
-					
-			TmpMove tmp = new TmpMove( new Point(x,y), new Point(actual+1,y), 
-												Direction.left, 
-												s,root, rack );
-			SearchRek( pool, tmp );
-			pool.Remove( new Move(new System.Drawing.Point(actual+1,y), s, false ) ); 		// položené slovo
+				}		
+				TmpMove tmp = new TmpMove( new Point(x,y), new Point(actual+1,y), 
+												Direction.left, s,root, rack );
+				SearchRek( pool, tmp );
+			} catch (System.IndexOutOfRangeException) {}
 		}
 		
 		private static void StartOfRecursionDownUp(HashSet<Move> pool, Node root, int x, int y, List<char> rack  ) {
@@ -77,12 +68,13 @@ namespace Scrabble.Lexicon
 					root = root.getSon( desk[x,actual] );
 					s = desk[x,actual].ToString() + s;
 					actual--;
-			} } catch {}
+				}
 			
-			TmpMove tmp = new TmpMove( new Point(x,y), new Point(x,actual+1), 
-												Direction.up, 
+				TmpMove tmp = new TmpMove( new Point(x,y), new Point(x,actual+1), 
+												Direction.up,
 												s,root, rack );
-			SearchRek( pool, tmp );
+				SearchRek( pool, tmp );	
+			} catch (System.IndexOutOfRangeException) {}
 		}
 		
 		private static void SearchRek(HashSet<Move> pool, TmpMove m ) {
@@ -182,7 +174,7 @@ namespace Scrabble.Lexicon
 						break;
 					}
 				}
-				return gaddag.Content(desk, x, y, true, x, y,c);
+				return gaddag.Content(desk, x, y, true, x, y, c);
 			case Direction.up :
 			case Direction.down :
 				// Alone stone

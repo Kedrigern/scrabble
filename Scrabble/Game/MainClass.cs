@@ -28,22 +28,20 @@ namespace Scrabble.Game
 		public static void Main ()
 		{
 			Gtk.Application.Init();
+			
 			var startwin = new Scrabble.GUI.StartWindow();
 			startwin.Show();
 			Gtk.Application.Run();
-
-			var w = new Scrabble.GUI.ScrabbleWindow();
-			Scrabble.Game.InitialConfig.game.window = w;
-			w.ShowAll();
+ 
+			/* ! ! ! BUG ! ! !
+			 * Při spuštění spuštění jinak než s MonoDevelop či terminalu se neotevře druhé okno.
+			 * Avšak chyba je někde v něm, jelikož pokud zkopirujeme kod nastavovacího okna pod něj, 
+			 * tak to se otevře normálně dvakrát
+			 * */
+			
+			Scrabble.Game.InitialConfig.game.window = new Scrabble.GUI.ScrabbleWindow();
+			Scrabble.Game.InitialConfig.game.window.ShowAll();
 			Gtk.Application.Run();
-			
-//			var startwin2 = new Scrabble.GUI.StartWindow();
-//			startwin2.Show();
-//			Gtk.Application.Run();
-			
-#if DEBUG
-			Console.WriteLine("[INFO]\tBYE");
-#endif
 		}
 	}
 }

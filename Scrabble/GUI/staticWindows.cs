@@ -148,7 +148,6 @@ namespace Scrabble.GUI
 			try { 
 				ResponseType choice = (ResponseType) fch.Run(); 
 				if( choice == ResponseType.Ok ) {
-					Console.WriteLine("ok: {0}", fch.Filename);
 					System.IO.StreamReader sr = new System.IO.StreamReader( fch.Filename );
 					game.dictionary = new Scrabble.Lexicon.GADDAG( sr );
 					MessageDialog info = new MessageDialog( null, DialogFlags.Modal, MessageType.Info,
