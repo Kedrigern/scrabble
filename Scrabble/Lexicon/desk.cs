@@ -238,10 +238,21 @@ namespace Scrabble.Lexicon
 		/// Check if new move is connected to other words at play desk.
 		/// </summary>
 		public bool Connect( Move m ) {
+			// Simplest heuristik
 			if( m.Word.Length > m.PutedStones.Count ) return true;
 			else { 
+				
 				foreach( MovedStone a in m.PutedStones ) {
-					if( a.i == 7 && a.j == 7 ) return true; 	
+					// first move
+					if( a.i == 7 && a.j == 7 ) return true; 
+					// 
+					if( m.Down ) {
+						if( this.desk[ a.i+1, a.j ] != '_' ) return true;
+						if( this.desk[ a.i-1, a.j ] != '_' ) return true;
+					} else {
+						if( this.desk[ a.i, a.j+1 ] != '_' ) return true;
+						if( this.desk[ a.i, a.j-1 ] != '_' ) return true;						
+					}
 				}
 			}
 			return false;
