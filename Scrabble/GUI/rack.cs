@@ -11,11 +11,9 @@ namespace Scrabble.GUI
 		private Gtk.Label[] labels;
 		private Gtk.Table buttonky;
 		private Gtk.VBox vbox;
-		private Scrabble.Game.Game game;
 		
 		public Rack ( Scrabble.Game.Game g ) : base ("Zásobník")
 		{
-			this.game = g;
 			this.HeightRequest = 99;
 			
 			this.vbox = new VBox();

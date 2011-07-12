@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.IO;
+using System.Collections.Generic;
 
 using Scrabble.Player;
 
@@ -38,8 +39,9 @@ namespace Scrabble.Game
 			get {return window;}
 		}
 		
-		public Scrabble.Lexicon.Move lastMove = new Scrabble.Lexicon.Move("");
 		public Scrabble.Lexicon.Move bestMove = new Scrabble.Lexicon.Move("");
+		
+		public Stack<Scrabble.Lexicon.Move> history;
 		
 		int OnTurn = 0;
 		int round;
@@ -51,6 +53,7 @@ namespace Scrabble.Game
 				this.dictionary	= Scrabble.Game.InitialConfig.dictionary;
 		
 			this.round = 1;
+			this.history = new Stack<Scrabble.Lexicon.Move>(20);
 			
 			// Initialization of play desk (logic component, not gtk)
 			desk = new Scrabble.Lexicon.PlayDesk ( this );
@@ -119,7 +122,6 @@ namespace Scrabble.Game
 			}
 			OnTurn = 0;
 			
-			this.lastMove = new Scrabble.Lexicon.Move("");
 			this.bestMove = new Scrabble.Lexicon.Move("");
 			
 			this.window.Restart();

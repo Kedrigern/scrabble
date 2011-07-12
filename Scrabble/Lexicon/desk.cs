@@ -284,6 +284,8 @@ namespace Scrabble.Lexicon
 				rack.Remove( ms.c );
 			}
 			
+			this.game.history.Push( move );
+			
 			// Increase score
 			game.IncActualPlayerScore( move.Score );
 		

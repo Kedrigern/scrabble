@@ -81,7 +81,6 @@ namespace Scrabble.Player
 			
 			if( ! game.desk.Play( m ) ) return false;	
 			else { 
-				game.lastMove = m;
 				if( m.Score > game.bestMove.Score ) game.bestMove = m;
 				WriteToLog( m );
 			}
@@ -212,7 +211,6 @@ namespace Scrabble.Player
 				max = ac;	
 			}
 						
-			game.lastMove = max;
 			if( max.Score > game.bestMove.Score ) game.bestMove = max;
 			if( max.Score > this.bestMove.Score ) this.bestMove = max;
 			WriteToLog( max );

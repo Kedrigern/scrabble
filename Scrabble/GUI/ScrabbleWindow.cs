@@ -88,7 +88,11 @@ namespace 	Scrabble.GUI {
 			
 			OnTurnLabel.Text = "Na tahu: " + game.GetActualPlayer().Name;
 			StatusLabelBest.Text = "Nejlepší tah: " + game.bestMove.Word;
-			StatusLabelLast.Text = "Poslední tah: " + game.lastMove.Word;
+			try {
+				StatusLabelLast.Text = "Poslední tah: " + game.history.Peek().Word;
+			} catch (InvalidOperationException) {
+				StatusLabelLast.Text = "Poslední tah: ";
+			}
 		}
 	
 		public void DisableButtons() {
