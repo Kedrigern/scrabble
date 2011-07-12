@@ -6,6 +6,11 @@
 			<menuitem name='saveG' action='saveG' />
 			<menuitem name='endG' action='endG' />
 		</menu>
+		<menu name='move' action='move'>
+			<menuitem name='backM' action='backM' />
+			<menuitem name='forwM' action='forwM' />
+			<menuitem name='helpM' action='helpM' />
+		</menu>
 		<menu name='dictionary' action='dictionary'>
 			<menuitem name='checDk' action='checkD' />
 			<menuitem name='infoD' action='infoD'/>

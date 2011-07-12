@@ -292,6 +292,7 @@ namespace Scrabble.Lexicon
 			return true;
 		}
 		
+		
 		/// <summary>
 		/// Loads bonuses from memory (array in memory)
 		/// </summary>

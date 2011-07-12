@@ -19,6 +19,7 @@ namespace Scrabble.GUI {
 		
 		/* Popdown menu */
 		Gtk.Action gameAction;
+		Gtk.Action moveAction;
 		Gtk.Action dictionary;
 		Gtk.Action settings;
 		Gtk.Action help;
@@ -28,6 +29,10 @@ namespace Scrabble.GUI {
 		Gtk.Action loadG;
 		Gtk.Action saveG;
 		Gtk.Action endG;
+		
+		Gtk.Action backM;
+		Gtk.Action forwardM;
+		Gtk.Action helpM;
 		
 		Gtk.Action infoD;
 		Gtk.Action checkD;	
@@ -47,10 +52,12 @@ namespace Scrabble.GUI {
 			this.ag = new ActionGroup("Default");
 			
 			this.gameAction = new Gtk.Action("game", "Hra", null, null);
+			this.moveAction = new Gtk.Action("move", "Tah", null, null);
 			this.dictionary = new Gtk.Action("dictionary", "Slovník", null, null);
 			this.settings = new Gtk.Action("settings", "Nastavení", null, null);
 			this.help = new Gtk.Action("help", "Nápověda", null, null);
 			this.ag.Add( gameAction );
+			this.ag.Add( moveAction );
 			this.ag.Add( dictionary );
 			this.ag.Add( settings );
 			this.ag.Add( help );
@@ -62,6 +69,11 @@ namespace Scrabble.GUI {
 			this.saveG = new Gtk.Action("saveG","Uložit", "Uložit hru", "gtk-save");
 			this.endG  = new Gtk.Action("endG", "Konec",  "Ukončí program", "gtk-quit");
 			this.endG.Activated += (sender, e) => Application.Quit();
+			
+			this.backM = new Gtk.Action("backM","Zpátky", "Vrátit tah zpátky", null);
+			this.forwardM = new Gtk.Action("forwM","Dopředu", "Vrátit tah dopředu", null);
+			this.helpM = new Gtk.Action("helpM", "Poradit", "Poradí vám s tahem", null);
+			
 			this.infoD = new Gtk.Action("infoD", "Info", "Informace o slovníku", "gtk-info");
 			this.infoD.Activated += StaticWindows.DictionaryInfoDialog;
 			this.addD = new Gtk.Action("addD", "Přidat slovo", null, "gtk-add");
@@ -70,6 +82,7 @@ namespace Scrabble.GUI {
 			this.checkD.Activated += StaticWindows.CheckWordDialog;
 			this.loadD = new Gtk.Action( "loadD", "Načti slovník", "Načti slovník" , "gtk-load");
 			this.loadD.Activated += StaticWindows.LoadNewDictionaryDialog;
+			
 			this.optionS = new Gtk.Action("optionS", "Volby", null, "gtk-prefernces");
 			this.about = new Gtk.Action("about", "O aplikaci", null, "gtk-info");
 			this.about.Activated += StaticWindows.AboutProgramDialog;
@@ -78,6 +91,9 @@ namespace Scrabble.GUI {
 			this.ag.Add( loadG, null);
 			this.ag.Add( saveG, null);
 			this.ag.Add( endG, "<Control><Mod2>q");
+			this.ag.Add( backM, "<Control><Mod2>b");
+			this.ag.Add( forwardM, "<Control><Mod2>f");
+			this.ag.Add( helpM, "<Control><Mod2>h");
 			this.ag.Add( infoD, "<Control><Mod2>i");
 			this.ag.Add( addD , "<Control><Mod2>a" );
 			this.ag.Add( checkD, "<Mod2>F5" );

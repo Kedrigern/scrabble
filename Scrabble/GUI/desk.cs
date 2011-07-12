@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Gtk;
 using Gdk;
 
@@ -149,6 +150,17 @@ namespace Scrabble.GUI
 					else SetBonus(new System.Drawing.Point(i,j), Pdesk.WordBonus[i,j], true);
 				}		
 		}
+		
+		public void UnsetMove( List<Scrabble.Lexicon.MovedStone> l ) {
+			foreach( Scrabble.Lexicon.MovedStone s in l) {
+				this.fields[s.i+1, s.j+1].unset();
+				if( this.Pdesk.CharBonus[s.i,s.j] !=1 ) 
+					this.fields[s.i+1, s.j+1].setBonus( this.Pdesk.CharBonus[s.i,s.j], false );
+				if( this.Pdesk.WordBonus[s.i,s.j] !=1 ) 
+					this.fields[s.i+1, s.j+1].setBonus( this.Pdesk.WordBonus[s.i,s.j], true );
+				
+			}
+		}
 	}
 	
 	class Stone : Gtk.Button {		
@@ -181,6 +193,11 @@ namespace Scrabble.GUI
 			if( s == "_" ) return;
 			this.Label = s;
 			this.ModifyBg( StateType.Normal, back );				
+		}
+		
+		public void unset() {
+			this.Label = " ";
+			this.ModifyBg( StateType.Normal, this.Style.Backgrounds[ (int) StateType.Prelight ]);
 		}
 	}
 }
