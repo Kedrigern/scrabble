@@ -72,7 +72,7 @@ namespace Scrabble.Player
 			
 			// LOG
 			if( Scrabble.Game.InitialConfig.log ) {
-				Scrabble.Game.InitialConfig.logStream.Write("ROUND {1}\tPLAYER {0}\tRACK: ", this.Name, this.game.Round);
+				Scrabble.Game.InitialConfig.logStream.Write("ROUND {1}\tPLAYER {0}\tRACK: ", this.Name, this.game.	Round);
 				foreach( char c in this.Rack) {
 					Scrabble.Game.InitialConfig.logStream.Write("{0} ", c);				
 				}

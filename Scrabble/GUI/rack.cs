@@ -8,6 +8,7 @@ namespace Scrabble.GUI
 	{
 		private Gtk.Button[] buttons;
 		private Gtk.Button reload;
+		private Gtk.Button pass;
 		private Gtk.Table buttonky;
 		private Gtk.VBox vbox;
 		private Scrabble.Game.Game game;
@@ -32,10 +33,15 @@ namespace Scrabble.GUI
 			
 			reload = new Gtk.Button("Reload");
 			reload.Clicked += ReloadRack;
+			pass = new Gtk.Button("Vzdát se tahu");
+			pass.Clicked += delegate {
+				this.game.changePlayer();
+			};
 			
 			vbox.PackStart( buttonky );
 			vbox.Spacing = 15;
-			vbox.PackEnd( reload );
+			vbox.Add( reload );
+			vbox.PackEnd( pass );
 			
 			this.Add( vbox );
 		}
