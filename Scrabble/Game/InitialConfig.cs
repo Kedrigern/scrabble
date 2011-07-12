@@ -33,13 +33,13 @@ namespace Scrabble.Game
 		public static int sizeOfRack = 7;
 		public static int port = 6541;
 		public static char[] stones = {
-			'A', 'A', 'A', 'A', 'A',
+			'A', 'A', 'A', 'A', 'A', 'A',
 			'Á',
 			'B', 'B', 'B',
 			'C', 'C', 'C',
 			'Č',
 			'D', 'D', 'D',
-			'E', 'E', 'E', 'E',
+			'E', 'E', 'E', 'E','E',
 			'F', 
 			'I', 'I', 'I',
 			'Í',
