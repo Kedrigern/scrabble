@@ -41,8 +41,9 @@ namespace Scrabble.Game
 		
 		public Scrabble.Lexicon.Move bestMove = new Scrabble.Lexicon.Move("");
 		
-		public Stack<Scrabble.Lexicon.Move> history;
-		public Stack<Scrabble.Lexicon.Move> future;
+		// History of game;
+		public Stack<Scrabble.Lexicon.Move> historyM;
+		public Stack<Scrabble.Lexicon.Move> futureM;
 		
 		int OnTurn = 0;
 		int round;
@@ -54,8 +55,8 @@ namespace Scrabble.Game
 				this.dictionary	= Scrabble.Game.InitialConfig.dictionary;
 		
 			this.round = 1;
-			this.history = new Stack<Scrabble.Lexicon.Move>(20);
-			this.future = new Stack<Scrabble.Lexicon.Move>(6);
+			this.historyM = new Stack<Scrabble.Lexicon.Move>(20);
+			this.futureM = new Stack<Scrabble.Lexicon.Move>(6);
 			
 			// Initialization of play desk (logic component, not gtk)
 			desk = new Scrabble.Lexicon.PlayDesk ( this );
@@ -131,8 +132,8 @@ namespace Scrabble.Game
 		}
 		
 		public void back() {
-			Scrabble.Lexicon.Move tmp = history.Pop();
-			future.Push( tmp );
+			Scrabble.Lexicon.Move tmp = historyM.Pop();
+			futureM.Push( tmp );
 			
 		}
 		
