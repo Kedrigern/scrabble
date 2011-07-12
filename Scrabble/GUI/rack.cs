@@ -1,14 +1,14 @@
 using System;
 using Gtk;
 using System.Collections.Generic;
+using Scrabble.Lexicon;
 
 namespace Scrabble.GUI
 {
 	public class Rack : Gtk.Frame
 	{
 		private Gtk.Button[] buttons;
-		private Gtk.Button reload;
-		private Gtk.Button pass;
+		private Gtk.Label[] labels;
 		private Gtk.Table buttonky;
 		private Gtk.VBox vbox;
 		private Scrabble.Game.Game game;
@@ -18,30 +18,24 @@ namespace Scrabble.GUI
 			this.game = g;
 			this.HeightRequest = 99;
 			
-			vbox = new VBox();
+			this.vbox = new VBox();
 			
-			buttons = new Gtk.Button[ Game.InitialConfig.sizeOfRack ];
+			this.buttons = new Gtk.Button[ Game.InitialConfig.sizeOfRack ];
+			this.labels = new Gtk.Label[ Scrabble.Game.InitialConfig.sizeOfRack ];
 			buttonky = new Gtk.Table(1, (uint) Game.InitialConfig.sizeOfRack , true);
 			for(uint i=0; i< Game.InitialConfig.sizeOfRack; i++) {
+				labels[i] = new Label();
 				buttons[i] = new Gtk.Button();
-				buttonky.Attach( buttons[i] ,  i, i+1, 0, 1 );
+				buttonky.Attach( labels[i] ,  i, i+1, 0, 1 );
 			}
 			
 			buttonky.ColumnSpacing = 6;
 			buttonky.BorderWidth = 3;
 			this.BorderWidth = 5;
-			
-			reload = new Gtk.Button("Reload");
-			reload.Clicked += ReloadRack;
-			pass = new Gtk.Button("Vzdát se tahu");
-			pass.Clicked += delegate {
-				this.game.changePlayer();
-			};
+
 			
 			vbox.PackStart( buttonky );
 			vbox.Spacing = 15;
-			vbox.Add( reload );
-			vbox.PackEnd( pass );
 			
 			this.Add( vbox );
 		}
@@ -54,25 +48,17 @@ namespace Scrabble.GUI
 		/// </param>
 		public void Change(List<char> l) {
 			for(int i=0; i	< l.Count; i++) {
-				((Gtk.Button) buttons[i]).Label = l[i].ToString();
-				buttons[i].Show();
+				this.labels[i].Markup = "<b>" + l[i].ToString() +"</b><sub>("+ l[i].ToRank() + ")</sub>";
+				this.labels[i].Show();
+				this.labels[i].TooltipText = "Písmeno " + l[i].ToString() + " je ve vašem zásobníku a má hodnotu: " + l[i].ToRank();
+				//((Gtk.Button) buttons[i]).Label = l[i].ToString();
+				//buttons[i].Show();
 			}
 			// Empty slot of rack
 			for(int i=l.Count ; i < Game.InitialConfig.sizeOfRack; i++) {
-				buttons[i].Hide();
+				labels[i].Hide();
+				//buttons[i].Hide();
 			}
-		}
-		
-		public void DisableButtons() {
-			reload.Clicked -= ReloadRack;	
-		}
-		
-		public void ActiveButtons() {
-			reload.Clicked += ReloadRack;
-		}
-		
-		private void ReloadRack(object sender, EventArgs e) {
-			this.game.ReloadRackAndChange();
 		}
 	}
 }

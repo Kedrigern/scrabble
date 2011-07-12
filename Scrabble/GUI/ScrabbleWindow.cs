@@ -7,6 +7,7 @@ namespace 	Scrabble.GUI {
 	public partial class 	ScrabbleWindow: Gtk.Window
 	{	
 		private VBox mainVbox;
+		private VBox bottomVbox;
 		private HPaned vertical;
 
 		private Statusbar statusbar;
@@ -17,6 +18,7 @@ namespace 	Scrabble.GUI {
 		private Scrabble.GUI.Desk desk;
 		private Scrabble.GUI.Rack rack;
 		private Scrabble.GUI.Info info;	
+		private Scrabble.GUI.Control control;
 		private Scrabble.GUI.MenuHover menu;
 		
 		public Scrabble.Game.Game game;
@@ -36,8 +38,14 @@ namespace 	Scrabble.GUI {
 			menu = new MenuHover( this );
 			desk = new Desk( this.game );
 			rack = new Rack( this.game );
+			control = new Control( this.game );
 			info = new Info( this.game );
-				
+			
+			bottomVbox = new VBox(true, 4 );
+			bottomVbox.PackStart( rack );
+			bottomVbox.PackEnd( control );
+			bottomVbox.ShowAll();
+			
 			vertical = new HPaned();		
 			vertical.HeightRequest = 100;
 
@@ -53,10 +61,7 @@ namespace 	Scrabble.GUI {
 			
 			vertical = new HPaned();
 			vertical.HeightRequest = 100;
-						
-			/* Four main GUI components */
-
-			vertical.Add1( rack );
+			vertical.Add1( bottomVbox );
 			vertical.Add2( info );
 							
 				
@@ -87,13 +92,18 @@ namespace 	Scrabble.GUI {
 		}
 	
 		public void DisableButtons() {
-			rack.DisableButtons();
+			control.DisableButtons();
 			desk.DisableButtons();
 		}
 		
 		public void ActiveButtons() {
-			rack.ActiveButtons();
+			control.ActiveButtons();
 			desk.ActiveButtons();
+		}
+		
+		public void Restart() {
+			this.desk.Restart();
+			this.changePlayer( this.game.GetActualPlayer() );
 		}
 		
 		protected void OnExposeEvent ( object sender, ExposeEventArgs a ) {

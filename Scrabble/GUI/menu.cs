@@ -18,7 +18,7 @@ namespace Scrabble.GUI {
 		Scrabble.GUI.ScrabbleWindow parrent;
 		
 		/* Popdown menu */
-		Gtk.Action game;
+		Gtk.Action gameAction;
 		Gtk.Action dictionary;
 		Gtk.Action settings;
 		Gtk.Action help;
@@ -46,17 +46,18 @@ namespace Scrabble.GUI {
 			this.uim = new UIManager();
 			this.ag = new ActionGroup("Default");
 			
-			this.game = new Gtk.Action("game", "Hra", null, null);
+			this.gameAction = new Gtk.Action("game", "Hra", null, null);
 			this.dictionary = new Gtk.Action("dictionary", "Slovník", null, null);
 			this.settings = new Gtk.Action("settings", "Nastavení", null, null);
 			this.help = new Gtk.Action("help", "Nápověda", null, null);
-			this.ag.Add( game );
+			this.ag.Add( gameAction );
 			this.ag.Add( dictionary );
 			this.ag.Add( settings );
 			this.ag.Add( help );
 			
 			this.newG  = new Gtk.Action("newG", "Nová",   null, "gtk-open");
 			this.newG.ShortLabel = "Nová";
+			this.newG.Activated += (sender, e) => this.parrent.game.newGame();
 			this.loadG = new Gtk.Action("loadG","Načíst", "Načíst hru" , "gtk-load");
 			this.saveG = new Gtk.Action("saveG","Uložit", "Uložit hru", "gtk-save");
 			this.endG  = new Gtk.Action("endG", "Konec",  "Ukončí program", "gtk-quit");

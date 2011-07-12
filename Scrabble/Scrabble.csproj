@@ -69,6 +69,7 @@
     <Compile Include="Player\AIs.cs" />
     <Compile Include="GUI\ScrabbleWindow.cs" />
     <Compile Include="Lexicon\deskPlus.cs" />
+    <Compile Include="GUI\Control.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Lexicon\" />

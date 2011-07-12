@@ -107,6 +107,24 @@ namespace Scrabble.Game
 			((Scrabble.Player.Player) players[OnTurn]).ReloadRack();
 			changePlayer();
 		}
+		
+		public void newGame() {
+			this.window.Hide();
+			this.round = 1;
+			this.desk = new Scrabble.Lexicon.PlayDesk(this);
+			this.stonesBag = new StonesBag();
+			foreach( Scrabble.Player.Player p in this.players ) {
+				p.Restart();	
+				this.stonesBag.CompleteRack( p.Rack );
+			}
+			OnTurn = 0;
+			
+			this.lastMove = new Scrabble.Lexicon.Move("");
+			this.bestMove = new Scrabble.Lexicon.Move("");
+			
+			this.window.Restart();
+			this.window.ShowAll();
+		}
 	}
 }
 

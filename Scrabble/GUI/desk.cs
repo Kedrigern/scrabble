@@ -35,30 +35,13 @@ namespace Scrabble.GUI
 				fields[0,i].setChar(i.ToString());
 			}
 			
-			/* initialization of Buttons (letters) */
 			for(uint j=1; j < fields.GetLength(1) ; j++)
 				for(uint i=1; i < fields.GetLength(0) ; i++) {
 					fields[i,j] = new Stone();
 					this.Attach( fields[i,j] , i, i+1, j, j+1);
-					fields[i,j].Name = "B " + i + " " + j;	// name is +1 oposite the logic desk
-					fields[i,j].TooltipText = "["+i+","+j+"]";
-					fields[i,j].Show();	
-					fields[i,j].Clicked += PushButton;
 				}
 			
-			/* initialization of charBonus */
-			for(int j=0; j < fields.GetLength(1)-1 ; j++)
-				for(int i=0; i < fields.GetLength(0)-1 ; i++) {
-					if( Pdesk.CharBonus[i,j] == 1 ) continue;
-					else SetBonus(new System.Drawing.Point(i,j), Pdesk.CharBonus[i,j], false);
-				}
-			
-			/* initialization of wordBonus */
-			for(int j=0; j < fields.GetLength(1)-1 ; j++)
-				for(int i=0; i < fields.GetLength(0)-1 ; i++) {
-					if( Pdesk.WordBonus[i,j] == 1 ) continue;
-					else SetBonus(new System.Drawing.Point(i,j), Pdesk.WordBonus[i,j], true);
-				}
+			Restart();
 		}
 		
 		public void SetBonus(System.Drawing.Point p, short level, bool word) {
@@ -135,13 +118,40 @@ namespace Scrabble.GUI
 		public void UpdateDesk(char[,] d) {
 			for(uint j=1; j <= d.GetLength(1); j++)
 				for(uint i=1; i <= d.GetLength(0); i++)
-					if( d[i-1,j-1] != '_' ) fields[i,j].setChar( d[i-1,j-1] .ToString());
+					fields[i,j].setChar( d[i-1,j-1] .ToString());
+		}
+		
+		// INIT blank desk with bonuses
+		public void Restart() {
+			/* initialization of Buttons (letters) */
+			for(uint j=1; j < fields.GetLength(1) ; j++)
+				for(uint i=1; i < fields.GetLength(0) ; i++) {
+					fields[i,j].setChar("");
+					fields[i,j].Name = "B " + i + " " + j;	// name is +1 oposite the logic desk
+					fields[i,j].TooltipText = "["+i+","+j+"]";
+					fields[i,j].ModifyBg( StateType.Normal, this.Style.Backgrounds[ (int) StateType.Prelight ]);
+					fields[i,j].Hide();		
+					fields[i,j].Show();	
+					fields[i,j].Clicked += PushButton;
+				}
+			
+			/* initialization of charBonus */
+			for(int j=0; j < fields.GetLength(1)-1 ; j++)
+				for(int i=0; i < fields.GetLength(0)-1 ; i++) {
+					if( Pdesk.CharBonus[i,j] == 1 ) continue;
+					else SetBonus(new System.Drawing.Point(i,j), Pdesk.CharBonus[i,j], false);
+				}
+			
+			/* initialization of wordBonus */
+			for(int j=0; j < fields.GetLength(1)-1 ; j++)
+				for(int i=0; i < fields.GetLength(0)-1 ; i++) {
+					if( Pdesk.WordBonus[i,j] == 1 ) continue;
+					else SetBonus(new System.Drawing.Point(i,j), Pdesk.WordBonus[i,j], true);
+				}		
 		}
 	}
 	
-	class Stone : Gtk.Button {
-		bool done;
-		
+	class Stone : Gtk.Button {		
 		public static readonly Color red = new Color(255,0,0);
 		public static readonly Color blue = new Color(0,0,255);
 		public static readonly Color green = new Color(30,150,80);
@@ -151,7 +161,6 @@ namespace Scrabble.GUI
 		
 		public Stone() : base() {
 			this.Label = "   ";
-			this.done = false;
 		}
 	
 		public void setBonus(short s, bool wBonus ) {
@@ -169,10 +178,9 @@ namespace Scrabble.GUI
 		}
 		
 		public void setChar(string s) {
-			if( done ) return;
+			if( s == "_" ) return;
 			this.Label = s;
-			this.done = true;
-			this.ModifyBg( StateType.Normal, back );
+			this.ModifyBg( StateType.Normal, back );				
 		}
 	}
 }

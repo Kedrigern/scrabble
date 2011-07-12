@@ -100,6 +100,11 @@ namespace Scrabble.Player
 				Scrabble.Game.InitialConfig.logStream.WriteLine();
 			}	
 		}
+		
+		public void Restart() {
+			this.Score = 0;
+			this.Rack.Clear();
+		}
 	}
 	
 	public static class Uniqe {

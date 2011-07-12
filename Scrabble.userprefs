@@ -1,13 +1,13 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Scrabble/GUI/rack.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Scrabble/GUI/Control.cs">
     <Files>
       <File FileName="Scrabble/GUI/info.cs" Line="13" Column="3" />
-      <File FileName="Scrabble/Game/Game.cs" Line="85" Column="15" />
-      <File FileName="Scrabble/GUI/ScrabbleWindow.cs" Line="1" Column="1" />
-      <File FileName="Scrabble/Player/Player.cs" Line="75" Column="104" />
+      <File FileName="Scrabble/Game/Game.cs" Line="1" Column="1" />
+      <File FileName="Scrabble/GUI/ScrabbleWindow.cs" Line="19" Column="29" />
+      <File FileName="Scrabble/Player/Player.cs" Line="1" Column="1" />
       <File FileName="Scrabble/Lexicon/searchalgorihm.cs" Line="1" Column="1" />
-      <File FileName="Scrabble/GUI/desk.cs" Line="113" Column="48" />
+      <File FileName="Scrabble/GUI/desk.cs" Line="1" Column="1" />
       <File FileName="Scrabble/Lexicon/move.cs" Line="1" Column="1" />
       <File FileName="Scrabble/GUI/StartWindow.cs" Line="1" Column="1" />
       <File FileName="Scrabble/Player/AIs.cs" Line="1" Column="1" />
@@ -18,11 +18,12 @@
       <File FileName="Scrabble/GUI/menu.cs" Line="1" Column="1" />
       <File FileName="Scrabble/Lexicon/PlayStone.cs" Line="1" Column="1" />
       <File FileName="Scrabble/Lexicon/trie.cs" Line="1" Column="1" />
-      <File FileName="Scrabble/GUI/rack.cs" Line="21" Column="22" />
+      <File FileName="Scrabble/GUI/rack.cs" Line="30" Column="4" />
       <File FileName="Scrabble/Lexicon/GADDAG.cs" Line="1" Column="1" />
       <File FileName="Scrabble/GUI/menu.xml" Line="1" Column="1" />
       <File FileName="Scrabble/Lexicon/node.cs" Line="1" Column="1" />
-      <File FileName="Scrabble/Lexicon/desk.cs" Line="253" Column="25" />
+      <File FileName="Scrabble/Lexicon/desk.cs" Line="1" Column="1" />
+      <File FileName="Scrabble/GUI/Control.cs" Line="38" Column="4" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -31,7 +32,7 @@
             <Node name="References" expanded="True" />
             <Node name="Game" expanded="True" />
             <Node name="GUI" expanded="True">
-              <Node name="rack.cs" selected="True" />
+              <Node name="Control.cs" selected="True" />
             </Node>
             <Node name="Lexicon" expanded="True" />
             <Node name="Player" expanded="True" />
