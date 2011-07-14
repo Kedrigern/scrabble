@@ -21,30 +21,61 @@
 using System;
 using System.Net;
 using System.Net.Sockets;
+using System.Runtime.Serialization.Formatters;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Text;
 
 namespace Scrabble.Game
 {
-	public enum netOp { info, questionToMove }
-	
-	public class Networking
-	{
-		
-		
-		public Networking ( )
-		{
-		}
-		
-		public bool sendInfo( IPEndPoint endP ) {
+	public static class Networking
+	{		
+		public static bool sendInfo( IPEndPoint end ) {
+			var client = new TcpClient( end );
+			var stream = client.GetStream();
+			var encoder = new UTF8Encoding();
+			
+			// greeting
+			byte[] buffer = encoder.GetBytes("HELLO");
+			stream.Write( buffer,0,buffer.Length);
+			stream.Flush();
+			
+			// response
+			stream.Read( buffer, 0, buffer.Length );
+			if( encoder.GetString(buffer).StartsWith("ACK") ) {}
+			else { return false; }
+			
+			// send PLAYERS
+			client = new TcpClient( end );
+			stream = client.GetStream();	
+			//formatter.Serialize( stream,  );			
+			
+			// response
+			stream.Read( buffer, 0, buffer.Length );
+			if( encoder.GetString(buffer).StartsWith("ACK") ) {}
+			else { return false; }
+			
+			// send DESK
+			client = new TcpClient( end );
+			stream = client.GetStream();
+			
+			// response	
+			stream.Read( buffer, 0, buffer.Length );
+			if( encoder.GetString(buffer).StartsWith("ACK") ) {}
+			else { return false; }
+
 			return false;
 		}
 		
-		public bool sendQuestion( IPEndPoint endP ) {
+		public static  bool sendQuestion( IPAddress endP , out Scrabble.Lexicon.Move m) {
+			m = new Scrabble.Lexicon.Move("");
 			return false;	
 		}
 		
-		public bool sendQuit( IPEndPoint endP ) {
+		public static bool sendQuit( IPEndPoint endP ) {
 			return false;	
 		}
+		
+		//public static bool 
 	}
 }
 

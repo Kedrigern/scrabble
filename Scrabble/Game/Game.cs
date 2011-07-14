@@ -106,6 +106,9 @@ namespace Scrabble.Game
 				((ComputerPlayer) players[OnTurn]).Play();
 				window.ActiveButtons();
 				changePlayer();
+			} else if( typeof( NetworkPlayer ) == players[ OnTurn ].GetType() ) {
+				Scrabble.Lexicon.Move m;
+				Scrabble.Game.Networking.sendQuestion( ((NetworkPlayer) players[ OnTurn ]).IP , out m );
 			} else if( this.morePeople )				
 				GUI.StaticWindows.NextPlayer( players[OnTurn].Name );
 		}
@@ -150,7 +153,7 @@ namespace Scrabble.Game
 		public void sendUpdateToNetPlayers() {
 			foreach( Scrabble.Player.Player p in this.players ) {
 				if( typeof( Scrabble.Player.NetworkPlayer ) == p.GetType() ) {
-					//
+					Scrabble.Game.Networking.sendInfo(  ((Scrabble.Player.NetworkPlayer)p).End  );
 				}
 			}
 		}

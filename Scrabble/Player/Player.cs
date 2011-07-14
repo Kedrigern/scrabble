@@ -116,6 +116,8 @@ namespace Scrabble.Player
 	
 	public class NetworkPlayer : Player {
 		protected IPEndPoint ep;
+		public IPAddress IP {get { return ep.Address; } }
+		public IPEndPoint End {get { return ep; } }
 		
 		public NetworkPlayer(string n, string ipt) : base( n ) {
 			IPAddress ip;
