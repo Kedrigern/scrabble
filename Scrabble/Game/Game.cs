@@ -131,13 +131,15 @@ namespace Scrabble.Game
 			
 			this.bestMove = new Scrabble.Lexicon.Move("");
 			
-			this.window.Restart();
+			this.window.Update();
 			this.window.ShowAll();
 		}
 		
 		public void back() {
 			Scrabble.Lexicon.Move tmp = historyM.Pop();
 			futureM.Push( tmp );
+			foreach( Scrabble.Lexicon.MovedStone m in tmp.PutedStones)
+				desk.Desk[ m.i , m.j ] = '_';
 			
 		}
 		

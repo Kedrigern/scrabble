@@ -39,7 +39,7 @@ namespace Scrabble.Game
 			 * tak to se otevře normálně dvakrát
 			 * */
 			try {
-				Scrabble.Game.InitialConfig.game.window = new Scrabble.GUI.ScrabbleWindow();
+				Scrabble.Game.InitialConfig.game.window = new Scrabble.GUI.ScrabbleWindow( Scrabble.Game.InitialConfig.client );
 				Scrabble.Game.InitialConfig.game.window.ShowAll();
 				Gtk.Application.Run();
 			} catch (Exception e) {

@@ -23,9 +23,9 @@ namespace 	Scrabble.GUI {
 		
 		public Scrabble.Game.Game game;
 		
-		public ScrabbleWindow ( ): base (Gtk.WindowType.Toplevel)
-		{		
-			this.Title = "Scrabble - Hrací deska";
+		public ScrabbleWindow ( bool client = false ): base (Gtk.WindowType.Toplevel)
+		{		 
+			this.Title = "Scrabble - Hrací deska" + (client ? " (klient)" : "");
 			this.DeleteEvent += new global::Gtk.DeleteEventHandler (this.OnDeleteEvent);
 			this.SetPosition( WindowPosition.Center );
 			this.DefaultWidth = 550;
@@ -34,8 +34,9 @@ namespace 	Scrabble.GUI {
 			if( Scrabble.Game.InitialConfig.game == null ) 
 				throw new System.NullReferenceException("During Scrabble main widow initialization is Scrabble.Game.InitialConfig.game == null");
 			this.game = Scrabble.Game.InitialConfig.game;	
-
-			menu = new MenuHover( this );
+			
+			if( !client )
+				menu = new MenuHover( this );
 			desk = new Desk( this.game );
 			rack = new Rack( this.game );
 			control = new Control( this.game );
@@ -66,15 +67,16 @@ namespace 	Scrabble.GUI {
 							
 				
 			mainVbox = new VBox(false, 5);
+			if( !client )
 			mainVbox.PackStart( menu.menuBar , false, false, 0  );
 			mainVbox.Add( desk );
 			mainVbox.Add( vertical );
 			mainVbox.PackEnd( statusbar, false, false, 0 );
-			
-			this.ExposeEvent += OnExposeEvent;
-			
+				
 			this.Add( mainVbox );
 			this.changePlayer( game.GetActualPlayer() );			
+			
+			if( client ) DisableButtons();
 		}
 		
 		public void RackChange( List<char> l ) {
@@ -105,14 +107,16 @@ namespace 	Scrabble.GUI {
 			desk.ActiveButtons();
 		}
 		
-		public void Restart() {
+		
+		/// <summary>
+		/// Update scrabble window (clear desk and put new data from logic desk)
+		/// </summary>
+		public void Update() {
 			this.desk.Restart();
 			this.changePlayer( this.game.GetActualPlayer() );
 		}
 		
-		protected void OnExposeEvent ( object sender, ExposeEventArgs a ) {
-			this.ErrorBell();
-		}
+
 		
 		protected void OnDeleteEvent (object sender, DeleteEventArgs a)
 		{

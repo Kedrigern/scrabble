@@ -28,6 +28,7 @@ namespace Scrabble.Lexicon
 	/// <summary>
 	/// Move ready to put at game desk.
 	/// </summary>
+	[Serializable]
 	public class Move
 	{
 		private Point start;

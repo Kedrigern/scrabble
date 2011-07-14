@@ -25,7 +25,7 @@ namespace Scrabble.Game
 	public static class InitialConfig
 	{
 		// TODO : Loading from config file
-		public static bool allDone = false;
+		public static bool client = false;
 		public static bool gui = true;
 		public static bool network = false;
 		public static bool log = true;

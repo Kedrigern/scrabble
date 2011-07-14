@@ -30,7 +30,6 @@ namespace Scrabble.GUI
 		// Dictionary loading (in own thread)
 		static object dicLoc = new System.Object();
 		Scrabble.Lexicon.GADDAG dic;
-		Scrabble.Player.Player[] players;
 		int numberOfPlayers;
 		System.Threading.Thread tdic;
 		
@@ -67,11 +66,11 @@ namespace Scrabble.GUI
 			this.SetPosition(WindowPosition.Center);
 			this.DefaultWidth = 400;
 			this.DefaultHeight = 280;
-			numberOfPlayers = 2;
+			this.numberOfPlayers = 2;
 		
 			// Own thread for loading dictionary
-			statusb = new Gtk.Statusbar();
-			statusb.Push( statusb.GetContextId( "Slovník" ), "Načítám slovník");
+			this.statusb = new Gtk.Statusbar();
+			this.statusb.Push( statusb.GetContextId( "Slovník" ), "Načítám slovník");
 			tdic = new Thread( LoadDictionary );
 			tdic.Start();
 			
@@ -135,6 +134,7 @@ namespace Scrabble.GUI
 				IPs [i].Sensitive = false;
 				table.Attach (IPs [i], 4, 5, (uint)i + 1, (uint)i + 2);
 			}
+			this.CPUchecks[0].Hide();
 		
 			ok = new Button ("Hotovo");
 			ok.Clicked += Done;
@@ -167,7 +167,7 @@ namespace Scrabble.GUI
 			foreach (Gtk.Entry e in IPs)
 				e.Hide ();
 			
-			
+			this.CPUchecks[0].Hide();
 		}
 	
 		protected void OnNumberOfPlayerChange (object sender, EventArgs e)
@@ -193,6 +193,8 @@ namespace Scrabble.GUI
 				}
 			}
 			numberOfPlayers = newVal;		
+			this.CPUchecks[0].Hide();
+			this.CPUchecks[1].Active = true;
 		}
 	
 		protected void OnCpuChange (object sender, EventArgs e)
@@ -208,6 +210,7 @@ namespace Scrabble.GUI
 			} else {
 				((CheckButton)MPchecks [i]).Sensitive = true;	
 			}
+			this.CPUchecks[0].Hide();
 		}
 	
 		protected void OnNetChange (object sender, EventArgs e)
@@ -225,28 +228,30 @@ namespace Scrabble.GUI
 			} else {
 				CPUchecks [i].Sensitive = true;
 			}
+			this.CPUchecks[0].Hide();
 		}
 	
 		protected void IamClient (object sender,EventArgs e)
 		{
 			if (((Gtk.CheckButton)sender).Active) {
-				client.Sensitive = false;
-				entryNum.Sensitive = false;
-				ipLabel.Show ();
-				IPs [0].Show ();
-				IPs [0].Sensitive = true;
-				MPchecks [0].Active = true;
-				MPchecks [0].Sensitive = false;
-				CPUchecks [0].Active = false;
-				CPUchecks [0].Sensitive = false;
-				for (int i=1; i < numberOfPlayers; i++) {
-					labels [i].Hide ();
-					entryes [i].Hide ();
-					CPUchecks [i].Hide ();
-					MPchecks [i].Hide ();
-				}
-			} else {
-				//TODO: Deactivation of button (full implementation)
+				Scrabble.Game.InitialConfig.players = new Player.Player[1];
+				Scrabble.Game.InitialConfig.players[0] = new Scrabble.Player.Player( entryes[0].Text);
+				Scrabble.Game.InitialConfig.client = true;
+				
+				// WAIT FOR DICTIONARY LOAD
+				this.tdic.Join();
+				lock( dicLoc ) {
+					Scrabble.Game.InitialConfig.dictionary = this.dic;
+				}			
+			
+				// ALL DONE
+				Scrabble.Game.InitialConfig.game = new Scrabble.Game.Game();
+
+				if( Scrabble.Game.InitialConfig.log )
+					Scrabble.Game.InitialConfig.logStream.WriteLine("[INFO]\tNastavení parametrů dokončeno.");
+
+				this.HideAll();
+				Gtk.Application.Quit();
 			}
 		}
 		
@@ -269,26 +274,19 @@ namespace Scrabble.GUI
 	
 		protected void Done (object sender, EventArgs e)
 		{				
-			if (client.Active) {
-				players = new Player.Player[1];
-				players[0] = new Scrabble.Player.Player( entryes[0].Text);
-			} else {
-				players = new Player.Player[ numberOfPlayers ];
-				for( int i=0; i < numberOfPlayers; i++) {
-					if( CPUchecks[i].Active ) {
-						players[i] = new Scrabble.Player.ComputerPlayer( entryes[i].Text, new Player.standartAI() );
-						continue;
-					}
-					if( MPchecks[i].Active ) {
-						players[i] = new Scrabble.Player.NetworkPlayer( entryes[i].Text, IPs[i].Text );
-						continue;
-					}
-					players[i] = new Scrabble.Player.Player( entryes[i].Text );	
+			Scrabble.Game.InitialConfig.players = new Player.Player[ numberOfPlayers ];
+			for( int i=0; i < numberOfPlayers; i++) {
+				if( CPUchecks[i].Active ) {
+					Scrabble.Game.InitialConfig.players[i] = new Scrabble.Player.ComputerPlayer( entryes[i].Text, new Player.standartAI() );
+					continue;
 				}
-			}
-						
-			Scrabble.Game.InitialConfig.players = this.players;
-			
+				if( MPchecks[i].Active ) {
+					Scrabble.Game.InitialConfig.players[i] = new Scrabble.Player.NetworkPlayer( entryes[i].Text, IPs[i].Text );
+					continue;
+				}
+				Scrabble.Game.InitialConfig.players[i] = new Scrabble.Player.Player( entryes[i].Text );	
+			}			
+									
 			// OPEN LOGS
 #if DEBUG
 			if( Scrabble.Game.InitialConfig.log )
@@ -303,7 +301,6 @@ namespace Scrabble.GUI
 			}			
 			
 			// ALL DONE
-			Scrabble.Game.InitialConfig.allDone = true;
 			Scrabble.Game.InitialConfig.game = new Scrabble.Game.Game();
 
 
@@ -311,13 +308,14 @@ namespace Scrabble.GUI
 				Scrabble.Game.InitialConfig.logStream.WriteLine("[INFO]\tNastavení parametrů dokončeno.");
 
 			this.HideAll();
-			OnDeleteEvent(this, new DeleteEventArgs());
+			Gtk.Application.Quit();
 		}
 	
 		protected void OnDeleteEvent (object sender, DeleteEventArgs a)
 		{
 			Gtk.Application.Quit();
 			a.RetVal = true;
+			Environment.Exit(0);
 		}
 	}
 
