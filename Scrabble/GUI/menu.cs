@@ -103,7 +103,7 @@ namespace Scrabble.GUI {
 					
 			this.uim.InsertActionGroup( ag, 0);
 			parrent.AddAccelGroup( uim.AccelGroup );
-			uim.AddUiFromFile("./GUI/menu.xml");		
+			uim.AddUiFromFile("/home/keddie/.scrabble/GUI/menu.xml");		
 			this.menuBar = (MenuBar) uim.GetWidget("/menubar");
 		}
 	}

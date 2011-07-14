@@ -182,7 +182,9 @@ namespace Scrabble.Player
 			
 			if( backUp.SameValues( this.game.desk.Desk ) ) {}
 			else {
+#if DEBUG
 				Scrabble.Game.InitialConfig.logStreamAI.WriteLine("[ERROR]\tNarušena deska (běheme analýzy v AI");
+#endif
 				Gtk.MessageDialog md = new Gtk.MessageDialog( 	this.game.Window, 
 																Gtk.DialogFlags.Modal, 
 																Gtk.MessageType.Error, 
