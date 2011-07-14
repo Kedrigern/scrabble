@@ -70,6 +70,7 @@
     <Compile Include="GUI\ScrabbleWindow.cs" />
     <Compile Include="Lexicon\deskPlus.cs" />
     <Compile Include="GUI\Control.cs" />
+    <Compile Include="Game\Networking.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Lexicon\" />

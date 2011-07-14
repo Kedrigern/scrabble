@@ -261,7 +261,13 @@ namespace Scrabble.GUI
 				if( File.Exists( "/home/keddie/.scrabble/dic.txt" ) ) {
 					StreamReader sr = new StreamReader ( "/home/keddie/.scrabble/dic.txt" );
 					dic = new Scrabble.Lexicon.GADDAG( sr );
-				} 
+				} else if( File.Exists( "/usr/share/games/scrabble/dic.txt" ) ) {
+					StreamReader sr = new StreamReader ( "/usr/share/games/scrabble/dic.txt" );
+					dic = new Scrabble.Lexicon.GADDAG( sr );
+				} else if ( File.Exists( "dic.txt" ) ) {
+					StreamReader sr = new StreamReader ( "dic.txt" );
+					dic = new Scrabble.Lexicon.GADDAG( sr );
+				}
 			}
 
 			if( Scrabble.Game.InitialConfig.log ) {

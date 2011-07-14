@@ -1,5 +1,11 @@
 2011-07-14  Ondřej Profant  <ondrej.profant@gmail.com>
 
+	* menu.cs:
+	* StartWindow.cs:
+	* ScrabbleWindow.cs: 
+
+2011-07-14  Ondřej Profant  <ondrej.profant@gmail.com>
+
 	* StartWindow.cs:
 	* ClientWindow.cs:
 	* ScrabbleWindow.cs: 

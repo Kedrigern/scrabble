@@ -20,6 +20,7 @@ namespace 	Scrabble.GUI {
 		private Scrabble.GUI.Info info;	
 		private Scrabble.GUI.Control control;
 		private Scrabble.GUI.MenuHover menu;
+		private Gtk.Label clientNotice;
 		
 		public Scrabble.Game.Game game;
 		
@@ -49,7 +50,11 @@ namespace 	Scrabble.GUI {
 			
 			vertical = new HPaned();		
 			vertical.HeightRequest = 100;
-
+			
+			clientNotice = new Label();
+			clientNotice.Markup = "<b>Čekám</b> na aktualizaci dat o hře.";
+			clientNotice.TooltipText = "Na portu " + Scrabble.Game.InitialConfig.port.ToString();
+			
 			statusbar = new Statusbar();
 			statusbar.HeightRequest = 20;
 			statusbar.Homogeneous = true;
@@ -67,8 +72,10 @@ namespace 	Scrabble.GUI {
 							
 				
 			mainVbox = new VBox(false, 5);
-			if( !client )
-			mainVbox.PackStart( menu.menuBar , false, false, 0  );
+			if( client )
+				mainVbox.PackStart( clientNotice, false, false , 5);
+			else
+				mainVbox.PackStart( menu.menuBar , false, false, 0  );
 			mainVbox.Add( desk );
 			mainVbox.Add( vertical );
 			mainVbox.PackEnd( statusbar, false, false, 0 );

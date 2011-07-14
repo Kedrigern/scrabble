@@ -87,8 +87,6 @@ namespace Scrabble.Player
 			return true;	
 		}
 		
-	
-		
 		protected void WriteToLog(Move m) {
 			if( Scrabble.Game.InitialConfig.log ) {
 				Scrabble.Game.InitialConfig.logStream.Write("ROUND {5}\tPLAYER {0}\tSCORE +{4}\tAT {2:00},{3:00}\tPUT {1} : ", 

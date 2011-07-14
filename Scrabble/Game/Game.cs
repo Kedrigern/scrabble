@@ -146,6 +146,14 @@ namespace Scrabble.Game
 		public void forward() {
 			
 		}
+		
+		public void sendUpdateToNetPlayers() {
+			foreach( Scrabble.Player.Player p in this.players ) {
+				if( typeof( Scrabble.Player.NetworkPlayer ) == p.GetType() ) {
+					//
+				}
+			}
+		}
 	}
 }
 

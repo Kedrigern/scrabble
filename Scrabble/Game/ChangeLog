@@ -1,6 +1,11 @@
 2011-07-14  Ondřej Profant  <ondrej.profant@gmail.com>
 
 	* Game.cs:
+	* Networking.cs: 
+
+2011-07-14  Ondřej Profant  <ondrej.profant@gmail.com>
+
+	* Game.cs:
 	* MainClass.cs:
 	* InitialConfig.cs: 
 

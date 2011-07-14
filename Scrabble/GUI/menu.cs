@@ -7,6 +7,7 @@
  */
 
 using System;
+using System.IO;
 using Gtk;
 
 namespace Scrabble.GUI {
@@ -103,7 +104,11 @@ namespace Scrabble.GUI {
 					
 			this.uim.InsertActionGroup( ag, 0);
 			parrent.AddAccelGroup( uim.AccelGroup );
-			uim.AddUiFromFile("/home/keddie/.scrabble/GUI/menu.xml");		
+			if     ( File.Exists("/home/keddie/.scrabble/GUI/menu.xml") ) uim.AddUiFromFile("/home/keddie/.scrabble/GUI/menu.xml");		
+			else if( File.Exists("/usr/share/scrabble/GUI/menu.xml") ) uim.AddUiFromFile("/usr/share/scrabble/GUI/menu.xml");		
+			else if( File.Exists("GUI/menu.xml") ) uim.AddUiFromFile("GUI/menu.xml");
+			else if( File.Exists("menu.xml") ) uim.AddUiFromFile("menu.xml");
+
 			this.menuBar = (MenuBar) uim.GetWidget("/menubar");
 		}
 	}
