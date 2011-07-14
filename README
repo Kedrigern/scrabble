@@ -10,17 +10,17 @@ CONTENT
 -------
 INSTALL
 -------
-Install isn't required. Just click at scrabble.exe or write:
-mono scrabble.exe
-
-Warrning: In actual develop versions is problem with standalone open (by click from graphic environment). 
-From MonoDevelop or terminal everything works great. 
-Please use terminal: mono Scrabble.exe
+Install isn't required. Just click at scrabble.exe, or write to terminal:
+	mono scrabble.exe
+You need these two files:	
+	menu.xml
+	dic.txt
+( in same folder )
 
 -------
 COMPILE
 -------
-Directories structures etc. is mono project. You can open in monodevelop and compile.
+Directories structures etc. is mono project. You can open it in Monodevelop 2.6 and compile. C# 4 is required.
 
 -------
 LICENCE
