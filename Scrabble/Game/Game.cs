@@ -47,6 +47,7 @@ namespace Scrabble.Game
 		
 		int OnTurn = 0;
 		int round;
+		bool morePeople = false;
 	
 		public Game( ) {
 			if( Scrabble.Game.InitialConfig.dictionary == null )
@@ -66,10 +67,13 @@ namespace Scrabble.Game
 			Lexicon.SearchAlgorithm.Init( desk.Desk, this.dictionary );
 			
 			this.players = Scrabble.Game.InitialConfig.players;
+			int k =0;
 			foreach( Scrabble.Player.Player p in players ) {
+				if( p.GetType() == typeof( Scrabble.Player.Player ) ) k++;
 				p.SetGame( this );
 				p.ReloadRack();
 			}
+			if( k > 1 ) this.morePeople = true;
 			
 			// Inicialize dialogs from menu (like checkword, about etc.)
 			Scrabble.GUI.StaticWindows.Init( this );
@@ -102,7 +106,7 @@ namespace Scrabble.Game
 				((ComputerPlayer) players[OnTurn]).Play();
 				window.ActiveButtons();
 				changePlayer();
-			} else 		
+			} else if( this.morePeople )				
 				GUI.StaticWindows.NextPlayer( players[OnTurn].Name );
 		}
 		

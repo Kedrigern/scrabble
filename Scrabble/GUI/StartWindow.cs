@@ -253,8 +253,8 @@ namespace Scrabble.GUI
 		protected void LoadDictionary() {
 			lock( dicLoc ) {				
 				dic = new Scrabble.Lexicon.GADDAG();
-				if( File.Exists( "~/.scrabble/dic.txt" ) /*&& false*/ ) {
-					StreamReader sr = new StreamReader ( "~/.scrabble/dic.txt" );
+				if( File.Exists( "/home/keddie/.scrabble/dic.txt" ) ) {
+					StreamReader sr = new StreamReader ( "/home/keddie/.scrabble/dic.txt" );
 					dic = new Scrabble.Lexicon.GADDAG( sr );
 				} 
 			}
