@@ -245,7 +245,7 @@ namespace Scrabble.GUI
 				}			
 			
 				// ALL DONE
-				Scrabble.Game.InitialConfig.game = new Scrabble.Game.Game();
+				Scrabble.Game.InitialConfig.game = new Scrabble.Game.Game( true );
 
 				if( Scrabble.Game.InitialConfig.log )
 					Scrabble.Game.InitialConfig.logStream.WriteLine("[INFO]\tNastavení parametrů dokončeno.");

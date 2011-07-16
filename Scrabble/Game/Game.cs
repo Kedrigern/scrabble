@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.IO;
+using System.Threading;
 using System.Collections.Generic;
 
 using Scrabble.Player;
@@ -48,8 +49,10 @@ namespace Scrabble.Game
 		int OnTurn = 0;
 		int round;
 		bool morePeople = false;
+		bool networkPlayers = false;
+		Thread networkThread;
 	
-		public Game( ) {
+		public Game(bool client = true ) {
 			if( Scrabble.Game.InitialConfig.dictionary == null )
 				throw new NullReferenceException("During game initialization is Scrabble.Game.InitialConfig.dictionary == null");
 			else 
@@ -67,13 +70,26 @@ namespace Scrabble.Game
 			Lexicon.SearchAlgorithm.Init( desk.Desk, this.dictionary );
 			
 			this.players = Scrabble.Game.InitialConfig.players;
-			int k =0;
-			foreach( Scrabble.Player.Player p in players ) {
-				if( p.GetType() == typeof( Scrabble.Player.Player ) ) k++;
-				p.SetGame( this );
-				p.ReloadRack();
+			
+			if( client ) {
+				this.networkThread = new System.Threading.Thread( clientLoop );
+				this.networkThread.Start();
+				this.window.DisableButtons();
+			} else {
+				int k =0;
+				int l =0; 
+				foreach( Scrabble.Player.Player p in players ) {
+					if( p.GetType() == typeof( Scrabble.Player.Player ) ) k++;
+					if( p.GetType() == typeof( Scrabble.Player.NetworkPlayer ) ) l++;
+					p.SetGame( this );
+					p.ReloadRack();
+				}
+				if( k > 1 ) this.morePeople = true;
+				if( l > 0 ) {
+					this.networkPlayers = true;
+					this.networkThread = new System.Threading.Thread( sendUpdateToNetPlayers );	
+				}
 			}
-			if( k > 1 ) this.morePeople = true;
 			
 			// Inicialize dialogs from menu (like checkword, about etc.)
 			Scrabble.GUI.StaticWindows.Init( this );
@@ -101,14 +117,16 @@ namespace Scrabble.Game
 			}
 			Window.changePlayer( players[OnTurn] );
 			
+			if( networkPlayers ) networkThread.Start();
+			
 			if( typeof( ComputerPlayer ) == players[ OnTurn ].GetType() ) {
 				window.DisableButtons();	
 				((ComputerPlayer) players[OnTurn]).Play();
 				window.ActiveButtons();
 				changePlayer();
 			} else if( typeof( NetworkPlayer ) == players[ OnTurn ].GetType() ) {
-				Scrabble.Lexicon.Move m;
-				Scrabble.Game.Networking.sendQuestion( ((NetworkPlayer) players[ OnTurn ]).IP , out m );
+				//Scrabble.Lexicon.Move m;
+				//Scrabble.Game.Networking.sendQuestion( ((NetworkPlayer) players[ OnTurn ]).IP , out m );
 			} else if( this.morePeople )				
 				GUI.StaticWindows.NextPlayer( players[OnTurn].Name );
 		}
@@ -155,6 +173,12 @@ namespace Scrabble.Game
 				if( typeof( Scrabble.Player.NetworkPlayer ) == p.GetType() ) {
 					Scrabble.Game.Networking.sendInfo(  ((Scrabble.Player.NetworkPlayer)p).End  );
 				}
+			}
+		}
+		
+		private void clientLoop() {
+			while( true ) {
+				Scrabble.Game.Networking.ReciveInfo();	
 			}
 		}
 	}
