@@ -26,7 +26,7 @@ namespace Scrabble.Game
 	public static class MainClass
 	{
 		public static void Main ()
-		{
+		{	
 			Gtk.Application.Init();
 			
 			var startwin = new Scrabble.GUI.StartWindow();
@@ -54,7 +54,8 @@ namespace Scrabble.Game
 				Scrabble.Game.InitialConfig.logStream.Flush();
 				Scrabble.Game.InitialConfig.logStream.Close();
 #if DEBUG
-				Scrabble.Game.InitialConfig.logStreamAI.Close();
+				if( Scrabble.Game.InitialConfig.logStreamAI != null )
+					Scrabble.Game.InitialConfig.logStreamAI.Close();
 #endif
 			}
 		}

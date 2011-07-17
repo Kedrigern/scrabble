@@ -24,36 +24,94 @@ using System.Net.Sockets;
 using System.Runtime.Serialization.Formatters;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
+using System.Threading;
 
 namespace Scrabble.Game
 {
-	public static class Networking
-	{		
-		public static bool sendInfo( IPEndPoint end ) {
+	/// <summary>
+	/// Networking class, do all about communication with rest od player.
+	/// It's designed for run in own thread.
+	/// </summary>
+	public class Networking
+	{	
+		bool done = false;
+		public bool Done { get { return done;} }
+		bool client;
+		UTF8Encoding encoder = new UTF8Encoding();
+		BinaryFormatter formatter = new BinaryFormatter();
+		
+		public Scrabble.Lexicon.PlayDesk playDesk;
+		public Scrabble.Player.Player[] players;
+			
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Scrabble.Game.Networking"/> class.
+		/// </summary>
+		/// <param name='isClient'>
+		/// Is client instance?
+		/// </param>
+		public Networking( bool isClient ) {
+			this.client = isClient;	
+		}
+		
+		/// <summary>
+		/// Work this instance (client or server). This is infinite cyklus with Thread.Sleep at the end.
+		/// </summary>
+		public void work() {
+			while ( true ) {	
+				#region console1
+				Console.WriteLine("Začínám work while");
+				#endregion
+				done = false;
+
+				if( client ) {
+					try {
+						ReciveInfo();	
+						done = true;
+					} catch {}
+				} else {
+					try {
+						foreach ( Player.Player p in this.players )
+							if( p.GetType() == typeof( Player.NetworkPlayer ) ) sendInfo( ((Player.NetworkPlayer)p).End );
+						done = true;
+					} catch { }
+				}
+			
+				Thread.Sleep( System.Threading.Timeout.Infinite );
+			}
+		}
+		
+		private bool sendInfo( IPEndPoint end ) {
 			var client = new TcpClient( end );
 			var stream = client.GetStream();
-			var encoder = new UTF8Encoding();
-			var formatter = new BinaryFormatter();
 			
 			// greeting
 			byte[] buffer = encoder.GetBytes("HELLO");
-			stream.Write( buffer,0,buffer.Length);
+			stream.Write( buffer,0,buffer.Length );
 			stream.Flush();
 			
 			// response
 			stream.Read( buffer, 0, buffer.Length );
 			if( encoder.GetString(buffer).StartsWith("ACK") ) {}
-			else { return false; }
+			else { 
+				#region console2
+				Console.WriteLine( "Nepozdravili jsme se" ); 
+				#endregion
+				return false; }
 			
 			// send PLAYERS
 			client = new TcpClient( end );
 			stream = client.GetStream();	
 			formatter.Serialize( stream, Scrabble.Game.InitialConfig.players  );			
 			
-//			// response
-//			stream.Read( buffer, 0, buffer.Length );
-//			if( encoder.GetString(buffer).StartsWith("ACK") ) {}
-//			else { return false; }
+			// response
+			stream.Read( buffer, 0, buffer.Length );
+			if( encoder.GetString(buffer).StartsWith("ACK") ) {}
+			else { 
+				#region console3
+				Console.WriteLine( "Nepozdravili jsme se" ); 
+				#endregion
+				return false; 
+			}
 //			
 //			// send DESK
 //			client = new TcpClient( end );
@@ -67,21 +125,20 @@ namespace Scrabble.Game
 			return false;
 		}
 		
-		public static  bool sendQuestion( IPAddress endP , out Scrabble.Lexicon.Move m) {
+		public  bool sendQuestion( IPAddress endP , out Scrabble.Lexicon.Move m) {
 			m = new Scrabble.Lexicon.Move("");
 			return false;	
 		}
 		
-		public static bool sendQuit( IPEndPoint endP ) {
+		public bool sendQuit( IPEndPoint endP ) {
 			return false;	
 		}
 		
-		public static bool ReciveInfo() {
-			UTF8Encoding encoder = new UTF8Encoding();
-			BinaryFormatter formatter = new BinaryFormatter();
+		private bool ReciveInfo() {
 			bool[] checkpoints = new bool[3]; 						// checkpoint in communication
 			TcpListener listener = new TcpListener ( IPAddress.Any, Scrabble.Game.InitialConfig.port );	
 			TcpClient client = new TcpClient();
+			
 			while( true ) {
 				listener.Start();
 				client = listener.AcceptTcpClient();				// this function is blocking
@@ -93,7 +150,7 @@ namespace Scrabble.Game
 					stream.Read( buffer, 0, buffer.Length );
 					string mes = encoder.GetString( buffer );
 					if( mes.StartsWith("HELLO") ) {
-						//ack
+						ack( stream );
 						checkpoints[0] = true;
 						continue;
 					} else {
@@ -106,13 +163,19 @@ namespace Scrabble.Game
 						Scrabble.Player.Player[] pl = (Scrabble.Player.Player[]) formatter.Deserialize( stream );
 						Scrabble.Game.InitialConfig.game.players = pl;
 						checkpoints[1] = true;
-						// ack
+						ack( stream );
 					} catch {
 						// error						
 					}
 					
 				}
-			}
+			}			
+		}
+		
+		private void ack( NetworkStream s) {
+			byte[] buf = encoder.GetBytes("ACK");
+			s.Write( buf, 0, buf.Length);
+			s.Flush();
 		}
 	}
 }

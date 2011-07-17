@@ -36,8 +36,7 @@ namespace 	Scrabble.GUI {
 				throw new System.NullReferenceException("During Scrabble main widow initialization is Scrabble.Game.InitialConfig.game == null");
 			this.game = Scrabble.Game.InitialConfig.game;	
 			
-			if( !client )
-				menu = new MenuHover( this );
+			menu = new MenuHover( this );
 			desk = new Desk( this.game );
 			rack = new Rack( this.game );
 			control = new Control( this.game );

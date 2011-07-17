@@ -257,16 +257,16 @@ namespace Scrabble.GUI
 		
 		protected void LoadDictionary() {
 			lock( dicLoc ) {				
-				dic = new Scrabble.Lexicon.GADDAG();
+				this.dic = new Scrabble.Lexicon.GADDAG();
 				if( File.Exists( "/home/keddie/.scrabble/dic.txt" ) ) {
 					StreamReader sr = new StreamReader ( "/home/keddie/.scrabble/dic.txt" );
-					dic = new Scrabble.Lexicon.GADDAG( sr );
+					this.dic = new Scrabble.Lexicon.GADDAG( sr );
 				} else if( File.Exists( "/usr/share/games/scrabble/dic.txt" ) ) {
 					StreamReader sr = new StreamReader ( "/usr/share/games/scrabble/dic.txt" );
-					dic = new Scrabble.Lexicon.GADDAG( sr );
+					this.dic = new Scrabble.Lexicon.GADDAG( sr );
 				} else if ( File.Exists( "dic.txt" ) ) {
 					StreamReader sr = new StreamReader ( "dic.txt" );
-					dic = new Scrabble.Lexicon.GADDAG( sr );
+					this.dic = new Scrabble.Lexicon.GADDAG( sr );
 				}
 			}
 
@@ -307,7 +307,7 @@ namespace Scrabble.GUI
 			}			
 			
 			// ALL DONE
-			Scrabble.Game.InitialConfig.game = new Scrabble.Game.Game();
+			Scrabble.Game.InitialConfig.game = new Scrabble.Game.Game(false);
 
 
 			if( Scrabble.Game.InitialConfig.log )

@@ -50,31 +50,34 @@ namespace Scrabble.Game
 		int round;
 		bool morePeople = false;
 		bool networkPlayers = false;
+		bool client;
 		Thread networkThread;
+		Networking networkInfo;
 	
-		public Game(bool client = true ) {
+		public Game(bool isClient = false ) {
 			if( Scrabble.Game.InitialConfig.dictionary == null )
 				throw new NullReferenceException("During game initialization is Scrabble.Game.InitialConfig.dictionary == null");
 			else 
 				this.dictionary	= Scrabble.Game.InitialConfig.dictionary;
 		
+			this.client = isClient;
 			this.round = 1;
 			this.historyM = new Stack<Scrabble.Lexicon.Move>(20);
 			this.futureM = new Stack<Scrabble.Lexicon.Move>(6);
 			
 			// Initialization of play desk (logic component, not gtk)
-			desk = new Scrabble.Lexicon.PlayDesk ( this );
+			this.desk = new Scrabble.Lexicon.PlayDesk ( this );
 			// Initialization of bag for game stones
-			stonesBag = new StonesBag();
+			this.stonesBag = new StonesBag();
 			
-			Lexicon.SearchAlgorithm.Init( desk.Desk, this.dictionary );
+			global::Scrabble.Lexicon.SearchAlgorithm.Init( desk.Desk, this.dictionary );
 			
 			this.players = Scrabble.Game.InitialConfig.players;
 			
-			if( client ) {
-				this.networkThread = new System.Threading.Thread( clientLoop );
+			if( isClient ) {
+				this.networkInfo = new Networking( true );
+				this.networkThread = new System.Threading.Thread( this.networkInfo.work );
 				this.networkThread.Start();
-				this.window.DisableButtons();
 			} else {
 				int k =0;
 				int l =0; 
@@ -86,8 +89,9 @@ namespace Scrabble.Game
 				}
 				if( k > 1 ) this.morePeople = true;
 				if( l > 0 ) {
+					this.networkInfo = new Networking( false );
 					this.networkPlayers = true;
-					this.networkThread = new System.Threading.Thread( sendUpdateToNetPlayers );	
+					this.networkThread = new System.Threading.Thread( this.networkInfo.work );	
 				}
 			}
 			
@@ -164,21 +168,30 @@ namespace Scrabble.Game
 			
 		}
 		
+		/// <summary>
+		/// TODO
+		/// </summary>
 		public void forward() {
 			
 		}
 		
-		public void sendUpdateToNetPlayers() {
-			foreach( Scrabble.Player.Player p in this.players ) {
-				if( typeof( Scrabble.Player.NetworkPlayer ) == p.GetType() ) {
-					Scrabble.Game.Networking.sendInfo(  ((Scrabble.Player.NetworkPlayer)p).End  );
-				}
+		/// <summary>
+		/// Update data in this class. Use networkInfo class that runs in onw networkThread
+		/// </summary>
+		private void networkUpdate() {				
+			
+			this.networkThread.Interrupt();
+			while( ! this.networkInfo.Done ) {
+				Thread.Sleep( 15 );
+				this.networkThread.Interrupt();
 			}
-		}
-		
-		private void clientLoop() {
-			while( true ) {
-				Scrabble.Game.Networking.ReciveInfo();	
+			
+			if( this.client ) {
+				this.players = this.networkInfo.players;
+				this.desk = this.networkInfo.playDesk;
+				this.Window.Update();
+			} else {
+				
 			}
 		}
 	}
