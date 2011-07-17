@@ -129,6 +129,7 @@ namespace Scrabble.Game
 				window.ActiveButtons();
 				changePlayer();
 			} else if( typeof( NetworkPlayer ) == players[ OnTurn ].GetType() ) {
+				changePlayer();
 				//Scrabble.Lexicon.Move m;
 				//Scrabble.Game.Networking.sendQuestion( ((NetworkPlayer) players[ OnTurn ]).IP , out m );
 			} else if( this.morePeople )				
@@ -183,10 +184,16 @@ namespace Scrabble.Game
 			this.networkThread.Interrupt();
 			while( ! this.networkInfo.Done ) {
 				Thread.Sleep( 15 );
+#if DEBUG
+				Console.WriteLine( "Probouzím network thread" );
+#endif
 				this.networkThread.Interrupt();
 			}
 			
 			if( this.client ) {
+#if DEBUG
+				Console.WriteLine( "Aktualizuji info" );
+#endif
 				this.players = this.networkInfo.players;
 				this.desk = this.networkInfo.playDesk;
 				this.Window.Update();

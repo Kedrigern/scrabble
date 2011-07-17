@@ -77,12 +77,18 @@ namespace Scrabble.Game
 				}
 			
 				Thread.Sleep( System.Threading.Timeout.Infinite );
+#if DEBUG
+				Console.WriteLine( "Probuzen" );
+#endif
 			}
 		}
 		
 		private bool sendInfo( IPEndPoint end ) {
 			var client = new TcpClient( end );
 			var stream = client.GetStream();
+#if DEBUG
+			Console.WriteLine( "Mám stream" );
+#endif
 			
 			// greeting
 			byte[] buffer = encoder.GetBytes("HELLO");
@@ -150,6 +156,9 @@ namespace Scrabble.Game
 					stream.Read( buffer, 0, buffer.Length );
 					string mes = encoder.GetString( buffer );
 					if( mes.StartsWith("HELLO") ) {
+#if DEBUG
+						Console.WriteLine( "HELLO přijate" );
+#endif
 						ack( stream );
 						checkpoints[0] = true;
 						continue;
@@ -164,6 +173,9 @@ namespace Scrabble.Game
 						Scrabble.Game.InitialConfig.game.players = pl;
 						checkpoints[1] = true;
 						ack( stream );
+#if DEBUG
+						Console.WriteLine( "Hráči přijati" );
+#endif					
 					} catch {
 						// error						
 					}
