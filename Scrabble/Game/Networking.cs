@@ -63,16 +63,16 @@ namespace Scrabble.Game
 				#endregion
 				done = false;
 
-				if( client ) {
+				if( this.client ) {
 					try {
-						ReciveInfo();	
-						done = true;
+						this.ReciveInfo();	
+						this.done = true;
 					} catch {}
 				} else {
 					try {
 						foreach ( Player.Player p in this.players )
 							if( p.GetType() == typeof( Player.NetworkPlayer ) ) sendInfo( ((Player.NetworkPlayer)p).End );
-						done = true;
+						this.done = true;
 					} catch { }
 				}
 			

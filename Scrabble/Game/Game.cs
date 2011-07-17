@@ -121,7 +121,7 @@ namespace Scrabble.Game
 			}
 			Window.changePlayer( players[OnTurn] );
 			
-			if( networkPlayers ) networkThread.Start();
+			if( networkPlayers ) this.networkUpdate();
 			
 			if( typeof( ComputerPlayer ) == players[ OnTurn ].GetType() ) {
 				window.DisableButtons();	
@@ -193,6 +193,10 @@ namespace Scrabble.Game
 			} else {
 				
 			}
+		}
+		
+		public void DestroyThread() {
+			this.networkThread.Abort();	
 		}
 	}
 }

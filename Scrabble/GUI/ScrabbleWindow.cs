@@ -126,7 +126,8 @@ namespace 	Scrabble.GUI {
 		
 		protected void OnDeleteEvent (object sender, DeleteEventArgs a)
 		{
-			Gtk.Application.Quit();
+			this.game.DestroyThread();
+			global::Gtk.Application.Quit();
 			a.RetVal = true;
 		}
 	}
