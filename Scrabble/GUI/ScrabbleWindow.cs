@@ -111,9 +111,12 @@ namespace 	Scrabble.GUI {
 	
 		public void DisableButtons() {
 			this.control.DisableButtons();
-			this.desk.DisableButtons();
+			this.desk.DisableButtons();		
+			this.rack.Hide();
+			this.control.Hide();
 			if( this.client ) {
 				this.clientNotice.Markup = "<b>Čekám</b> na aktualizaci dat o hře."	;
+
 			}
 		}
 		
@@ -123,6 +126,8 @@ namespace 	Scrabble.GUI {
 			if( this.client ) {
 				this.clientNotice.Markup = "<b>Jste na tahu !</b>"	;
 			}
+			this.rack.Show();
+			this.control.Show();
 		}
 		
 		
