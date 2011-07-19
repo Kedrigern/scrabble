@@ -99,8 +99,10 @@ namespace Scrabble.GUI
 				if( this.game.GetActualPlayer().DoMove(
 								new Lexicon.Move( new System.Drawing.Point(i-1,j-1), input.Text.ToUpperInvariant(), check.Active )	)
 					) { 
+					w.Destroy ();
 					if( !Scrabble.Game.InitialConfig.client ) this.game.changePlayer();
-				}w.Destroy ();
+				}
+
 			};
 				
 			w.KeyPressEvent += delegate(object o, KeyPressEventArgs args) {

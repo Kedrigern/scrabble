@@ -52,8 +52,10 @@ namespace Scrabble.Game
 							Scrabble.Game.InitialConfig.game.clientTurn();
 						}
 					}
-					if( Scrabble.Game.InitialConfig.game.window.end )
+					if( Scrabble.Game.InitialConfig.game.window.end ) {
+						Scrabble.Game.InitialConfig.game.clientThread.Abort();
 						break;
+					}
 				}
 			} catch (Exception e) {
 				Gtk.MessageDialog md = new Gtk.MessageDialog( 

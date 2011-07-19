@@ -143,6 +143,7 @@ namespace Scrabble.Player
 			if( ! game.desk.Connect( m ) ) return false;
 			
 			lock( Scrabble.Game.InitialConfig.game.gameLock ) {
+				Scrabble.Game.InitialConfig.game.Window.DisableButtons();
 				Scrabble.Game.InitialConfig.game.move = m;
 				Scrabble.Game.InitialConfig.game.turnDone = true;
 				Scrabble.Game.InitialConfig.game.clientThread.Interrupt();

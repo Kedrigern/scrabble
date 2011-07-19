@@ -14,20 +14,24 @@ namespace 	Scrabble.GUI {
 		private Label OnTurnLabel;
 		private Label StatusLabelBest;
 		private Label StatusLabelLast;
-		
+		private Label clientNotice;
+
 		private Scrabble.GUI.Desk desk;
 		private Scrabble.GUI.Rack rack;
 		private Scrabble.GUI.Info info;	
 		private Scrabble.GUI.Control control;
 		private Scrabble.GUI.MenuHover menu;
-		private Gtk.Label clientNotice;
+		
+		private bool client;
 		
 		public Scrabble.Game.Game game;
 		public bool end = false;
 		
-		public ScrabbleWindow ( bool client = false ): base (Gtk.WindowType.Toplevel)
-		{		 
-			this.Title = "Scrabble - Hrací deska" + (client ? " (klient)" : "");
+		public ScrabbleWindow ( bool isClient = false ): base (Gtk.WindowType.Toplevel)
+		{		
+			this.client = isClient;
+			
+			this.Title = "Scrabble - Hrací deska" + (isClient ? " (klient)" : "");
 			this.DeleteEvent += new global::Gtk.DeleteEventHandler (this.OnDeleteEvent);
 			this.SetPosition( WindowPosition.Center );
 			this.DefaultWidth = 550;
@@ -72,7 +76,7 @@ namespace 	Scrabble.GUI {
 							
 				
 			mainVbox = new VBox(false, 5);
-			if( client )
+			if( isClient )
 				mainVbox.PackStart( clientNotice, false, false , 5);
 			else
 				mainVbox.PackStart( menu.menuBar , false, false, 0  );
@@ -83,7 +87,7 @@ namespace 	Scrabble.GUI {
 			this.Add( mainVbox );
 			this.changePlayer( game.GetActualPlayer() );			
 			
-			if( client ) DisableButtons();
+			if( isClient ) DisableButtons();
 			
 		}
 		
@@ -106,13 +110,19 @@ namespace 	Scrabble.GUI {
 		}
 	
 		public void DisableButtons() {
-			control.DisableButtons();
-			desk.DisableButtons();
+			this.control.DisableButtons();
+			this.desk.DisableButtons();
+			if( this.client ) {
+				this.clientNotice.Markup = "<b>Čekám</b> na aktualizaci dat o hře."	;
+			}
 		}
 		
 		public void ActiveButtons() {
-			control.ActiveButtons();
-			desk.ActiveButtons();
+			this.control.ActiveButtons();
+			this.desk.ActiveButtons();
+			if( this.client ) {
+				this.clientNotice.Markup = "<b>Jste na tahu !</b>"	;
+			}
 		}
 		
 		

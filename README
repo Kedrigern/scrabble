@@ -15,12 +15,12 @@ Install isn't required. Just click at scrabble.exe, or write to terminal:
 You need these two files:	
 	menu.xml
 	dic.txt
-( in same folder )
+( in same folder, or at unix-like systems in ~/.scrabble/ )
 
 -------
 COMPILE
 -------
-Directories structures etc. is mono project. You can open it in Monodevelop 2.6 and compile. C# 4 is required.
+Directories structures etc. is Monodevelop project. You can open it in Monodevelop 2.6 (or newer) and compile. C# 4 (Mono 2.10) is required.
 
 -------
 LICENCE
