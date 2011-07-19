@@ -28,166 +28,215 @@ using System.Threading;
 
 namespace Scrabble.Game
 {
-	/// <summary>
-	/// Networking class, do all about communication with rest od player.
-	/// It's designed for run in own thread.
-	/// </summary>
-	public class Networking
-	{	
-		bool done = false;
-		public bool Done { get { return done;} }
-		bool client;
+	
+	public class scrabbleClient {
+		public bool newData = false;
+		public bool yourTurn = false;
+		
+		TcpListener listener;
+		TcpClient client;
 		UTF8Encoding encoder = new UTF8Encoding();
 		BinaryFormatter formatter = new BinaryFormatter();
+		NetworkStream stream;
+		byte[] buffer;
 		
-		public Scrabble.Lexicon.PlayDesk playDesk;
-		public Scrabble.Player.Player[] players;
-			
-		/// <summary>
-		/// Initializes a new instance of the <see cref="Scrabble.Game.Networking"/> class.
-		/// </summary>
-		/// <param name='isClient'>
-		/// Is client instance?
-		/// </param>
-		public Networking( bool isClient ) {
-			this.client = isClient;	
+		Scrabble.Game.Game game;
+		bool end = false;
+		
+		public scrabbleClient( Scrabble.Game.Game g ) {
+			this.game = g;
+			this.listener = new TcpListener (IPAddress.Any, Scrabble.Game.InitialConfig.port );
 		}
 		
-		/// <summary>
-		/// Work this instance (client or server). This is infinite cyklus with Thread.Sleep at the end.
-		/// </summary>
-		public void work() {
-			while ( true ) {	
-				#region console1
-				Console.WriteLine("Začínám work while");
-				#endregion
-				done = false;
-
-				if( this.client ) {
-					try {
-						this.ReciveInfo();	
-						this.done = true;
-					} catch {}
-				} else {
-					try {
-						foreach ( Player.Player p in this.players )
-							if( p.GetType() == typeof( Player.NetworkPlayer ) ) sendInfo( ((Player.NetworkPlayer)p).End );
-						this.done = true;
-					} catch { }
-				}
+		public void mainLoop ( ) {
+			this.listener.Start();
+			while ( ! end ) {
+				Recive();
+			}	
+		}
+		
+		private void Recive() {
 			
-				Thread.Sleep( System.Threading.Timeout.Infinite );
+			this.client = listener.AcceptTcpClient();
+			this.stream = this.client.GetStream();
+			
+			this.buffer = new byte[4];
+			this.stream.Read( buffer, 0, buffer.Length );
+			string mes = encoder.GetString( buffer );
+			
+			if( mes.StartsWith( "FULL" ) ) {
 #if DEBUG
-				Console.WriteLine( "Probuzen" );
+				Console.WriteLine("Přijimam FULL update");
 #endif
+				NetworkCarrierFull c = ( NetworkCarrierFull ) formatter.Deserialize( this.stream );
+				this.game.networkUpdate( c );
 			}
-		}
-		
-		private bool sendInfo( IPEndPoint end ) {
-			var client = new TcpClient( end );
-			var stream = client.GetStream();
+			
+			if( mes.StartsWith( "MINI" ) ) {
 #if DEBUG
-			Console.WriteLine( "Mám stream" );
+				Console.WriteLine("Přijimam MINI update");
 #endif
-			
-			// greeting
-			byte[] buffer = encoder.GetBytes("HELLO");
-			stream.Write( buffer,0,buffer.Length );
-			stream.Flush();
-			
-			// response
-			stream.Read( buffer, 0, buffer.Length );
-			if( encoder.GetString(buffer).StartsWith("ACK") ) {}
-			else { 
-				#region console2
-				Console.WriteLine( "Nepozdravili jsme se" ); 
-				#endregion
-				return false; }
-			
-			// send PLAYERS
-			client = new TcpClient( end );
-			stream = client.GetStream();	
-			formatter.Serialize( stream, Scrabble.Game.InitialConfig.players  );			
-			
-			// response
-			stream.Read( buffer, 0, buffer.Length );
-			if( encoder.GetString(buffer).StartsWith("ACK") ) {}
-			else { 
-				#region console3
-				Console.WriteLine( "Nepozdravili jsme se" ); 
-				#endregion
-				return false; 
+				NetworkCarrierMini c = ( NetworkCarrierMini ) formatter.Deserialize( this.stream );
+				this.game.networkUpdate( c );
 			}
-//			
-//			// send DESK
-//			client = new TcpClient( end );
-//			stream = client.GetStream();
-//			
-//			// response	
-//			stream.Read( buffer, 0, buffer.Length );
-//			if( encoder.GetString(buffer).StartsWith("ACK") ) {}
-//			else { return false; }
-
-			return false;
-		}
-		
-		public  bool sendQuestion( IPAddress endP , out Scrabble.Lexicon.Move m) {
-			m = new Scrabble.Lexicon.Move("");
-			return false;	
-		}
-		
-		public bool sendQuit( IPEndPoint endP ) {
-			return false;	
-		}
-		
-		private bool ReciveInfo() {
-			bool[] checkpoints = new bool[3]; 						// checkpoint in communication
-			TcpListener listener = new TcpListener ( IPAddress.Any, Scrabble.Game.InitialConfig.port );	
-			TcpClient client = new TcpClient();
 			
-			while( true ) {
-				listener.Start();
-				client = listener.AcceptTcpClient();				// this function is blocking
-				NetworkStream stream = client.GetStream();
-				
-				// Start of connection
-				if( ! checkpoints[0] ) {
-					byte[] buffer = new byte[128];
-					stream.Read( buffer, 0, buffer.Length );
-					string mes = encoder.GetString( buffer );
-					if( mes.StartsWith("HELLO") ) {
-#if DEBUG
-						Console.WriteLine( "HELLO přijate" );
-#endif
-						ack( stream );
-						checkpoints[0] = true;
-						continue;
-					} else {
-						// error		
-					}
+			if( mes.StartsWith( "MOVE" ) ) {
+				NetworkCarrierPlayer c = (NetworkCarrierPlayer) formatter.Deserialize( this.stream );
+				lock( this.game.gameLock ) {
+					this.game.yourTurn = true;
+					this.game.ncp = c;
 				}
 				
-				if( ! checkpoints[1] ) {
+				while( true ) {
 					try {
-						Scrabble.Player.Player[] pl = (Scrabble.Player.Player[]) formatter.Deserialize( stream );
-						Scrabble.Game.InitialConfig.game.players = pl;
-						checkpoints[1] = true;
-						ack( stream );
-#if DEBUG
-						Console.WriteLine( "Hráči přijati" );
-#endif					
-					} catch {
-						// error						
+						Thread.Sleep( Timeout.Infinite );
+					} catch (ThreadInterruptedException) {}
+					lock( this.game.gameLock ) {
+						if( this.game.turnDone ) {
+							this.game.turnDone = false;
+							this.game.yourTurn = false;
+							formatter.Serialize( this.stream, this.game.move);
+							this.stream.Flush();
+							this.stream.Close();
+							break;
+						}
+							
 					}
-					
 				}
-			}			
+			}
+			
+			if( mes.StartsWith( "EXIT" ) ) {
+				this.listener.Stop();
+				try { this.stream.Close(); } catch {}
+				try { this.client.Close(); } catch {}
+				this.end = true;
+			}
+			
 		}
 		
-		private void ack( NetworkStream s) {
-			byte[] buf = encoder.GetBytes("ACK");
-			s.Write( buf, 0, buf.Length);
-			s.Flush();
+		public void setNewData() {
+				
 		}
 	}
+	
+	public class scrabbleServer {
+		TcpClient client;
+		UTF8Encoding encoder = new UTF8Encoding();
+		BinaryFormatter formatter = new BinaryFormatter();
+		NetworkStream stream;
+		byte[] buffer;
+		
+		Scrabble.Game.Game game;
+		
+		public scrabbleServer( Scrabble.Game.Game g ) {
+			this.game = g;
+		}
+		
+		public void sendFullInfo(string ip) {
+			NetworkCarrierFull c = new NetworkCarrierFull( this.game.players, this.game.desk );
+			newConnection(ip, "FULL");
+			try {
+				this.formatter.Serialize( this.stream, c );
+				return;
+			} catch (Exception e) {
+				Console.WriteLine( e.Message );
+			}	
+		}
+		
+		public void sendMiniInfo(string ip, NetworkCarrierMini cin = null) {
+			NetworkCarrierMini c;
+			if ( cin == null ) {
+				int[] ints = new int[ this.game.players.Length ];
+				for(int i=0; i< this.game.players.Length; i++) {
+					ints[i] = this.game.players[i].Score;	
+				}
+				c = new NetworkCarrierMini( ints , this.game.desk.Desk );
+			} else {
+				c = cin;
+			}
+			newConnection(ip, "MINI");
+			try {
+				this.formatter.Serialize( this.stream, c );
+				return;
+			} catch (Exception e) {
+				Console.WriteLine( e.Message );
+			}	
+		}
+		
+		public void sendQuestion(string ip) {
+			newConnection(ip, "MOVE");
+			try {
+				this.formatter.Serialize( this.stream, this.game.getNCP() );
+				this.stream.Flush();
+				Lexicon.Move m = (Lexicon.Move) this.formatter.Deserialize( this.stream );
+				this.game.desk.Play( m );
+			} catch (Exception e ) {
+				Console.WriteLine( e.Message );
+			}
+		}
+		
+		public void sendExit(string ip) {
+			newConnection(ip, "EXIT");
+		}
+		
+		private void newConnection( string ip, string s ) {
+			int n =0;
+			while( true ) {
+				try {
+					this.client = new TcpClient( ip , Scrabble.Game.InitialConfig.port);
+					break;
+				} catch ( System.Net.Sockets.SocketException ) {
+					Console.WriteLine("[info]\tNepodařilo se spojit (zbývá {0} pokusů).", 4-n);
+					n++;
+					if( n == 5 ) {
+						Scrabble.Game.InitialConfig.logStream.WriteLine("Nedaří se spojit s: {0}", ip);
+						Scrabble.Game.InitialConfig.logStream.Flush();
+						Environment.Exit(0);
+					}
+					System.Threading.Thread.Sleep( 2000 );
+				}
+			}
+			this.buffer = this.encoder.GetBytes( s );
+			this.stream = this.client.GetStream();
+			this.stream.Write( this.buffer, 0, this.buffer.Length );
+			this.stream.Flush();
+		}
+	}
+	
+	#region network infrastructure
+	public enum carrierType { mini, full }
+	
+	[Serializable]
+	public abstract class NetworkCarrier {}
+	
+	[Serializable]
+	public class NetworkCarrierFull : NetworkCarrier {
+		public Scrabble.Player.Player[] players;	
+		public Scrabble.Lexicon.PlayDesk playDesk;
+		public NetworkCarrierFull(Scrabble.Player.Player[] p, Scrabble.Lexicon.PlayDesk d) {
+			this.players = p;
+			this.playDesk = d;
+		}
+	}
+	
+	[Serializable]
+	public class NetworkCarrierMini : NetworkCarrier {
+		public int[] scores;
+		public char[,] desk;
+		public NetworkCarrierMini(int[] s, char[,] d) {
+			this.scores = s;
+			this.desk =d;
+		}
+	}
+	
+	[Serializable]
+	public class NetworkCarrierPlayer : NetworkCarrier {
+		public int order;
+		public System.Collections.Generic.List<char> rack;
+		public NetworkCarrierPlayer( int o, System.Collections.Generic.List<char> l) {
+			this.order = o;
+			this.rack = l;
+		}
+	}
+	#endregion
 }

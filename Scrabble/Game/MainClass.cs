@@ -29,19 +29,32 @@ namespace Scrabble.Game
 		{	
 			Gtk.Application.Init();
 			
+			#region INIT WINDOW
 			var startwin = new Scrabble.GUI.StartWindow();
 			startwin.Show();
 			Gtk.Application.Run();
+			#endregion
 			
-			/* ! ! ! BUG ! ! !
-			 * Při spuštění spuštění jinak než s MonoDevelop či terminalu se neotevře druhé okno.
-			 * Avšak chyba je někde v něm, jelikož pokud zkopirujeme kod nastavovacího okna pod něj, 
-			 * tak to se otevře normálně dvakrát
-			 * */
+			#region MAIN WINDOW
 			try {
 				Scrabble.Game.InitialConfig.game.window = new Scrabble.GUI.ScrabbleWindow( Scrabble.Game.InitialConfig.client );
 				Scrabble.Game.InitialConfig.game.window.ShowAll();
-				Gtk.Application.Run();
+				while( true ) {
+					Gtk.Application.RunIteration();
+					lock(  Scrabble.Game.InitialConfig.game.gameLock ) {
+						if( Scrabble.Game.InitialConfig.game.newData ) {
+							Scrabble.Game.InitialConfig.game.newData = false;
+							Scrabble.Game.InitialConfig.game.Window.Update();
+						}
+					}
+					lock( Scrabble.Game.InitialConfig.game.gameLock ) {
+						if(	Scrabble.Game.InitialConfig.game.yourTurn ) {
+							Scrabble.Game.InitialConfig.game.clientTurn();
+						}
+					}
+					if( Scrabble.Game.InitialConfig.game.window.end )
+						break;
+				}
 			} catch (Exception e) {
 				Gtk.MessageDialog md = new Gtk.MessageDialog( 
 					null, 
@@ -58,6 +71,7 @@ namespace Scrabble.Game
 					Scrabble.Game.InitialConfig.logStreamAI.Close();
 #endif
 			}
+			#endregion
 		}
 	}
 }

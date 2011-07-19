@@ -69,7 +69,7 @@ namespace Scrabble.GUI {
 			this.loadG = new Gtk.Action("loadG","Načíst", "Načíst hru" , "gtk-load");
 			this.saveG = new Gtk.Action("saveG","Uložit", "Uložit hru", "gtk-save");
 			this.endG  = new Gtk.Action("endG", "Konec",  "Ukončí program", "gtk-quit");
-			this.endG.Activated += (sender, e) => Application.Quit();
+			this.endG.Activated += (sender, e) => Scrabble.Game.InitialConfig.game.Window.end = true;
 			
 			this.backM = new Gtk.Action("backM","Zpátky", "Vrátit tah zpátky", null);
 			this.forwardM = new Gtk.Action("forwM","Dopředu", "Vrátit tah dopředu", null);

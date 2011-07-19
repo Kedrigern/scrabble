@@ -26,6 +26,7 @@ using Scrabble.Lexicon;
 
 namespace Scrabble.Player
 {
+	[Serializable]
 	public class Player
 	{
 		protected int id;
@@ -34,6 +35,8 @@ namespace Scrabble.Player
 		public string Name { get {return name;} }
 		public int Score { get; set; }
 		public List<char> Rack;
+		
+		[NonSerialized]
 		protected Game.Game game;
 		
 		public Move bestMove = new Move("");
@@ -61,14 +64,16 @@ namespace Scrabble.Player
 			this.game = g;	
 		}
 		
-		public bool DoMove( Lexicon.Move m ) {
+		public virtual bool DoMove( Lexicon.Move m ) {
 
 			/* Check cross check 
 			 * Calcul score */
-			if( ! game.desk.AnalyzeMove( m ) ) return false;
+			if( ! this.game.desk.AnalyzeMove( m ) ) return false;
 			
 			/* Is connected with rest of stone? */
-			if( ! game.desk.Connect( m ) ) return false;
+			if( ! this.game.desk.Connect( m ) ) return false;
+			
+			
 			
 			// LOG
 			if( Scrabble.Game.InitialConfig.log ) {
@@ -79,7 +84,7 @@ namespace Scrabble.Player
 				Scrabble.Game.InitialConfig.logStream.WriteLine();
 			}
 			
-			if( ! game.desk.Play( m ) ) return false;	
+			if( ! this.game.desk.Play( m ) ) return false;	
 			else { 
 				if( m.Score > game.bestMove.Score ) game.bestMove = m;
 				WriteToLog( m );
@@ -113,7 +118,7 @@ namespace Scrabble.Player
 		}
 	}
 	
-	
+	[Serializable]
 	public class NetworkPlayer : Player {
 		protected IPEndPoint ep;
 		public IPAddress IP {get { return ep.Address; } }
@@ -127,11 +132,29 @@ namespace Scrabble.Player
 			}
 			this.ep = new IPEndPoint( ip, Scrabble.Game.InitialConfig.port );	
 		}
+		
+		public override bool DoMove (Lexicon.Move m)
+		{
+			/* Check cross check 
+			 * Calcul score */
+			if( ! game.desk.AnalyzeMove( m ) ) return false;
+			
+			/* Is connected with rest of stone? */
+			if( ! game.desk.Connect( m ) ) return false;
+			
+			lock( Scrabble.Game.InitialConfig.game.gameLock ) {
+				Scrabble.Game.InitialConfig.game.move = m;
+				Scrabble.Game.InitialConfig.game.turnDone = true;
+				Scrabble.Game.InitialConfig.game.clientThread.Interrupt();
+			}
+			return true;
+		}
 	}
 	
 	/// <summary>
 	/// Basic computer player (artificial inteligence), use greedy algorithm (czech: "hladový")
 	/// </summary>
+	[Serializable]
 	public class ComputerPlayer : Player {
 		protected AI ais;	
 		
@@ -217,6 +240,7 @@ namespace Scrabble.Player
 			if( max.Score > this.bestMove.Score ) this.bestMove = max;
 			WriteToLog( max );
 		}
+		
 	}
 }
 

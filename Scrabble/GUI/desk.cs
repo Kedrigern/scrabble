@@ -93,15 +93,14 @@ namespace Scrabble.GUI
 				i = int.Parse (name [1]);
 				j = int.Parse (name [2]);
 				
-				if( game.GetActualPlayer().DoMove(
+				w.HideAll ();
+				
+				
+				if( this.game.GetActualPlayer().DoMove(
 								new Lexicon.Move( new System.Drawing.Point(i-1,j-1), input.Text.ToUpperInvariant(), check.Active )	)
 					) { 
-					game.changePlayer();
-				}
-
-				w.HideAll ();
-				w.Dispose ();
-				w.Destroy ();
+					if( !Scrabble.Game.InitialConfig.client ) this.game.changePlayer();
+				}w.Destroy ();
 			};
 				
 			w.KeyPressEvent += delegate(object o, KeyPressEventArgs args) {

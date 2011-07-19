@@ -24,16 +24,18 @@ using System.Collections.Generic;
 
 namespace Scrabble.Lexicon
 {
+	[Serializable]
 	public class PlayDesk
 	{	
 		char[,] desk;
 		byte[,] wordBonus;
 		byte[,] charBonus;
 		
-		public char[,] Desk { get { return desk;} }
+		public char[,] Desk { get { return desk;} set { this.desk = value; } }
 		public byte[,] WordBonus { get { return wordBonus;} }
 		public byte[,] CharBonus { get { return charBonus;} }
 		
+		[NonSerialized]
 		Scrabble.Game.Game game;
 		
 		/// <summary>
@@ -191,7 +193,7 @@ namespace Scrabble.Lexicon
 		private int Cross(int i, int j, bool down) {
 			int score = 0;	
 			int n = 0;
-			Scrabble.Lexicon.Node tmp = game.dictionary.Root;
+			Scrabble.Lexicon.Node tmp = this.game.dictionary.Root;
 				
 			if( ! down ) { 	
 				// 1. find start of crossing word
@@ -349,8 +351,8 @@ namespace Scrabble.Lexicon
 			return true;
 		}
 		
-		public void FindWhichLetterIsNeed(Move m) {
-			
+		public void setGame( Scrabble.Game.Game g ) {
+			this.game = g;
 		}
 	}
 	

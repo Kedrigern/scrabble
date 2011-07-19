@@ -23,6 +23,7 @@ namespace 	Scrabble.GUI {
 		private Gtk.Label clientNotice;
 		
 		public Scrabble.Game.Game game;
+		public bool end = false;
 		
 		public ScrabbleWindow ( bool client = false ): base (Gtk.WindowType.Toplevel)
 		{		 
@@ -83,6 +84,7 @@ namespace 	Scrabble.GUI {
 			this.changePlayer( game.GetActualPlayer() );			
 			
 			if( client ) DisableButtons();
+			
 		}
 		
 		public void RackChange( List<char> l ) {
@@ -118,6 +120,9 @@ namespace 	Scrabble.GUI {
 		/// Update scrabble window (clear desk and put new data from logic desk)
 		/// </summary>
 		public void Update() {
+#if DEBUG
+			Console.WriteLine("Updatuji");
+#endif
 			this.desk.Restart();
 			this.changePlayer( this.game.GetActualPlayer() );
 		}
@@ -126,9 +131,7 @@ namespace 	Scrabble.GUI {
 		
 		protected void OnDeleteEvent (object sender, DeleteEventArgs a)
 		{
-			this.game.DestroyThread();
-			global::Gtk.Application.Quit();
-			a.RetVal = true;
+			this.end = true;
 		}
 	}
 }

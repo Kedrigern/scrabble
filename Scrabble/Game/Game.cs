@@ -33,6 +33,7 @@ namespace Scrabble.Game
 		public int Round { get { return round; } }
 		public Scrabble.Lexicon.GADDAG dictionary;
 		public Scrabble.Lexicon.PlayDesk desk;
+		
 		public Player.Player[] players;		
 		public StonesBag stonesBag;
 		public Scrabble.GUI.ScrabbleWindow window;
@@ -40,20 +41,33 @@ namespace Scrabble.Game
 			get {return window;}
 		}
 		
+		// Statistic data
 		public Scrabble.Lexicon.Move bestMove = new Scrabble.Lexicon.Move("");
 		
 		// History of game;
 		public Stack<Scrabble.Lexicon.Move> historyM;
 		public Stack<Scrabble.Lexicon.Move> futureM;
 		
+		public bool newData = false;
+		
 		int OnTurn = 0;
 		int round;
 		bool morePeople = false;
 		bool networkPlayers = false;
 		bool client;
-		Thread networkThread;
-		Networking networkInfo;
 	
+		// server specific
+		scrabbleServer sserver;
+		
+		// client specific
+		public bool yourTurn = false;
+		public bool turnDone = false;
+		public Lexicon.Move move;
+		Scrabble.Game.scrabbleClient sclient;
+		public Thread clientThread;
+		public object gameLock = new object();
+		public NetworkCarrierPlayer ncp;
+		
 		public Game(bool isClient = false ) {
 			if( Scrabble.Game.InitialConfig.dictionary == null )
 				throw new NullReferenceException("During game initialization is Scrabble.Game.InitialConfig.dictionary == null");
@@ -75,10 +89,9 @@ namespace Scrabble.Game
 			this.players = Scrabble.Game.InitialConfig.players;
 			
 			if( isClient ) {
-				this.networkInfo = new Networking( true );
-				this.networkThread = new System.Threading.Thread( this.networkInfo.work );
-				this.networkThread.Start();
+				this.morePeople = true;
 			} else {
+				sserver = new scrabbleServer( this );
 				int k =0;
 				int l =0; 
 				foreach( Scrabble.Player.Player p in players ) {
@@ -88,53 +101,29 @@ namespace Scrabble.Game
 					p.ReloadRack();
 				}
 				if( k > 1 ) this.morePeople = true;
-				if( l > 0 ) {
-					this.networkInfo = new Networking( false );
-					this.networkPlayers = true;
-					this.networkThread = new System.Threading.Thread( this.networkInfo.work );	
-				}
+				if( l > 0 ) this.networkPlayers = true;
 			}
 			
 			// Inicialize dialogs from menu (like checkword, about etc.)
 			Scrabble.GUI.StaticWindows.Init( this );
+			
+			if( this.client ) {
+				this.sclient = new scrabbleClient( this );
+				this.clientThread = new Thread( this.mainClientLoop );
+				this.clientThread.Start();
+			} else {
+				this.sendUpdatViaNetwork( true );
+			}
 		}
 		
+		#region BASIC LOGIC
 		public Scrabble.Player.Player GetActualPlayer() {
 			return players[ OnTurn ];	
 		}
 		
 		public void IncActualPlayerScore(int s) {
 			players[OnTurn].Score += s;	
-		}
-		
-		public void changePlayer () {
-			this.stonesBag.CompleteRack( ((Scrabble.Player.Player) players[OnTurn]).Rack );
-
-			OnTurn++;
-			if( OnTurn >= players.Length ) {
-				OnTurn =0;
-				round++;
-				Scrabble.Game.InitialConfig.logStream.Flush();
-#if DEBUG
-				Scrabble.Game.InitialConfig.logStreamAI.Flush();
-#endif
-			}
-			Window.changePlayer( players[OnTurn] );
-			
-			if( networkPlayers ) this.networkUpdate();
-			
-			if( typeof( ComputerPlayer ) == players[ OnTurn ].GetType() ) {
-				window.DisableButtons();	
-				((ComputerPlayer) players[OnTurn]).Play();
-				window.ActiveButtons();
-				changePlayer();
-			} else if( typeof( NetworkPlayer ) == players[ OnTurn ].GetType() ) {
-				changePlayer();
-				//Scrabble.Lexicon.Move m;
-				//Scrabble.Game.Networking.sendQuestion( ((NetworkPlayer) players[ OnTurn ]).IP , out m );
-			} else if( this.morePeople )				
-				GUI.StaticWindows.NextPlayer( players[OnTurn].Name );
-		}
+		}	
 		
 		/// <summary>
 		/// Reloads the rack and change player - alternative way to turn.
@@ -144,6 +133,62 @@ namespace Scrabble.Game
 			changePlayer();
 		}
 		
+		private void nextPlayerIndex() {
+			this.OnTurn++;
+			if( this.OnTurn >= this.players.Length ) {
+				this.OnTurn =0;
+				this.round++;
+				Scrabble.Game.InitialConfig.logStream.Flush();
+#if DEBUG
+				Scrabble.Game.InitialConfig.logStreamAI.Flush();
+#endif
+			}
+		}
+		#endregion		
+		
+		#region MAIN LOOP and SERVER
+		public void changePlayer () {
+			this.stonesBag.CompleteRack( ((Scrabble.Player.Player) players[OnTurn]).Rack );
+			
+			this.nextPlayerIndex();
+
+			this.Window.changePlayer( players[OnTurn] );
+			
+			if( this.networkPlayers ) this.sendUpdatViaNetwork( false );
+			
+			if( typeof( ComputerPlayer ) == players[ OnTurn ].GetType() ) {
+				this.Window.DisableButtons();	
+				((ComputerPlayer) players[OnTurn]).Play();
+				this.Window.ActiveButtons();
+				this.changePlayer();
+			} else if( typeof( NetworkPlayer ) == players[ OnTurn ].GetType() ) {
+				this.Window.DisableButtons();	
+				this.sserver.sendQuestion( ((NetworkPlayer) players[ OnTurn]).IP.ToString() );
+				this.Window.ActiveButtons();
+				this.changePlayer();
+			} else if( this.morePeople )				
+				GUI.StaticWindows.NextPlayer( players[OnTurn].Name );
+		}
+		
+		private void sendUpdatViaNetwork(bool full = false) {
+			foreach( Scrabble.Player.Player p in players ) {
+				if( p.GetType() == typeof( NetworkPlayer ) ) {
+					if( full )
+						sserver.sendFullInfo( ((NetworkPlayer) p).IP.ToString() );
+					else
+						sserver.sendMiniInfo( ((NetworkPlayer) p).IP.ToString() );
+				}
+			}
+		}
+		
+		public NetworkCarrierPlayer getNCP() {
+			
+			return new NetworkCarrierPlayer( OnTurn, players[OnTurn].Rack );	
+		}
+		#endregion
+		
+
+		#region GAME CONTROL
 		public void newGame() {
 			this.window.Hide();
 			this.round = 1;
@@ -160,7 +205,7 @@ namespace Scrabble.Game
 			this.window.Update();
 			this.window.ShowAll();
 		}
-		
+	
 		public void back() {
 			Scrabble.Lexicon.Move tmp = historyM.Pop();
 			futureM.Push( tmp );
@@ -175,36 +220,46 @@ namespace Scrabble.Game
 		public void forward() {
 			
 		}
+		#endregion
 		
+		#region CLIENT
 		/// <summary>
-		/// Update data in this class. Use networkInfo class that runs in onw networkThread
+		/// Update data in this class. Use client!
 		/// </summary>
-		private void networkUpdate() {				
-			
-			this.networkThread.Interrupt();
-			while( ! this.networkInfo.Done ) {
-				Thread.Sleep( 15 );
-#if DEBUG
-				Console.WriteLine( "Probouzím network thread" );
-#endif
-				this.networkThread.Interrupt();
-			}
-			
-			if( this.client ) {
-#if DEBUG
-				Console.WriteLine( "Aktualizuji info" );
-#endif
-				this.players = this.networkInfo.players;
-				this.desk = this.networkInfo.playDesk;
-				this.Window.Update();
-			} else {
-				
+		public void networkUpdate( NetworkCarrierMini c ) {				
+			lock( this.gameLock ) {
+				this.newData = true;
+				for(int i=0; i<this.players.Length;i++) {
+					this.players[i].Score = c.scores[i];	
+				}
+				this.desk.Desk = c.desk;
 			}
 		}
 		
-		public void DestroyThread() {
-			this.networkThread.Abort();	
+		public void networkUpdate( NetworkCarrierFull c ) {				
+			lock( this.gameLock ) {
+				this.newData = true;
+				this.players = c.players;
+				foreach( Scrabble.Player.Player p in this.players ) 
+					p.SetGame( this );
+				this.desk = c.playDesk;
+				this.desk.setGame( this );
+			}
 		}
+		
+		public void mainClientLoop() {
+			this.sclient.mainLoop();
+		}
+		
+		public void clientTurn() {
+			this.yourTurn = false;
+			this.players[ ncp.order ].Rack = ncp.rack;
+			this.OnTurn = ncp.order;
+			this.Window.changePlayer( this.players[ ncp.order] );
+			this.Window.ActiveButtons();
+			
+		}
+		#endregion
 	}
 }
 

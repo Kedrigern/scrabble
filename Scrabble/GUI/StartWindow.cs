@@ -168,6 +168,7 @@ namespace Scrabble.GUI
 				e.Hide ();
 			
 			this.CPUchecks[0].Hide();
+			this.MPchecks[0].Hide();
 		}
 	
 		protected void OnNumberOfPlayerChange (object sender, EventArgs e)

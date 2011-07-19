@@ -28,13 +28,19 @@ namespace Scrabble.GUI
 			this.PackStart( pla );
 			this.PackEnd( score );
 			
-			scoresTable = new Gtk.Table( (uint) g.players.Length, 2, true );
-			scoreValues = new Gtk.Label[g.players.Length*2];
-			for( int i=0; i < game.players.Length; i++) {
+			scoresTable = new Gtk.Table( 6, 2, true );
+			scoreValues = new Gtk.Label[ 6*2 ];
+			for( int i=0; i < this.game.players.Length; i++) {
 				scoreValues[ i ] = new Label( game.players[i].Name );
-				scoreValues[ i+game.players.Length ] = new Label( "0" );
+				scoreValues[ i+6 ] = new Label( "0" );
 				scoresTable.Attach( scoreValues[i], 0 , 1, (uint) i, (uint) i+1);
-				scoresTable.Attach( scoreValues[i+g.players.Length] , 1, 2, (uint) i, (uint) i+1 );
+				scoresTable.Attach( scoreValues[i+6] , 1, 2, (uint) i, (uint) i+1 );
+			}
+			for( int i=this.game.players.Length; i < 6; i++) {
+				scoreValues[ i ] = new Label( );
+				scoreValues[ i+6 ] = new Label( );
+				scoresTable.Attach( scoreValues[i], 0 , 1, (uint) i, (uint) i+1);
+				scoresTable.Attach( scoreValues[i+6] , 1, 2, (uint) i, (uint) i+1 );
 			}
 			scoresTable.BorderWidth = 3;
 			score.Add( scoresTable );
@@ -61,10 +67,10 @@ namespace Scrabble.GUI
 			scoresTable.HideAll();
 			for( int i=0; i < game.players.Length; i++) {
 				if( typeof( Player.ComputerPlayer ) == game.players[i].GetType() )
-					scoreValues[ i ].Text = game.players[i].Name + " (CPU)";
+					scoreValues[ i ].Markup = game.players[i].Name + " <span size=\"smaller\">(CPU)</span>";
 				else
 					scoreValues[ i ].Text = game.players[i].Name + "  ";
-				scoreValues[ i+game.players.Length ].Text = string.Format( "{0}", game.players[i].Score );
+				scoreValues[ i+6 ].Text = string.Format( "{0}", game.players[i].Score );
 			}
 
 			scoresTable.ShowAll();

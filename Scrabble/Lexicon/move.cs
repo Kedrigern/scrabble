@@ -82,6 +82,7 @@ namespace Scrabble.Lexicon
 	/// Struct that identify conrete position for one new stone. 
 	/// List<MovedStone> uniqe define all move
 	/// </summary>
+	[Serializable]
 	public struct MovedStone {
 		public char c;	
 		public int i;
