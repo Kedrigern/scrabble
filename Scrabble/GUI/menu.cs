@@ -53,7 +53,7 @@ namespace Scrabble.GUI {
 			this.ag = new ActionGroup("Default");
 			
 			this.gameAction = new Gtk.Action("game", "Hra", null, null);
-			this.moveAction = new Gtk.Action("move", "Tah", null, null);
+				this.moveAction = new Gtk.Action("move", "Tah", null, null);
 			this.dictionary = new Gtk.Action("dictionary", "Slovník", null, null);
 			this.settings = new Gtk.Action("settings", "Nastavení", null, null);
 			this.help = new Gtk.Action("help", "Nápověda", null, null);
@@ -111,9 +111,12 @@ namespace Scrabble.GUI {
 			this.uim.InsertActionGroup( ag, 0);
 			this.parrent.AddAccelGroup( uim.AccelGroup );
 			
-			this.uim.AddUiFromResource( "Scrabble.Resources.menu.xml" );
-
-			this.menuBar = (MenuBar) this.uim.GetWidget("/menubar");
+			try {
+				this.uim.AddUiFromResource( "Scrabble.Resources.menu.xml" );
+				this.menuBar = (MenuBar) this.uim.GetWidget("/menubar");
+			} catch (Exception e) {
+				Scrabble.Game.InitialConfig.logStream.WriteLine("[ERROR]\tSomethink wrong during menu init.");	
+			}
 		}
 	}
 }

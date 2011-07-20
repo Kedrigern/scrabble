@@ -20,20 +20,20 @@ namespace Scrabble.GUI
 			this.Pdesk = ((Game.Game) game).desk;
 			
 			// inicialization of labels 
-			fields[0,0] = new Stone();
-			fields[0,0].Sensitive = false;
+			this.fields[0,0] = new Stone();
+			this.fields[0,0].Sensitive = false;
 			for( uint i = 1; i < fields.GetLength(0); i++) {
-				fields[i,0] = new Stone();
+				this.fields[i,0] = new Stone();
 				this.Attach( fields[i,0], i,i+1,0,1);
-				fields[i,0].Sensitive = false;
-				fields[i,0].Show();
-				fields[i,0].setChar(i.ToString());
+				this.fields[i,0].Sensitive = false;
+				this.fields[i,0].Show();
+				this.fields[i,0].setChar(i.ToString());
 				
-				fields[0,i] = new Stone();
+				this.fields[0,i] = new Stone();
 				this.Attach( fields[0,i], 0,1,i,i+1);
-				fields[0,i].Sensitive = false;
-				fields[0,i].Show();
-				fields[0,i].setChar(i.ToString());
+				this.fields[0,i].Sensitive = false;
+				this.fields[0,i].Show();
+				this.fields[0,i].setChar(i.ToString());
 			}
 			
 			for(uint j=1; j < fields.GetLength(1) ; j++)
