@@ -33,6 +33,10 @@ namespace Scrabble.GUI
 		
 		public Control ( Scrabble.Game.Game g) : base ("Tah")
 		{
+			this.HeightRequest = 60;
+			this.WidthRequest = 350;
+			
+			
 			this.game = g;
 			this.BorderWidth = 5;
 			
