@@ -64,6 +64,8 @@ namespace Scrabble.Game
 			'Z', 'Z'
 		} ;
 		
+		public static Gdk.Pixbuf icon;
+		
 		/* Usually complete start window */
 		public static Lexicon.GADDAG dictionary;	
 		public static Player.Player[] players;
@@ -72,6 +74,15 @@ namespace Scrabble.Game
 #if DEBUG		
 		public static System.IO.StreamWriter logStreamAI;
 #endif
+		
+		/// <summary>
+		/// Initializes the <see cref="Scrabble.Game.InitialConfig"/> class (static constructor).
+		/// </summary>
+		static InitialConfig() {
+			try {
+				Scrabble.Game.InitialConfig.icon = new Gdk.Pixbuf("gscrabble.svg");
+			} catch {}			
+		}
 	}
 }
 

@@ -67,13 +67,18 @@ namespace Scrabble.GUI {
 			this.newG.ShortLabel = "Nová";
 			this.newG.Activated += (sender, e) => this.parrent.game.newGame();
 			this.loadG = new Gtk.Action("loadG","Načíst", "Načíst hru" , "gtk-load");
+			this.loadG.Sensitive = false;
 			this.saveG = new Gtk.Action("saveG","Uložit", "Uložit hru", "gtk-save");
+			this.saveG.Sensitive = false;
 			this.endG  = new Gtk.Action("endG", "Konec",  "Ukončí program", "gtk-quit");
 			this.endG.Activated += (sender, e) => Scrabble.Game.InitialConfig.game.Window.end = true;
 			
 			this.backM = new Gtk.Action("backM","Zpátky", "Vrátit tah zpátky", null);
+			this.backM.Sensitive = false;
 			this.forwardM = new Gtk.Action("forwM","Dopředu", "Vrátit tah dopředu", null);
+			this.forwardM.Sensitive = false;
 			this.helpM = new Gtk.Action("helpM", "Poradit", "Poradí vám s tahem", null);
+			this.helpM.Sensitive = false;
 			
 			this.infoD = new Gtk.Action("infoD", "Info", "Informace o slovníku", "gtk-info");
 			this.infoD.Activated += StaticWindows.DictionaryInfoDialog;
@@ -85,6 +90,7 @@ namespace Scrabble.GUI {
 			this.loadD.Activated += StaticWindows.LoadNewDictionaryDialog;
 			
 			this.optionS = new Gtk.Action("optionS", "Volby", null, "gtk-prefernces");
+			this.optionS.Sensitive = false;
 			this.about = new Gtk.Action("about", "O aplikaci", null, "gtk-info");
 			this.about.Activated += StaticWindows.AboutProgramDialog;
 			

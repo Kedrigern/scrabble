@@ -41,9 +41,7 @@ namespace Scrabble.GUI {
 			this.Name = "MainWindow";
 			this.DoubleBuffered = true;
 			this.SetPosition( WindowPosition.Center );
-			try {
-				this.Icon = new Gdk.Pixbuf("gscrabble.svg");
-			} catch {}
+			this.Icon = Scrabble.Game.InitialConfig.icon;
 			
 			this.DeleteEvent += new global::Gtk.DeleteEventHandler (this.OnDeleteEvent);
 

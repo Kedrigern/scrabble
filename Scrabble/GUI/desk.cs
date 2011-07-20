@@ -15,11 +15,11 @@ namespace Scrabble.GUI
 		
 		public Desk (Game.Game g) : base ( sizeX , sizeY , true )
 		{
-			fields = new Stone[ sizeX+1, sizeY+1 ];
-			game = g;
-			Pdesk = ((Game.Game) game).desk;
+			this.fields = new Stone[ sizeX+1, sizeY+1 ];
+			this.game = g;
+			this.Pdesk = ((Game.Game) game).desk;
 			
-			/* inicialization of labels */
+			// inicialization of labels 
 			fields[0,0] = new Stone();
 			fields[0,0].Sensitive = false;
 			for( uint i = 1; i < fields.GetLength(0); i++) {
@@ -42,11 +42,11 @@ namespace Scrabble.GUI
 					this.Attach( fields[i,j] , i, i+1, j, j+1);
 				}
 			
-			Restart();
+			this.Restart();
 		}
 		
 		public void SetBonus(System.Drawing.Point p, short level, bool word) {
-				fields[p.X+1,p.Y+1].setBonus( level, word );
+				this.fields[p.X+1,p.Y+1].setBonus( level, word );
 		}
 		
 		public void DisableButtons() {
@@ -61,8 +61,7 @@ namespace Scrabble.GUI
 			}
 		}
 		
-		private void PushButton( object sender, EventArgs e) {
-			
+		private void PushButton( object sender, EventArgs e) {		
 			Gtk.CheckButton check = new Gtk.CheckButton("Down");
 			Gtk.Entry input = new Gtk.Entry(15);
 			Gtk.HBox divide = new Gtk.HBox(false, 0);
@@ -117,13 +116,21 @@ namespace Scrabble.GUI
 				
 		}
 		
+		/// <summary>
+		/// Updates the desk againts the logic desk
+		/// </summary>
+		/// <param name='d'>
+		/// Logic desk (char[,])
+		/// </param>
 		public void UpdateDesk(char[,] d) {
 			for(uint j=1; j <= d.GetLength(1); j++)
 				for(uint i=1; i <= d.GetLength(0); i++)
 					fields[i,j].setChar( d[i-1,j-1] .ToString());
 		}
 		
-		// INIT blank desk with bonuses
+		/// <summary>
+		/// Init blank desk with all bonuses 
+		/// </summary>
 		public void Restart() {
 			/* initialization of Buttons (letters) */
 			for(uint j=1; j < fields.GetLength(1) ; j++)
@@ -164,6 +171,9 @@ namespace Scrabble.GUI
 		}
 	}
 	
+	/// <summary>
+	/// Auxiliary class derived from Gtk.Button. Work with colors.
+	/// </summary>
 	class Stone : Gtk.Button {		
 		public static readonly Color red = new Color(255,0,0);
 		public static readonly Color blue = new Color(0,0,255);

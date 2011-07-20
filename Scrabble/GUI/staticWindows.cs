@@ -24,6 +24,9 @@ using Gdk;
 
 namespace Scrabble.GUI
 {
+	/// <summary>
+	/// Small static windows. They are using from diffent part of code, general from menu
+	/// </summary>
 	class StaticWindows {
 		private static Scrabble.Game.Game game;
 	
@@ -193,14 +196,14 @@ namespace Scrabble.GUI
 			Gtk.AboutDialog aboutWin = new Gtk.AboutDialog();
 			aboutWin.Copyright = "GPL";
 			aboutWin.Documenters = new string[] {"Ondřej Profant"};
-			aboutWin.ProgramName = "Scrabble";
+			aboutWin.ProgramName = "gScrabble";
 			aboutWin.Authors = new string[] {"Ondřej Profant"};
 			aboutWin.Artists = new string[] {"Lada Švadlenková"};
 			aboutWin.Website = "https://github.com/Kedrigern/scrabble";
-			aboutWin.Title = "O programu Scrabble";
+			aboutWin.Title = "O programu gScrabble";
 			aboutWin.WebsiteLabel = "Projekt na GitHubu";
 			aboutWin.WrapLicense = true;
-			//aboutWin.Logo =
+			aboutWin.Logo = Scrabble.Game.InitialConfig.icon;
 			aboutWin.Comments = text;
 			aboutWin.Run();
 			aboutWin.Hide();

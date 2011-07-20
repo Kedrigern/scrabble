@@ -69,9 +69,7 @@ namespace Scrabble.GUI
 			this.SetPosition(WindowPosition.Center);
 			this.DefaultWidth = 410;
 			this.DefaultHeight = 280;	
-			try {
-				this.Icon = new Gdk.Pixbuf("gscrabble.svg");
-			} catch {}
+			this.Icon = Scrabble.Game.InitialConfig.icon;
 			#endregion
 
 			this.numberOfPlayers = 2;
