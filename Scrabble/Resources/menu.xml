@@ -1,0 +1,30 @@
+<ui>
+	<menubar name='menubar'>
+		<menu name='game' action='game'>
+			<menuitem name='newG' action='newG' />
+			<menuitem name='loadG' action='loadG' />
+			<menuitem name='saveG' action='saveG' />
+			<menuitem name='endG' action='endG' />
+		</menu>
+		<menu name='move' action='move'>
+			<menuitem name='backM' action='backM' />
+			<menuitem name='forwM' action='forwM' />
+			<menuitem name='helpM' action='helpM' />
+		</menu>
+			<menu name='dictionary' action='dictionary'>
+			<menuitem name='checDk' action='checkD' />
+			<menuitem name='infoD' action='infoD'/>
+			<menuitem name='addD' action='addD' />
+			<menuitem name='loadD' action='loadD' />
+		</menu>
+		<menu name='settings' action='settings'>
+			<menuitem name='optionS' action='optionS' />
+		</menu>
+		<menu name='help' action='help'>
+			<menuitem name='about' action='about' />
+		</menu>
+	</menubar>
+</ui>
+<!-- XML declaration of menu, rest are in menu.cs
+Attentoion if you put this XML comment at start of document the parser crash down
+-->

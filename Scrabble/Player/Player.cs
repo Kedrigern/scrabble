@@ -36,6 +36,7 @@ namespace Scrabble.Player
 		public int Score { get; set; }
 		public List<char> Rack;
 		
+			
 		[NonSerialized]
 		protected Game.Game game;
 		
@@ -45,7 +46,7 @@ namespace Scrabble.Player
 		{
 			this.name = n;
 			this.Score = 0;
-			Rack = new List<char>( Scrabble.Game.InitialConfig.sizeOfRack );
+			this.Rack = new List<char>( Scrabble.Game.InitialConfig.sizeOfRack );
 			this.id = Uniqe.GetFreeID();
 		}
 		
@@ -118,6 +119,7 @@ namespace Scrabble.Player
 		}
 	}
 	
+	
 	[Serializable]
 	public class NetworkPlayer : Player {
 		protected IPEndPoint ep;
@@ -151,6 +153,7 @@ namespace Scrabble.Player
 			return true;
 		}
 	}
+	
 	
 	/// <summary>
 	/// Basic computer player (artificial inteligence), use greedy algorithm (czech: "hladový")

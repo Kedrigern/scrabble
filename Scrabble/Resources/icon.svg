@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="64px"
+   height="64px"
+   id="svg3007"
+   version="1.1"
+   inkscape:version="0.48.1 r9760"
+   sodipodi:docname="gscrabble.svg">
+  <defs
+     id="defs3009">
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="4.3636364 : -9 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="68.363636 : -9 : 1"
+       inkscape:persp3d-origin="36.363636 : -19.666667 : 1"
+       id="perspective3015" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="11"
+     inkscape:cx="21.12661"
+     inkscape:cy="32.292274"
+     inkscape:current-layer="layer1"
+     showgrid="true"
+     inkscape:document-units="px"
+     inkscape:grid-bbox="true"
+     inkscape:window-width="1920"
+     inkscape:window-height="1056"
+     inkscape:window-x="0"
+     inkscape:window-y="24"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata3012">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     id="layer1"
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer">
+    <text
+       xml:space="preserve"
+       style="font-size:90.90364075px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
+       x="-4.7068162"
+       y="67.510345"
+       id="text3055"
+       sodipodi:linespacing="125%"
+       transform="scale(1.0761381,0.92924875)"><tspan
+         sodipodi:role="line"
+         id="tspan3057"
+         x="-4.7068162"
+         y="67.510345">G</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:100.64250945999999942px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#008000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
+       x="0.16741417"
+       y="37.206379"
+       id="text3059"
+       sodipodi:linespacing="125%"
+       transform="scale(0.59148911,1.6906482)"><tspan
+         sodipodi:role="line"
+         id="tspan3061"
+         x="0.16741417"
+         y="37.206379"
+         style="font-size:25.16062737000000027px;fill:#008000">scrabble</tspan></text>
+  </g>
+</svg>

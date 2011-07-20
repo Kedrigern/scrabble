@@ -109,13 +109,11 @@ namespace Scrabble.GUI {
 			this.ag.Add( about, null);
 					
 			this.uim.InsertActionGroup( ag, 0);
-			parrent.AddAccelGroup( uim.AccelGroup );
-			if     ( File.Exists("/home/keddie/.scrabble/GUI/menu.xml") ) uim.AddUiFromFile("/home/keddie/.scrabble/GUI/menu.xml");		
-			else if( File.Exists("/usr/share/scrabble/GUI/menu.xml") ) uim.AddUiFromFile("/usr/share/scrabble/GUI/menu.xml");		
-			else if( File.Exists("GUI/menu.xml") ) uim.AddUiFromFile("GUI/menu.xml");
-			else if( File.Exists("menu.xml") ) uim.AddUiFromFile("menu.xml");
+			this.parrent.AddAccelGroup( uim.AccelGroup );
+			
+			this.uim.AddUiFromResource( "Scrabble.Resources.menu.xml" );
 
-			this.menuBar = (MenuBar) uim.GetWidget("/menubar");
+			this.menuBar = (MenuBar) this.uim.GetWidget("/menubar");
 		}
 	}
 }

@@ -62,6 +62,10 @@ namespace Scrabble.Game
 			content.Remove( c );
 			return c;
 		}
+		
+		public int getNumberOfRemainig() {
+			return this.content.Count;	
+		}
 	}
 }
 

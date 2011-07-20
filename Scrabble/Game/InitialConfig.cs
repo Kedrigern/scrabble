@@ -80,8 +80,8 @@ namespace Scrabble.Game
 		/// </summary>
 		static InitialConfig() {
 			try {
-				Scrabble.Game.InitialConfig.icon = new Gdk.Pixbuf("gscrabble.svg");
-			} catch {}			
+				Scrabble.Game.InitialConfig.icon = Gdk.Pixbuf.LoadFromResource( "Scrabble.Resources.icon.svg" );
+			} catch {	}			
 		}
 	}
 }
