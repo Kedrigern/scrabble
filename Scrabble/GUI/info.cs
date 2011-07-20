@@ -4,29 +4,22 @@ using Scrabble.Game;
 
 namespace Scrabble.GUI
 {
-	public class Info : Gtk.HBox
+	public class Info : Gtk.Frame
 	{	
-		Gtk.Frame pla;
-		Gtk.Frame score;
 		Gtk.Table scoresTable;
 		Gtk.Label[] scoreValues;
-		
-		Pango.Layout layout;
-		Gtk.DrawingArea da;
 		
 		Scrabble.Game.Game game;
 		
 		public Info (Game.Game g)
 		{
-			pla = new Gtk.Frame("Na tahu");
-			pla.BorderWidth = 5;
-			score = new Gtk.Frame("Score");
-			score.BorderWidth = 5;
-			game = g;
+
+			this.Label = "Score";
+			this.BorderWidth = 5;
+			this.game = g;
 			
 			this.HeightRequest = 99;
-			this.PackStart( pla );
-			this.PackEnd( score );
+			this.WidthRequest = 120;
 			
 			scoresTable = new Gtk.Table( 6, 2, true );
 			scoreValues = new Gtk.Label[ 6*2 ];
@@ -43,24 +36,9 @@ namespace Scrabble.GUI
 				scoresTable.Attach( scoreValues[i+6] , 1, 2, (uint) i, (uint) i+1 );
 			}
 			scoresTable.BorderWidth = 3;
-			score.Add( scoresTable );
-			
-			da = new Gtk.DrawingArea();
-			da.ExposeEvent += Expose_Event;	
-			pla.Add(da);
-			
-			layout = new Pango.Layout(this.PangoContext);
-			layout.Width = Pango.Units.FromPixels( 90 );
-			layout.Wrap = Pango.WrapMode.Word;
-			layout.Alignment = Pango.Alignment.Center;
-			layout.FontDescription = Pango.FontDescription. FromString("Ahafoni CLM Bold 18");
-			
+			this.Add( scoresTable );
+
 			this.ShowAll();
-		}
-		
-		void Expose_Event(object obj, ExposeEventArgs args){
-			layout.SetText( game.GetActualPlayer().Name );
-			da.GdkWindow.DrawLayout (da.Style.TextGC (StateType.Normal), 5, 5, layout);
 		}
 		
 		public void Change(string name, Scrabble.Player.Player[] players) {		

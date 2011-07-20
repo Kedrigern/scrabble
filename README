@@ -12,6 +12,10 @@ INSTALL
 -------
 Install isn't required. Just click at scrabble.exe, or write to terminal:
 	mono scrabble.exe
+but is required Mono 2.10 (Ubuntu 11.04 installation: 
+http://www.integratedwebsystems.com/2011/05/install-mono-2-10-2-and-monodevelop-2-6-beta-3-on-ubuntu-or-fedora-with-a-bash-script
+, in Ubuntu 11.10, is by default.), download: http://www.go-mono.com/mono-downloads/download.html
+
 You need these two files:	
 	menu.xml
 	dic.txt

@@ -53,7 +53,9 @@ namespace Scrabble.Game
 						}
 					}
 					if( Scrabble.Game.InitialConfig.game.window.end ) {
-						Scrabble.Game.InitialConfig.game.clientThread.Abort();
+						try {
+							Scrabble.Game.InitialConfig.game.clientThread.Abort();
+						} catch (NullReferenceException) { /* no network players */ }
 						break;
 					}
 				}

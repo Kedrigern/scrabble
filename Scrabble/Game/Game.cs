@@ -51,22 +51,22 @@ namespace Scrabble.Game
 		public bool newData = false;
 		
 		int OnTurn = 0;
-		int round;
+		int round = 1;
 		bool morePeople = false;
 		bool networkPlayers = false;
-		bool client;
+		bool client = false;
 	
 		// server specific
-		scrabbleServer sserver;
+		scrabbleServer sserver = null;
 		
 		// client specific
 		public bool yourTurn = false;
 		public bool turnDone = false;
-		public Lexicon.Move move;
-		Scrabble.Game.scrabbleClient sclient;
-		public Thread clientThread;
+		public Lexicon.Move move = null;
+		Scrabble.Game.scrabbleClient sclient = null;
+		public Thread clientThread = null;
 		public object gameLock = new object();
-		public NetworkCarrierPlayer ncp;
+		public NetworkCarrierPlayer ncp = null;
 		
 		public Game(bool isClient = false ) {
 			if( Scrabble.Game.InitialConfig.dictionary == null )

@@ -35,8 +35,11 @@ namespace Scrabble.GUI
 		
 		// TOP
 		Gtk.VBox mainVbox;
-	
-		// Upper Line
+			
+		// infoText
+		Gtk.Label infoText;
+		
+		// First config line
 		Gtk.HBox upperHbox;
 		Gtk.Label l1;
 		Gtk.Label l2;
@@ -52,41 +55,46 @@ namespace Scrabble.GUI
 		Gtk.Entry[] IPs;
 		Gtk.Label ipLabel;
 		Gtk.Button ok;
-
-		// infoText
-		Gtk.Label infoText;
 		
 		// StatusBar
 		Gtk.Statusbar statusb;
 	
 		public StartWindow (): base (Gtk.WindowType.Toplevel)
 		{
+			#region Basic window properties
+			// Basic window properties
 			this.Title = "Scrabble - Základní nastavení";
+			this.Name = "ConfigWindow";
 			this.DeleteEvent += OnDeleteEvent; 
 			this.SetPosition(WindowPosition.Center);
-			this.DefaultWidth = 400;
-			this.DefaultHeight = 280;
+			this.DefaultWidth = 410;
+			this.DefaultHeight = 280;	
+			try {
+				this.Icon = new Gdk.Pixbuf("gscrabble.svg");
+			} catch {}
+			#endregion
+
 			this.numberOfPlayers = 2;
-		
+			
 			// Own thread for loading dictionary
 			this.statusb = new Gtk.Statusbar();
 			this.statusb.Push( statusb.GetContextId( "Slovník" ), "Načítám slovník");
-			tdic = new Thread( LoadDictionary );
-			tdic.Start();
+			this.tdic = new Thread( LoadDictionary );
+			this.tdic.Start();
 			
-			// infoText
-			infoText = new Gtk.Label ("Základní nastavení hry.\n" +
+			// infoText (top)
+			this.infoText = new Gtk.Label ("Základní nastavení hry.\n" +
 			"Nastavte prosím počet hráčů, jejich jména a určete zda za ně bude hrát umělá inteligence. " +
 			"Také můžete nastavit, kteří hráči se připojují vzdáleně.");
-			infoText.Wrap = true;
+			this.infoText.Wrap = true;
 		
-			// upperline
-			upperHbox = new HBox (false, 5);
-			l1 = new Label ("Počet hráčů");
-			upperHbox.PackStart (l1);
-			l2 = new Label (", nebo:");
-			entryNum = new SpinButton (2, 5, 1);
-			entryNum.Changed += OnNumberOfPlayerChange;
+			// First config line (number of players, client)
+			this.upperHbox = new HBox (false, 5);
+			this.l1 = new Label ("Počet hráčů");
+			this.upperHbox.PackStart (l1);
+			this.l2 = new Label (", nebo:");
+			this.entryNum = new SpinButton (2, 5, 1);
+			this.entryNum.Changed += OnNumberOfPlayerChange;
 			client = new CheckButton ();
 			client.Clicked += IamClient;
 			client.Label = "připojit se ke vzdálené hře";
@@ -97,7 +105,7 @@ namespace Scrabble.GUI
 			upperHbox.BorderWidth = 10;
 			upperHbox.WidthRequest = 20;
 				
-			// table
+			// Table with config for each player (dynamic size)
 			table = new Gtk.Table (5, 7, false);
 			table.Attach (new Gtk.Label ("Jméno hráče:"), 1, 2, 0, 1);
 			table.Attach (new Gtk.Label ("CPU"), 2, 3, 0, 1);
@@ -142,18 +150,18 @@ namespace Scrabble.GUI
 			ok.TooltipText = "Potvrzením začne hra. Může se stát, že program bude ještě chvíli načítat slovník.";
 			table.Attach (ok, 0, 5, 6, 7);
 
-			// Main vbox
-			mainVbox = new Gtk.VBox (false, 5);
+			// Main vbox (where all is)
+			this.mainVbox = new Gtk.VBox (false, 5);
 			
-			mainVbox.PackStart (infoText);
-			mainVbox.Add (upperHbox);
-			mainVbox.Spacing = 5;
-			mainVbox.Add( table );
-			mainVbox.PackEnd (statusb);
+			this.mainVbox.PackStart (infoText);
+			this.mainVbox.Add (upperHbox);
+			this.mainVbox.Spacing = 5;
+			this.mainVbox.Add( table );
+			this.mainVbox.PackEnd (statusb);
 		
-			mainVbox.BorderWidth = 10;
+			this.mainVbox.BorderWidth = 9;
 			this.Add (mainVbox);
-			mainVbox.ShowAll ();	
+			this.mainVbox.ShowAll ();	
 		
 			for (int i = 2; i < numberOfPlayers+3; i++) {
 				labels [i].Hide ();
@@ -232,6 +240,9 @@ namespace Scrabble.GUI
 			this.CPUchecks[0].Hide();
 		}
 	
+		/// <summary>
+		/// Stop configuration and start game as client.
+		/// </summary>
 		protected void IamClient (object sender,EventArgs e)
 		{
 			if (((Gtk.CheckButton)sender).Active) {
@@ -256,6 +267,9 @@ namespace Scrabble.GUI
 			}
 		}
 		
+		/// <summary>
+		/// Loads the dictionary (take lot of time - use own thread).
+		/// </summary>
 		protected void LoadDictionary() {
 			lock( dicLoc ) {				
 				this.dic = new Scrabble.Lexicon.GADDAG();
@@ -280,7 +294,8 @@ namespace Scrabble.GUI
 		}
 	
 		protected void Done (object sender, EventArgs e)
-		{				
+		{	
+			// Collect info about players
 			Scrabble.Game.InitialConfig.players = new Player.Player[ numberOfPlayers ];
 			for( int i=0; i < numberOfPlayers; i++) {
 				if( CPUchecks[i].Active ) {
@@ -300,7 +315,6 @@ namespace Scrabble.GUI
 				Scrabble.Game.InitialConfig.logStreamAI = new StreamWriter("./lastAI.log", false);
 #endif	
 		
-			
 			// WAIT FOR DICTIONARY LOAD
 			tdic.Join();
 			lock( dicLoc ) {
@@ -325,5 +339,4 @@ namespace Scrabble.GUI
 			Environment.Exit(0);
 		}
 	}
-
 }
