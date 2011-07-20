@@ -281,7 +281,7 @@ namespace Scrabble.GUI
 					StreamReader sr = new StreamReader ( "dic.txt" );
 					this.dic = new Scrabble.Lexicon.GADDAG( sr );
 				} else if ( File.Exists( "dic-cs.txt" ) ) {
-					StreamReader sr = new StreamReader ( "dic.txt" );
+					StreamReader sr = new StreamReader ( "dic-cs.txt" );
 					this.dic = new Scrabble.Lexicon.GADDAG( sr );
 				}
 			}

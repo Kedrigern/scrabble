@@ -198,7 +198,7 @@ namespace Scrabble.GUI
 			aboutWin.Documenters = new string[] {"Ondřej Profant"};
 			aboutWin.ProgramName = "gScrabble";
 			aboutWin.Authors = new string[] {"Ondřej Profant"};
-			aboutWin.Artists = new string[] {"Lada Švadlenková"};
+			aboutWin.Artists = new string[] {"Ondřej Profant", "Lada Švadlenková"};
 			aboutWin.Website = "https://github.com/Kedrigern/scrabble";
 			aboutWin.Title = "O programu gScrabble";
 			aboutWin.WebsiteLabel = "Projekt na GitHubu";
