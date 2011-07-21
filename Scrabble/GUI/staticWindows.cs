@@ -167,6 +167,32 @@ namespace Scrabble.GUI
 			finally { fch.Destroy(); }
 		}
 		
+		public static void GameInfo() {
+			var tabl = new Table( (uint)(Scrabble.Game.InitialConfig.game.players.Length+3), 4, true );
+			tabl.RowSpacing = 6;
+			tabl.ColumnSpacing = 10;
+			tabl.BorderWidth = 10;
+			tabl.Attach( new Label( string.Format("{0}. kolo hry, zbývá {1} nepřidělených kamenů. ", 
+									Scrabble.Game.InitialConfig.game.Round, 
+									Scrabble.Game.InitialConfig.game.stonesBag.getNumberOfRemainig()) ), 			0, 4, 0, 1 );
+			tabl.Attach( new Label( string.Format("Nejlepší tah: ", Scrabble.Game.InitialConfig.game.Round ) ), 	0, 2, 1, 2 );
+			tabl.Attach( new Label( string.Format("{0}", Scrabble.Game.InitialConfig.game.bestMove.ToString() ) ), 	2, 4, 1, 2 );
+			tabl.Attach( new Label( "Jméno hráče" ), 		0, 1, 2, 3 );
+			tabl.Attach( new Label( "Score (celkem)" ), 	1, 2, 2, 3 );
+			tabl.Attach( new Label( "Nejlepší tah" ), 		2, 3, 2, 3 );
+			tabl.Attach( new Label( "Score" ), 				3, 4, 2, 3 );
+
+			for(int i=0; i < Scrabble.Game.InitialConfig.game.players.Length; i++) {
+				tabl.Attach( new Label( Scrabble.Game.InitialConfig.game.players[i].Name ),							0, 1, (uint)i+3, (uint)i+4);
+				tabl.Attach( new Label( Scrabble.Game.InitialConfig.game.players[i].Score.ToString() ),				1, 2, (uint)i+3, (uint)i+4);
+				tabl.Attach( new Label( Scrabble.Game.InitialConfig.game.players[i].bestMove.Word ), 				2, 3, (uint)i+3, (uint)i+4);
+				tabl.Attach( new Label( Scrabble.Game.InitialConfig.game.players[i].bestMove.Score.ToString() ), 	3, 4, (uint)i+3, (uint)i+4);			
+			}
+			var win = new Gtk.Window( Gtk.WindowType.Toplevel );
+			win.Add( tabl );
+			win.ShowAll();
+		}
+		
 		public static void NextPlayer(string name) {
 			var but = new Gtk.Button( );
 			but.TooltipMarkup = "Po kliknutí bude hrát další hráč";

@@ -88,6 +88,7 @@ namespace Scrabble.Player
 			if( ! this.game.desk.Play( m ) ) return false;	
 			else { 
 				if( m.Score > game.bestMove.Score ) game.bestMove = m;
+				if( m.Score > this.bestMove.Score ) this.bestMove = m;
 				WriteToLog( m );
 			}
 			return true;	

@@ -27,6 +27,7 @@ namespace Scrabble.GUI {
 		
 		/* Items in menu */
 		Gtk.Action newG;
+		Gtk.Action infoG;
 		Gtk.Action loadG;
 		Gtk.Action saveG;
 		Gtk.Action endG;
@@ -66,6 +67,8 @@ namespace Scrabble.GUI {
 			this.newG  = new Gtk.Action("newG", "Nová",   null, "gtk-open");
 			this.newG.ShortLabel = "Nová";
 			this.newG.Activated += (sender, e) => this.parrent.game.newGame();
+			this.infoG = new Gtk.Action("infoG", "Info", null, null);
+			this.infoG.Activated += (sender, e) => StaticWindows.GameInfo();
 			this.loadG = new Gtk.Action("loadG","Načíst", "Načíst hru" , "gtk-load");
 			this.loadG.Sensitive = false;
 			this.saveG = new Gtk.Action("saveG","Uložit", "Uložit hru", "gtk-save");
@@ -95,6 +98,7 @@ namespace Scrabble.GUI {
 			this.about.Activated += StaticWindows.AboutProgramDialog;
 			
 			this.ag.Add( newG, null);
+			this.ag.Add( infoG, null );
 			this.ag.Add( loadG, null);
 			this.ag.Add( saveG, null);
 			this.ag.Add( endG, "<Control><Mod2>q");
@@ -115,7 +119,7 @@ namespace Scrabble.GUI {
 				this.uim.AddUiFromResource( "Scrabble.Resources.menu.xml" );
 				this.menuBar = (MenuBar) this.uim.GetWidget("/menubar");
 			} catch (Exception e) {
-				Scrabble.Game.InitialConfig.logStream.WriteLine("[ERROR]\tSomethink wrong during menu init.");	
+				Scrabble.Game.InitialConfig.logStream.WriteLine("[ERROR]\tSomethink wrong during menu init. {0}", e.Message);	
 			}
 		}
 	}

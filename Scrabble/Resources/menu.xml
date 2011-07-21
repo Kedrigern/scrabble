@@ -2,6 +2,7 @@
 	<menubar name='menubar'>
 		<menu name='game' action='game'>
 			<menuitem name='newG' action='newG' />
+			<menuitem name='infoG' action='infoG' />
 			<menuitem name='loadG' action='loadG' />
 			<menuitem name='saveG' action='saveG' />
 			<menuitem name='endG' action='endG' />

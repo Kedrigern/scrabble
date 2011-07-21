@@ -25,10 +25,10 @@ namespace Scrabble.Game
 {
 	public static class MainClass
 	{
-		public static void Main ()
+		public static void Main ( string[] args )
 		{	
-			Gtk.Application.Init();
-			
+			Gtk.Application.Init( Environment.GetCommandLineArgs()[0] , ref args );
+		
 			#region INIT WINDOW
 			var startwin = new Scrabble.GUI.StartWindow();
 			startwin.Show();
