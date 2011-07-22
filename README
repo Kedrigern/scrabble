@@ -14,7 +14,7 @@ Install isn't required. Just click at scrabble.exe, or write to terminal:
 	mono scrabble.exe
 but is required Mono 2.10 + Gtk sharp 2.
 
-	OS						WORK		NOTES
+	OS				WORK			NOTES
 - OpenSuse 11.4 	ok
 - Fedora 15 		ok		packages: mono-core , gtk-sharp2 (tested on both system)
 - Ubuntu 11.04 		ok		has not Mono 2.10 (only 2.6.7). Way to install 2.10: 
