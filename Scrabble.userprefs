@@ -1,11 +1,11 @@
 ﻿<Properties GitUserInfo="UsingGIT">
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release|x86" ctype="Workspace" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Scrabble/GUI/menu.cs" ctype="Workbench">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release|x86" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Scrabble/Lexicon/desk.cs">
     <Files>
       <File FileName="Scrabble/Game/Game.cs" Line="1" Column="1" />
       <File FileName="Scrabble/Game/Networking.cs" Line="1" Column="1" />
       <File FileName="Scrabble/Lexicon/PlayStone.cs" Line="1" Column="1" />
-      <File FileName="Scrabble/Lexicon/desk.cs" Line="1" Column="1" />
+      <File FileName="Scrabble/Lexicon/desk.cs" Line="28" Column="22" />
       <File FileName="Scrabble/Game/MainClass.cs" Line="1" Column="1" />
       <File FileName="Scrabble/GUI/ScrabbleWindow.cs" Line="1" Column="1" />
       <File FileName="Scrabble/Game/StonesBag.cs" Line="1" Column="1" />
@@ -32,10 +32,10 @@
           <Node name="Scrabble" expanded="True">
             <Node name="References" expanded="True" />
             <Node name="Game" expanded="True" />
-            <Node name="GUI" expanded="True">
-              <Node name="menu.cs" selected="True" />
+            <Node name="GUI" expanded="True" />
+            <Node name="Lexicon" expanded="True">
+              <Node name="desk.cs" selected="True" />
             </Node>
-            <Node name="Lexicon" expanded="True" />
             <Node name="Player" expanded="True" />
             <Node name="Resources" expanded="True" />
           </Node>
@@ -56,7 +56,7 @@
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches ctype="PinnedWatchStore">
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches>
     <Watch file="Scrabble/Lexicon/trie.cs" line="32" offsetX="110" offsetY="153" expression="Trie" liveUpdate="False" />
     <Watch file="Scrabble/Lexicon/desk.cs" line="193" offsetX="198" offsetY="2788" expression="i" liveUpdate="False" />
     <Watch file="Scrabble/Lexicon/desk.cs" line="193" offsetX="198" offsetY="2788" expression="j" liveUpdate="False" />
