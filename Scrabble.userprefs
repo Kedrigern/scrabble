@@ -31,7 +31,9 @@
         <State expanded="True">
           <Node name="Scrabble" expanded="True">
             <Node name="References" expanded="True">
-              <Node name="gtk-dotnet, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" expanded="True" selected="True" />
+              <Node name="gtk-dotnet, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" expanded="True" />
+              <Node name="gtk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" expanded="True" />
+              <Node name="System.Core, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" selected="True" />
             </Node>
             <Node name="Game" expanded="True" />
             <Node name="GUI" expanded="True" />
