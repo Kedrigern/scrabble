@@ -24,6 +24,9 @@ using System.Collections.Generic;
 
 namespace Scrabble.Lexicon
 {
+	///<summary>
+	///Logic play desk. Hold information about puted chars and bonuses (all type).
+	///</summary>
 	[Serializable]
 	public class PlayDesk
 	{	
@@ -39,8 +42,8 @@ namespace Scrabble.Lexicon
 		Scrabble.Game.Game game;
 		
 		/// <summary>
-		/// Initializes a new instance of the <see cref="trie.PlayDesk"/> class. 
-		/// Lay-out is classic Scrabble desk 15*15 + classic bonuses.
+		/// Initializes a new instance of the <see cref="Scrabble.Lexicon.PlayDesk"/> class. 
+		/// Layout is classic Scrabble desk 15*15 + classic bonuses.
 		/// </summary>/
 		public PlayDesk (Game.Game g) 
 		{
@@ -68,16 +71,19 @@ namespace Scrabble.Lexicon
 		}
 		
 		/// <summary>
-		/// Initializes a new instance of the <see cref="trie.PlayDesk"/> class.
-		/// Lay-out is from stream Sr.
+		/// Initializes a new instance of the <see cref="Scrabble.Lexicon.PlayDesk"/> class.
+		/// Layout is from stream Sr. Not implemented yet.
 		/// </summary>
 		/// <param name='sr'>
 		/// Sr. Stream with desk
 		/// </param>
+		/// <exception cref='Exception'>
+		/// NotImplementedException
+		/// </exception>
 		public PlayDesk (StreamReader sr)
 		{
 			//TODO: Loading dictionary via stream reader
-
+			throw new NotImplementedException();
 		}		
 
 	
@@ -85,15 +91,16 @@ namespace Scrabble.Lexicon
 		
 		/// <summary>
 		/// Analyzes the move: which letter are need to put, calcul score
+		/// Load these new "advance" information to input parametr M.
 		/// </summary>
 		/// <returns>
-		/// Is move correct?.
+		/// Is move correct?
 		/// </returns>
 		/// <param name='M'>
-		/// If set to <c>true</c> m.
+		/// Class Move with basic information about move (like position, word)
 		/// </param>
 		/// <exception cref='Exception'>
-		/// Represents errors that occur during application execution.
+		/// no
 		/// </exception>
 		public bool AnalyzeMove(Move M) {
 			int i = M.Start.X ;
@@ -181,15 +188,18 @@ namespace Scrabble.Lexicon
 		/// <summary>
 		/// Analyze crossword from position [i, j]. Return value: <0 error;; =0 no word;; <0 score
 		/// </summary>
+		/// <returns>
+		/// <0 error;; =0 no word;; <0 score
+		/// </returns>
 		/// <param name='i'>
-		/// 
+		/// axis x
 		/// </param>
 		/// <param name='j'>
-		/// 
+		/// axis y
 		/// </param>
 		/// <param name='down'>
-		/// Down (true) or Across (false)
-		/// </param>
+		/// Down (true), or Across (false)
+		/// </param> 
 		private int Cross(int i, int j, bool down) {
 			int score = 0;	
 			int n = 0;
@@ -243,11 +253,10 @@ namespace Scrabble.Lexicon
 			// Simplest heuristik
 			if( m.Word.Length > m.PutedStones.Count ) return true;
 			else { 
-				
 				foreach( MovedStone a in m.PutedStones ) {
 					// first move
 					if( a.i == 7 && a.j == 7 ) return true; 
-					// 
+					// otherwise
 					if( m.Down ) {
 						if( this.desk[ a.i+1, a.j ] != '_' ) return true;
 						if( this.desk[ a.i-1, a.j ] != '_' ) return true;
@@ -311,44 +320,6 @@ namespace Scrabble.Lexicon
 			for(int n=0; n<what1.GetLength(0); n++) {
 				to[ what1[n,0] , what1[n,1] ] = what2;	
 			}
-		}
-		
-		public bool CheckAllDesk() {
-			string w = "";
-			for( int j=0; j < this.desk.GetLength(1); j++) {
-				for( int i=0; i < this.desk.GetLength(0); i++) {
-					if( desk[i,j] == '_' ) {
-						if( w != "" ) {
-							if( ! this.game.dictionary.Content( w ) ) return false;
-							w = "";
-						}
-						continue;
-					}
-					else w += desk[i,j].ToString();
-				}
-				if( w != "" ) {
-					if( ! this.game.dictionary.Content( w ) ) return false;
-					w = "";
-				}
-			}
-			w="";
-			for( int i=0; i < this.desk.GetLength(0); i++) {
-				for( int j=0; j < this.desk.GetLength(1); j++) {
-					if( desk[i,j] == '_' ) {
-						if( w != "" ) {
-							if( ! this.game.dictionary.Content( w ) ) return false;
-							w = "";
-						}
-						continue;
-					}
-					else w += desk[i,j].ToString();
-				}
-				if( w != "" ) {
-					if( ! this.game.dictionary.Content( w ) ) return false;
-					w = "";
-				}
-			}
-			return true;
 		}
 		
 		public void setGame( Scrabble.Game.Game g ) {
