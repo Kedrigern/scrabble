@@ -9,7 +9,7 @@
       <File FileName="Scrabble/Game/MainClass.cs" Line="1" Column="1" />
       <File FileName="Scrabble/GUI/ScrabbleWindow.cs" Line="1" Column="1" />
       <File FileName="Scrabble/Game/StonesBag.cs" Line="1" Column="1" />
-      <File FileName="Scrabble/GUI/rack.cs" Line="2" Column="1" />
+      <File FileName="Scrabble/GUI/rack.cs" Line="41" Column="37" />
       <File FileName="Scrabble/GUI/desk.cs" Line="1" Column="1" />
       <File FileName="Scrabble/Player/Player.cs" Line="1" Column="1" />
       <File FileName="Scrabble/Game/InitialConfig.cs" Line="1" Column="1" />
@@ -29,12 +29,8 @@
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
-          <Node name="Scrabble" expanded="True">
-            <Node name="References" expanded="True">
-              <Node name="gtk-dotnet, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" expanded="True" />
-              <Node name="gtk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" expanded="True" />
-              <Node name="System.Core, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" selected="True" />
-            </Node>
+          <Node name="Scrabble" expanded="True" selected="True">
+            <Node name="References" expanded="True" />
             <Node name="Game" expanded="True" />
             <Node name="GUI" expanded="True" />
             <Node name="Lexicon" expanded="True" />

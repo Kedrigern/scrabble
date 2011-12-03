@@ -9,7 +9,7 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>Scrabble</RootNamespace>
     <AssemblyName>Scrabble</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <StartupObject>Scrabble.Game.MainClass</StartupObject>
     <CodePage>65001</CodePage>
   </PropertyGroup>
