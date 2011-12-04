@@ -174,7 +174,7 @@ namespace Scrabble.GUI
 			tabl.BorderWidth = 10;
 			tabl.Attach( new Label( string.Format("{0}. kolo hry, zbývá {1} nepřidělených kamenů. ", 
 									Scrabble.Game.InitialConfig.game.Round, 
-									Scrabble.Game.InitialConfig.game.stonesBag.getNumberOfRemainig()) ), 			0, 4, 0, 1 );
+									Scrabble.Game.StonesBag.getNumberOfRemainig()) ), 			0, 4, 0, 1 );
 			tabl.Attach( new Label( string.Format("Nejlepší tah: ", Scrabble.Game.InitialConfig.game.Round ) ), 	0, 2, 1, 2 );
 			tabl.Attach( new Label( string.Format("{0}", Scrabble.Game.InitialConfig.game.bestMove.ToString() ) ), 	2, 4, 1, 2 );
 			tabl.Attach( new Label( "Jméno hráče" ), 		0, 1, 2, 3 );

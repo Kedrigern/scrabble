@@ -51,7 +51,7 @@ namespace Scrabble.Player
 		}
 		
 		public void ReloadRack() {
-			Rack = game.stonesBag.ReloadAll( Rack );
+			Rack =  Scrabble.Game.StonesBag.ReloadAll( Rack );
 			if( Scrabble.Game.InitialConfig.log ) 
 				Scrabble.Game.InitialConfig.logStream.WriteLine("PLAYER {0} REALOAD RACK", this.Name);	
 		}

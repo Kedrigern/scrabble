@@ -19,11 +19,25 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using System;
+using System.Collections.Generic;
 
 namespace Scrabble.Lexicon
 {
 	public static class PlayStone
 	{
+		private static SortedDictionary< char, int > values;
+		
+		/// <summary>
+		/// Static initializes the <see cref="Scrabble.Lexicon.PlayStone"/> class.
+		/// </summary>
+		static PlayStone() {
+			values = new SortedDictionary<char, int>();
+		}
+		
+		public static void Add(char c, int i) {
+			values.Add(c, i);	
+		}
+		
 		/// <summary>
 		/// From char (stone) get yout rank (score)
 		/// </summary>
@@ -34,10 +48,10 @@ namespace Scrabble.Lexicon
 		/// C.
 		/// </param>
 		public static int ToRank(this char c) {
-			switch(c) {
-			case 'a': return 1;
-			case 'b': return 1;
-			default : return 1;
+			try {
+				return values[c];
+			} catch (KeyNotFoundException) {
+				return 1;
 			}
 		}
 	}

@@ -269,13 +269,19 @@ namespace Scrabble.GUI
 		/// Loads the dictionary (take lot of time - use own thread).
 		/// </summary>
 		protected void LoadDictionary() {
+			// On Linux: "/home/$user/.scrabble"
+			string home = Environment.GetFolderPath( Environment.SpecialFolder.Personal ) + "/.scrabble/";
+			// On Linux: "/usr/share/games/"
+			string usrShrG = Environment.GetFolderPath( Environment.SpecialFolder.CommonApplicationData ) + "/games/";
+			
 			lock( dicLoc ) {				
 				this.dic = new Scrabble.Lexicon.GADDAG();
-				if( File.Exists( "/home/keddie/.scrabble/dic.txt" ) ) {
-					StreamReader sr = new StreamReader ( "/home/keddie/.scrabble/dic.txt" );
+				
+				if( File.Exists( home + "dic.txt" ) ) {
+					StreamReader sr = new StreamReader ( home + "dic.txt" ); //HACK: for my computer only!!!
 					this.dic = new Scrabble.Lexicon.GADDAG( sr );
-				} else if( File.Exists( "/usr/share/games/scrabble/dic.txt" ) ) {
-					StreamReader sr = new StreamReader ( "/usr/share/games/scrabble/dic.txt" );
+				} else if( File.Exists( usrShrG +  "scrabble/dic.txt" ) ) {
+					StreamReader sr = new StreamReader ( usrShrG + "scrabble/dic.txt" );
 					this.dic = new Scrabble.Lexicon.GADDAG( sr );
 				} else if ( File.Exists( "dic.txt" ) ) {
 					StreamReader sr = new StreamReader ( "dic.txt" );

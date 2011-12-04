@@ -19,51 +19,21 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using System;
+using System.IO;
+using System.Xml.XPath;
+using System.Reflection;
 
 namespace Scrabble.Game
 {
 	public static class InitialConfig
 	{
-		// TODO : Loading from config file
 		public static bool client = false;
 		public static bool gui = true;
 		public static bool network = false;
-		public static bool log = true;
-		public static int numberOfStones = 100;
-		public static int sizeOfRack = 7;
-		public static int port = 6541;
-		public static char[] stones = {
-			'A', 'A', 'A', 'A', 'A', 'A',
-			'Á',
-			'B', 'B', 'B',
-			'C', 'C', 'C',
-			'Č',
-			'D', 'D', 'D',
-			'E', 'E', 'E', 'E','E',
-			'F', 
-			'I', 'I', 'I',
-			'Í',
-			'J', 'J', 'K',
-			'K', 'K', 'K',
-			'L', 'L', 'L',
-			'M', 'M',
-			'N', 'N', 'N',
-			'O', 'O', 'O', 'O',
-			'P', 'P', 
-//			'Q',
-			'R', 'R',
-			'S', 'S', 'S',
-			'Š',
-			'T', 'T', 
-			'U', 'U', 'U', 
-			'Ú',
-			'Ů',
-			'V', 'V',
-			'X',
-			'Y', 'Y',
-			'Z', 'Z'
-		} ;
-		
+		public static bool log;
+		public static int numberOfStones;
+		public static int sizeOfRack;
+		public static int port;
 		public static Gdk.Pixbuf icon;
 		
 		/* Usually complete start window */
@@ -81,7 +51,46 @@ namespace Scrabble.Game
 		static InitialConfig() {
 			try {
 				Scrabble.Game.InitialConfig.icon = Gdk.Pixbuf.LoadFromResource( "Scrabble.Resources.icon.svg" );
-			} catch {	}			
+			} catch {	}	
+			
+			/* Choice of config */
+			string usrShrG = Environment.GetFolderPath( Environment.SpecialFolder.CommonApplicationData ) + "/games/";
+			
+			if( File.Exists("config.xml") ) {
+				XPathDocument xDoc = new XPathDocument( new StreamReader("config.xml") );
+				getConfig(xDoc);
+			} else if ( File.Exists( usrShrG + "scrabble/config.xml" ) ) {
+				XPathDocument xDoc = new XPathDocument(
+					Assembly.GetExecutingAssembly().GetManifestResourceStream(usrShrG + "scrabble/config.xml")
+				);
+				getConfig(xDoc);
+			} else {
+				XPathDocument xDoc = new XPathDocument(
+					Assembly.GetExecutingAssembly().GetManifestResourceStream("Scrabble.Resources.defaultConfig.xml")
+				);
+				getConfig(xDoc);
+			}
+		}
+		
+		static private void getConfig(XPathDocument xDoc) {		
+			XPathNavigator xNav = xDoc.CreateNavigator();
+					
+			sizeOfRack = xNav.SelectSingleNode("/scrabble/game/rackSize").ValueAsInt;
+			numberOfStones = xNav.SelectSingleNode("/scrabble/game/numberStones").ValueAsInt;
+			
+			foreach (XPathNavigator stone in xNav.Select("/scrabble/game/stones/*") ) {
+				char c = stone.GetAttribute("type", "")[0];
+				int val = int.Parse( stone.GetAttribute("value", "") );
+				int count = int.Parse( stone.GetAttribute("count", "") );
+				Scrabble.Lexicon.PlayStone.Add(c,val);
+				do {
+					Scrabble.Game.StonesBag.Add( c );
+					count--;
+				} while( count <= 0);
+			}
+			
+			log = xNav.SelectSingleNode("/scrabble/technical/log").ValueAsBoolean;
+			port = xNav.SelectSingleNode("/scrabble/technical/port").ValueAsInt;			
 		}
 	}
 }

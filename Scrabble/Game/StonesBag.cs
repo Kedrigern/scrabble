@@ -24,20 +24,18 @@ using System.Collections.Generic;
 namespace Scrabble.Game
 {
 	/// <summary>
-	/// Represents bag for game stones.
+	/// Represents bag for game stones. In game is only one hence static (singleton).
 	/// </summary>
-	public class StonesBag
+	public static class StonesBag
 	{
-		List<char> content;
-		Random rand;
-			
-		public StonesBag ()
-		{
-			content = new List<char>( InitialConfig.stones );
-			rand = new Random();
+		static List<char> content = new List<char>( Scrabble.Game.InitialConfig.numberOfStones );
+		static Random rand = new Random();
+				
+		public static void Add(char c) {
+			content.Add(c);
 		}
 		
-		public void CompleteRack( List<char> r ) {
+		public static void CompleteRack( List<char> r ) {
 			while( r.Count < Scrabble.Game.InitialConfig.sizeOfRack ) {
 				try {
 					r.Add( getOneStone() );
@@ -45,7 +43,7 @@ namespace Scrabble.Game
 			}
 		}
 		
-		public List<char> ReloadAll( List<char> r) {
+		public static List<char> ReloadAll( List<char> r) {
 			List<char> newRack = new List<char>( Scrabble.Game.InitialConfig.sizeOfRack );
 			CompleteRack( newRack );
 
@@ -56,15 +54,15 @@ namespace Scrabble.Game
 			return newRack;
 		}
 		
-		private char getOneStone() {
+		private static char getOneStone() {
 			if( content.Count == 0 ) throw new Exception("Empty bag");
 			char c = content[ rand.Next(0,content.Count-1) ];
 			content.Remove( c );
 			return c;
 		}
 		
-		public int getNumberOfRemainig() {
-			return this.content.Count;	
+		public static int getNumberOfRemainig() {
+			return content.Count;	
 		}
 	}
 }

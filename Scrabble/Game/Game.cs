@@ -35,7 +35,6 @@ namespace Scrabble.Game
 		public Scrabble.Lexicon.PlayDesk desk;
 		
 		public Player.Player[] players;		
-		public StonesBag stonesBag;
 		public Scrabble.GUI.ScrabbleWindow window;
 		public Scrabble.GUI.ScrabbleWindow Window {
 			get {return window;}
@@ -81,8 +80,6 @@ namespace Scrabble.Game
 			
 			// Initialization of play desk (logic component, not gtk)
 			this.desk = new Scrabble.Lexicon.PlayDesk ( this );
-			// Initialization of bag for game stones
-			this.stonesBag = new StonesBag();
 			
 			global::Scrabble.Lexicon.SearchAlgorithm.Init( desk.Desk, this.dictionary );
 			
@@ -148,7 +145,7 @@ namespace Scrabble.Game
 		
 		#region MAIN LOOP and SERVER
 		public void changePlayer () {
-			this.stonesBag.CompleteRack( ((Scrabble.Player.Player) players[OnTurn]).Rack );
+			Scrabble.Game.StonesBag.CompleteRack( ((Scrabble.Player.Player) players[OnTurn]).Rack );
 			
 			this.nextPlayerIndex();
 
@@ -193,10 +190,9 @@ namespace Scrabble.Game
 			this.window.Hide();
 			this.round = 1;
 			this.desk = new Scrabble.Lexicon.PlayDesk(this);
-			this.stonesBag = new StonesBag();
 			foreach( Scrabble.Player.Player p in this.players ) {
 				p.Restart();	
-				this.stonesBag.CompleteRack( p.Rack );
+				Scrabble.Game.StonesBag.CompleteRack( p.Rack );
 			}
 			OnTurn = 0;
 			
