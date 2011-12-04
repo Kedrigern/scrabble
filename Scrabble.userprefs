@@ -1,6 +1,6 @@
 ﻿<Properties GitUserInfo="UsingGIT">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Release|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Scrabble/GUI/StartWindow.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Scrabble/Resources/defaultConfig.xml">
     <Files>
       <File FileName="Scrabble/Game/Game.cs" Line="1" Column="1" />
       <File FileName="Scrabble/Game/Networking.cs" Line="1" Column="1" />
@@ -12,10 +12,10 @@
       <File FileName="Scrabble/GUI/rack.cs" Line="31" Column="7" />
       <File FileName="Scrabble/GUI/desk.cs" Line="1" Column="1" />
       <File FileName="Scrabble/Player/Player.cs" Line="1" Column="1" />
-      <File FileName="Scrabble/Game/InitialConfig.cs" Line="60" Column="29" />
+      <File FileName="Scrabble/Game/InitialConfig.cs" Line="89" Column="21" />
       <File FileName="Scrabble/Lexicon/move.cs" Line="1" Column="1" />
       <File FileName="Scrabble/GUI/info.cs" Line="1" Column="1" />
-      <File FileName="Scrabble/GUI/StartWindow.cs" Line="273" Column="16" />
+      <File FileName="Scrabble/GUI/StartWindow.cs" Line="278" Column="32" />
       <File FileName="Scrabble/GUI/menu.cs" Line="114" Column="6" />
       <File FileName="Scrabble/GUI/Control.cs" Line="1" Column="1" />
       <File FileName="Scrabble/GUI/staticWindows.cs" Line="1" Column="1" />
@@ -33,12 +33,12 @@
           <Node name="Scrabble" expanded="True">
             <Node name="References" expanded="True" />
             <Node name="Game" expanded="True" />
-            <Node name="GUI" expanded="True">
-              <Node name="StartWindow.cs" selected="True" />
-            </Node>
+            <Node name="GUI" expanded="True" />
             <Node name="Lexicon" expanded="True" />
             <Node name="Player" expanded="True" />
-            <Node name="Resources" expanded="True" />
+            <Node name="Resources" expanded="True">
+              <Node name="defaultConfig.xml" selected="True" />
+            </Node>
           </Node>
         </State>
       </Pad>
@@ -55,9 +55,7 @@
     </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore>
-      <Breakpoint file="/home/keddie/Projects/scrabble/Scrabble/Game/MainClass.cs" line="30" />
-    </BreakpointStore>
+    <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches>
     <Watch file="Scrabble/Lexicon/trie.cs" line="32" offsetX="110" offsetY="153" expression="Trie" liveUpdate="False" />

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Scrabble configurations -->
+<!-- For more info see: http://github.com/Kedrigern/scrabble -->
+<scrabble>
+	<game>
+		<rackSize>7</rackSize>
+		<numberStones>100</numberStones>
+		<stones>
+			<!--No jokers => +1 A, +1 U -->
+			<stone type='A' value='1' count='6' />
+			<stone type='Á' value='2' count='2' />
+			<stone type='B' value='3' count='2' />
+			<stone type='C' value='2' count='3' />
+			<stone type='Č' value='4' count='1' />
+			<stone type='D' value='1' count='3' />
+			<stone type='Ď' value='8' count='1' />
+			<stone type='E' value='1' count='5' />
+			<stone type='É' value='3' count='2' />
+			<stone type='Ě' value='3' count='2' />
+			<stone type='F' value='5' count='1' />
+			<stone type='G' value='5' count='1' />
+			<stone type='H' value='2' count='3' />
+			<stone type='I' value='1' count='4' />
+			<stone type='Í' value='2' count='3' />
+			<stone type='J' value='2' count='2' />
+			<stone type='K' value='1' count='3' />
+			<stone type='L' value='1' count='3' />
+			<stone type='M' value='2' count='3' />
+			<stone type='N' value='1' count='5' />
+			<stone type='Ň' value='6' count='1' />
+			<stone type='O' value='1' count='6' />
+			<stone type='Ó' value='7' count='1' />
+			<stone type='P' value='1' count='3' />
+			<stone type='R' value='1' count='3' />
+			<stone type='Ř' value='4' count='2' />
+			<stone type='S' value='1' count='4' />
+			<stone type='Š' value='4' count='2' />
+			<stone type='T' value='1' count='4' />
+			<stone type='Ť' value='7' count='1' />
+			<stone type='U' value='2' count='4' />
+			<stone type='Ú' value='5' count='1' />
+			<stone type='Ů' value='4' count='1' />
+			<stone type='V' value='1' count='4' />
+			<stone type='X' value='10' count='1' />
+			<stone type='Y' value='2' count='2' />
+			<stone type='Ý' value='4' count='2' />
+			<stone type='Z' value='2' count='2' />
+			<stone type='Ž' value='4' count='1' />
+		</stones>
+	</game>	
+	<!-- Be careful at next lines -->
+	<technical>	
+		<log>true</log>
+		<port>6541</port>
+	</technical>
+</scrabble>
