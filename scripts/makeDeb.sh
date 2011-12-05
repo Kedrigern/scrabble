@@ -4,6 +4,7 @@
 # VARIABLES
 name=scrabble
 version=0.1
+homepage=http://github.com/Kedrigern/srabble
 
 function prepareStructure {
 
@@ -12,33 +13,38 @@ if msgfmt -V 1> /dev/null; then :
 else exit 1;
 fi;
 
-# make structure for dpkg-deb
+# MAKE structure for dpkg-deb
 mkdir -p tmp
 cd tmp
 mkdir -p DEBIAN
 mkdir -p usr
+mkdir -p usr/games
 mkdir -p usr/share
 mkdir -p usr/share/applications
 mkdir -p usr/share/doc
 mkdir -p usr/share/doc/${name}
-mkdir -p usr/share/${name}
+mkdir -p usr/share/games/${name}
+mkdir -p usr/share/games/${name}/dics
 mkdir -p usr/share/pixmaps
 mkdir -p usr/share/locale/cs/LC_MESSAGES
 
-# debug
+# DEBUG
 #echo "pwd"
 #pwd
 #echo "ls"
 #ls
 
-# copy files
-cp ../../Scrabble/bin/Release/Scrabble.exe ./usr/share/${name}/
-mv ./usr/share/${name}/Scrabble.exe ./usr/share/${name}/scrabble.exe
-# localzation
+# -- COPY files --
+cp ../../Scrabble/bin/Release/Scrabble.exe ./usr/share/games/${name}
+mv ./usr/share/games/${name}/Scrabble.exe ./usr/share/games/${name}/scrabble.exe
+#to post install
+#ln -s /usr/share/games/${name}/scrabble.exe /usr/games/scrabble
+# -- LOCALIZATION --
 if [ -f ../cs.po ]; then
 msgfmt ../cs.po -o ${name}.mo
 mv ${name}.mo usr/share/locale/cs/LC_MESSAGES/
 fi;
+# -- ICON --
 if [ -e ../icon.png ]; then
 cp ../icon.png usr/share/pixmaps
 fi;
@@ -47,7 +53,7 @@ fi;
 echo "[Desktop Entry]
 Name=${name}
 Comment=Clasic desktop game Scrabble.
-Exec=/usr/share/${name}/scrabble.exe
+Exec=/usr/games/scrabble
 Terminal=false
 Type=Application
 Icon=${name}.png
@@ -58,7 +64,7 @@ Categories=Game" > usr/share/applications/${name}.desktop
  
 echo "This package was debianized by Ondřej Profant <ondrej.profant@gmail.com> 
 
-It was downloaded from http://github.com/Kedrigern/srabble
+It was downloaded from ${homepage}
 
 Copyright (C) 2011-2012 Ondřej Profant
 
@@ -82,8 +88,17 @@ You can also obtain it by writing to the Free Software Foundation, Inc.,
 
 # -- CHANGELOG --
 echo "${name} (0.1.0) unstable; urgency=low
-This is early alpha version, for changelog use git logs, thanks." > usr/share/doc/${name}/changelog
+
+  * This is early alpha version, for changelog use git logs (homepage), thanks.
+
+ -- Ondřej Profant <ondrej.profant@gmail.com>" > usr/share/doc/${name}/changelog
 gzip -9 usr/share/doc/${name}/changelog
+
+# DICs
+../download-dictionary.sh
+
+mv ./dic-*.txt ./usr/share/games/${name}/dics/
+
 
 # -- MAKE md5sum --
 find * -type f ! -regex '^DEBIAN/.*' -exec md5sum {} \; > DEBIAN/md5sums
@@ -99,17 +114,28 @@ Priority: optional
 Recommends:
 Depends: mono-runtime (>= 2.10.5), gtk-sharp2 (>= 2.12.10)
 Architecture: all
-Homepage: http://github.com/Kedrigern/srabble
+Homepage: ${homepage}
 Installed-Size: " > DEBIAN/control
 
 echo $size >> DEBIAN/control
 
 echo "Maintainer: Ondřej Profant <ondrej.profant@gmail.com>
 Description: Clasic desktop game Scrabble
+ Scrabble is a word game in which players score points by forming words.
  Use GADDAG algorithm, Czech and English dictionaries are inlcuded. 
  Writen in C# (mono) and GTK# (gtk front-end)." >> DEBIAN/control
 
+echo "#!/bin/sh
+ln -s /usr/share/games/${name}/scrabble.exe /usr/games/scrabble" > DEBIAN/postinst
+chmod +x DEBIAN/postinst
+
+echo "#!/bin/sh
+rm /usr/games/scrabble" > DEBIAN/postrm
+
+chmod +x DEBIAN/postrm
+
 cd ..
+
 }
 
 function prepareDEB {
@@ -117,6 +143,7 @@ echo "All is prepared. For final step we need superuser authorization:" ;
 sudo chown -hR root:root tmp/*
 sudo chmod -R 755 tmp/
 sudo chmod 644 tmp/DEBIAN/md5sums ;
+sudo chmod 644 tmp/usr/share/games/${name}/dics/*
 sudo chmod 644 tmp/usr/share/applications/${name}.desktop ;
 sudo chmod 644 tmp/usr/share/doc/${name}/copyright ;
 sudo chmod 644 tmp/usr/share/doc/${name}/changelog.gz

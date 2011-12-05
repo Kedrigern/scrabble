@@ -86,7 +86,7 @@ namespace Scrabble.Game
 				do {
 					Scrabble.Game.StonesBag.Add( c );
 					count--;
-				} while( count <= 0);
+				} while( count > 0);
 			}
 			
 			log = xNav.SelectSingleNode("/scrabble/technical/log").ValueAsBoolean;
