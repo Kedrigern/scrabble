@@ -1,6 +1,6 @@
 ﻿<Properties GitUserInfo="UsingGIT">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Release|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Scrabble/Resources/defaultConfig.xml">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Scrabble/Game/Game.cs">
     <Files>
       <File FileName="Scrabble/Game/Game.cs" Line="1" Column="1" />
       <File FileName="Scrabble/Game/Networking.cs" Line="1" Column="1" />
@@ -32,13 +32,13 @@
         <State expanded="True">
           <Node name="Scrabble" expanded="True">
             <Node name="References" expanded="True" />
-            <Node name="Game" expanded="True" />
+            <Node name="Game" expanded="True">
+              <Node name="Game.cs" selected="True" />
+            </Node>
             <Node name="GUI" expanded="True" />
             <Node name="Lexicon" expanded="True" />
             <Node name="Player" expanded="True" />
-            <Node name="Resources" expanded="True">
-              <Node name="defaultConfig.xml" selected="True" />
-            </Node>
+            <Node name="Resources" expanded="True" />
           </Node>
         </State>
       </Pad>
