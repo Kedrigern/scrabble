@@ -72,6 +72,7 @@
     <Compile Include="Lexicon\deskPlus.cs" />
     <Compile Include="GUI\Control.cs" />
     <Compile Include="Game\Networking.cs" />
+    <Compile Include="Testing\startTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Lexicon\" />
@@ -79,6 +80,7 @@
     <Folder Include="GUI\" />
     <Folder Include="Player\" />
     <Folder Include="Resources\" />
+    <Folder Include="Testing\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\icon.svg" />
