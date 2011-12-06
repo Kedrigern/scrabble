@@ -45,8 +45,9 @@ msgfmt ../cs.po -o ${name}.mo
 mv ${name}.mo usr/share/locale/cs/LC_MESSAGES/
 fi;
 # -- ICON --
-if [ -e ../icon.png ]; then
-cp ../icon.png usr/share/pixmaps
+if [ -f ../../Scrabble/Resources/icon.svg ]; then
+cp ../../Scrabble/Resources/icon.svg usr/share/pixmaps
+mv usr/share/pixmaps/icon.svg usr/share/pixmaps/${name}.svg
 fi;
 
 # -- LAUNCHER --
