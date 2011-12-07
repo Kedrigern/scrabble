@@ -25,7 +25,10 @@ using Gtk;
 
 namespace Scrabble.GUI
 {
-	public partial class StartWindow: Gtk.Window
+	/// <summary>
+	/// Start window with configuration like number of players, dictionary etc.
+	/// </summary>
+	public class StartWindow : Gtk.Window
 	{	
 		// Dictionary loading (in own thread)
 		static object dicLoc = new System.Object();
@@ -59,7 +62,10 @@ namespace Scrabble.GUI
 		// StatusBar
 		Gtk.Statusbar statusb;
 	
-		public StartWindow (): base (Gtk.WindowType.Toplevel)
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Scrabble.GUI.StartWindow"/> class.
+		/// </summary>
+		public StartWindow () : base (Gtk.WindowType.Toplevel)
 		{
 			#region Basic window properties
 			// Basic window properties
@@ -268,36 +274,27 @@ namespace Scrabble.GUI
 		/// <summary>
 		/// Loads the dictionary (take lot of time - use own thread).
 		/// </summary>
-		protected void LoadDictionary() {
-			// On Linux: "/home/$user/.scrabble"
-			string home = Environment.GetFolderPath( Environment.SpecialFolder.Personal ) + "/.scrabble/";
-			// On Linux: "/usr/share/games/"
-			string usrShrG = Environment.GetFolderPath( Environment.SpecialFolder.CommonApplicationData ) + "/games/";
-			
+		protected void LoadDictionary() {	
 			lock( dicLoc ) {				
 				this.dic = new Scrabble.Lexicon.GADDAG();
-				
-				if( File.Exists( home + "dic.txt" ) ) {
-					StreamReader sr = new StreamReader ( home + "dic.txt" ); //HACK: for my computer only!!!
-					this.dic = new Scrabble.Lexicon.GADDAG( sr );
-				} else if( File.Exists( usrShrG +  "scrabble/dic.txt" ) ) {
-					StreamReader sr = new StreamReader ( usrShrG + "scrabble/dic.txt" );
-					this.dic = new Scrabble.Lexicon.GADDAG( sr );
-				} else if ( File.Exists( "dic.txt" ) ) {
-					StreamReader sr = new StreamReader ( "dic.txt" );
-					this.dic = new Scrabble.Lexicon.GADDAG( sr );
-				} else if ( File.Exists( "dic-cs.txt" ) ) {
-					StreamReader sr = new StreamReader ( "dic-cs.txt" );
+				if(! File.Exists( Scrabble.Game.InitialConfig.dicPath ) ) {
+					DicPathError();			
+				} else {
+					StreamReader sr = new StreamReader ( Scrabble.Game.InitialConfig.dicPath );
 					this.dic = new Scrabble.Lexicon.GADDAG( sr );
 				}
 			}
 
 			if( Scrabble.Game.InitialConfig.log ) {
-				Scrabble.Game.InitialConfig.logStream = new StreamWriter("./last.log", false);
 				Scrabble.Game.InitialConfig.logStream.WriteLine("[INFO]\tSlovník obsahuje {0} slov.", dic.WordCount);
 			}	
 			
 			statusb.Push( statusb.GetContextId( "Slovník" ), "Slovník načten");
+		}
+		
+		private void DicPathError() {
+			//var md = new MessageDialog( this, DialogFlags.Modal, MessageType.Error, ButtonsType.Ok, "" );
+			//md.Run();
 		}
 	
 		protected void Done (object sender, EventArgs e)

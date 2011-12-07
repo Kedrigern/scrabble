@@ -37,6 +37,8 @@ mkdir -p usr/share/locale/cs/LC_MESSAGES
 # -- COPY files --
 cp ../../Scrabble/bin/Release/Scrabble.exe ./usr/share/games/${name}
 mv ./usr/share/games/${name}/Scrabble.exe ./usr/share/games/${name}/scrabble.exe
+cp ../../Scrabble/Resources/defaultConfig.xml ./usr/share/games/config.xml
+
 #to post install
 #ln -s /usr/share/games/${name}/scrabble.exe /usr/games/scrabble
 # -- LOCALIZATION --
@@ -145,6 +147,7 @@ sudo chown -hR root:root tmp/*
 sudo chmod -R 755 tmp/
 sudo chmod 644 tmp/DEBIAN/md5sums ;
 sudo chmod 644 tmp/usr/share/games/${name}/dics/*
+sudo chmod 644 tmp/usr/share/games/config.xml
 sudo chmod 644 tmp/usr/share/applications/${name}.desktop ;
 sudo chmod 644 tmp/usr/share/doc/${name}/copyright ;
 sudo chmod 644 tmp/usr/share/doc/${name}/changelog.gz

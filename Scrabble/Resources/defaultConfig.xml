@@ -3,6 +3,7 @@
 <!-- For more info see: http://github.com/Kedrigern/scrabble -->
 <scrabble>
 	<game>
+		<dictionary>/usr/share/games/scrabble/dics/dic-cs.txt</dictionary>
 		<rackSize>7</rackSize>
 		<numberStones>100</numberStones>
 		<stones>

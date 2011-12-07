@@ -34,6 +34,7 @@ namespace Scrabble.Game
 		public static int numberOfStones;
 		public static int sizeOfRack;
 		public static int port;
+		public static string dicPath;
 		public static Gdk.Pixbuf icon;
 		
 		/* Usually complete start window */
@@ -47,29 +48,45 @@ namespace Scrabble.Game
 		
 		/// <summary>
 		/// Initializes the <see cref="Scrabble.Game.InitialConfig"/> class (static constructor).
+		/// Use config.xml , ~/.scrabble/config.xml, share/scrabble/config.xml or inbuild (defaultConfig.xml from resources)
 		/// </summary>
 		static InitialConfig() {
 			try {
 				Scrabble.Game.InitialConfig.icon = Gdk.Pixbuf.LoadFromResource( "Scrabble.Resources.icon.svg" );
 			} catch {	}	
 			
-			/* Choice of config */
+			#region Choice of config file 
 			string usrShrG = Environment.GetFolderPath( Environment.SpecialFolder.CommonApplicationData ) + "/games/";
+			string home = Environment.GetFolderPath( Environment.SpecialFolder.Personal ) + "/.scrabble/";
+			string config = string.Empty;	
 			
 			if( File.Exists("config.xml") ) {
-				XPathDocument xDoc = new XPathDocument( new StreamReader("config.xml") );
-				getConfig(xDoc);
+				config = "config.xml";
+			} else if( File.Exists( home + "config.xml" ) ) {
+				config = home + "config.xml";
 			} else if ( File.Exists( usrShrG + "scrabble/config.xml" ) ) {
-				XPathDocument xDoc = new XPathDocument(
-					Assembly.GetExecutingAssembly().GetManifestResourceStream(usrShrG + "scrabble/config.xml")
-				);
-				getConfig(xDoc);
-			} else {
+				config = usrShrG + "scrabble/config.xml";
+			} 
+			
+			if ( config == string.Empty ) {
 				XPathDocument xDoc = new XPathDocument(
 					Assembly.GetExecutingAssembly().GetManifestResourceStream("Scrabble.Resources.defaultConfig.xml")
 				);
 				getConfig(xDoc);
+				if ( log ) {
+					logStream = new StreamWriter("./last.log", false);
+					logStream.WriteLine("[INFO]\tPoužívám: defaultConfig z Resources");
+				}
+			} else {
+				XPathDocument xDoc = new XPathDocument( new FileStream( config, FileMode.Open) );
+				getConfig(xDoc);
+				if ( log ) {
+					logStream = new StreamWriter("./last.log", false);
+					logStream.WriteLine("[INFO]\tPoužívám: " + config);
+				}
 			}
+			#endregion
+			
 		}
 		
 		static private void getConfig(XPathDocument xDoc) {		
@@ -77,6 +94,7 @@ namespace Scrabble.Game
 					
 			sizeOfRack = xNav.SelectSingleNode("/scrabble/game/rackSize").ValueAsInt;
 			numberOfStones = xNav.SelectSingleNode("/scrabble/game/numberStones").ValueAsInt;
+			dicPath = xNav.SelectSingleNode("/scrabble/game/dictionary").Value;
 			
 			foreach (XPathNavigator stone in xNav.Select("/scrabble/game/stones/*") ) {
 				char c = stone.GetAttribute("type", "")[0];

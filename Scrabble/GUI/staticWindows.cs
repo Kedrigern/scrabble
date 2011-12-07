@@ -42,7 +42,8 @@ namespace Scrabble.GUI
 								ButtonsType.Ok, 
 								"Slovník obsahuje:\n"+ game.dictionary.WordCount+
 								"\t\tslov\n"+game.dictionary.NodeCount+
-								"\t\tvrcholů\nNejdelší slovo má delku "+ game.dictionary.MaxDepth+".");
+								"\t\tvrcholů\nNejdelší slovo má delku "+ game.dictionary.MaxDepth+"."+
+								"\nNačten z:\n\t" + Scrabble.Game.InitialConfig.dicPath );
 			md.Run();
 			md.Hide();
 			md.Destroy();	
