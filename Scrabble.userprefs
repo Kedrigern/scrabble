@@ -1,6 +1,6 @@
 ﻿<Properties GitUserInfo="UsingGIT">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Release|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Scrabble/Game/InitialConfig.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Scrabble/GUI/StartWindow.cs">
     <Files>
       <File FileName="Scrabble/Game/Game.cs" Line="1" Column="1" />
       <File FileName="Scrabble/Game/Networking.cs" Line="1" Column="1" />
@@ -12,33 +12,37 @@
       <File FileName="Scrabble/GUI/rack.cs" Line="31" Column="7" />
       <File FileName="Scrabble/GUI/desk.cs" Line="1" Column="1" />
       <File FileName="Scrabble/Player/Player.cs" Line="1" Column="1" />
-      <File FileName="Scrabble/Game/InitialConfig.cs" Line="75" Column="27" />
+      <File FileName="Scrabble/Game/InitialConfig.cs" Line="69" Column="6" />
       <File FileName="Scrabble/Lexicon/move.cs" Line="1" Column="1" />
       <File FileName="Scrabble/GUI/info.cs" Line="1" Column="1" />
-      <File FileName="Scrabble/GUI/StartWindow.cs" Line="278" Column="32" />
       <File FileName="Scrabble/GUI/menu.cs" Line="114" Column="6" />
       <File FileName="Scrabble/GUI/Control.cs" Line="1" Column="1" />
-      <File FileName="Scrabble/GUI/staticWindows.cs" Line="1" Column="1" />
+      <File FileName="Scrabble/GUI/staticWindows.cs" Line="46" Column="13" />
       <File FileName="Scrabble/Lexicon/searchalgorihm.cs" Line="1" Column="1" />
       <File FileName="Scrabble/Lexicon/node.cs" Line="1" Column="1" />
       <File FileName="Scrabble/Lexicon/deskPlus.cs" Line="1" Column="1" />
       <File FileName="Scrabble/Lexicon/GADDAG.cs" Line="1" Column="1" />
       <File FileName="Scrabble/Lexicon/trie.cs" Line="1" Column="1" />
       <File FileName="Scrabble/GUI/menu.xml" Line="1" Column="1" />
-      <File FileName="Scrabble/Resources/defaultConfig.xml" Line="9" Column="25" />
+      <File FileName="Scrabble/Resources/defaultConfig.xml" Line="6" Column="56" />
+      <File FileName="Scrabble/Player/AIs.cs" Line="1" Column="1" />
+      <File FileName="Scrabble/Testing/startTests.cs" Line="15" Column="1" />
+      <File FileName="Scrabble/GUI/StartWindow.cs" Line="285" Column="6" />
+      <File FileName="Scrabble/bin/Release/last.log" Line="6" Column="2" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
           <Node name="Scrabble" expanded="True">
             <Node name="References" expanded="True" />
-            <Node name="Game" expanded="True">
-              <Node name="InitialConfig.cs" selected="True" />
+            <Node name="Game" expanded="True" />
+            <Node name="GUI" expanded="True">
+              <Node name="StartWindow.cs" selected="True" />
             </Node>
-            <Node name="GUI" expanded="True" />
             <Node name="Lexicon" expanded="True" />
             <Node name="Player" expanded="True" />
             <Node name="Resources" expanded="True" />
+            <Node name="Testing" expanded="True" />
           </Node>
         </State>
       </Pad>

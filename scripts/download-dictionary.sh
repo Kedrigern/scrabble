@@ -1,7 +1,8 @@
 #!/bin/bash
-# Author: Ondrej Profant
+# Author: Ondřej Profant, 2011
 # Email: ondrej.profant <> gmail.com
-# For gScrabble hosted at http://github.com/Kedrigern/scrabble
+# Licence: GPL
+# Download dictionaries for gScrabble hosted at: http://github.com/Kedrigern/scrabble
 
 function usage {
 	echo "USAGE:"

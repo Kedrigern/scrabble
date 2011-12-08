@@ -1,5 +1,8 @@
 #!/bin/bash
-# Script for create deb package
+# Author: Ondřej Profant, 2011
+# Email: ondrej.profant <> gmail.com
+# Licence: GPL
+# Script for create deb package for gScrabble hosted at: http://github.com/Kedrigern/scrabble
 
 # VARIABLES
 name=scrabble
