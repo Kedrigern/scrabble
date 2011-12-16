@@ -23,6 +23,8 @@ using System.IO;
 using System.Xml.XPath;
 using System.Reflection;
 
+//TODO: Compatibility with last type of config
+
 namespace Scrabble.Game
 {
 	public static class InitialConfig
@@ -112,12 +114,12 @@ namespace Scrabble.Game
 			log = xNav.SelectSingleNode("/scrabble/technical/log").ValueAsBoolean;
 			port = xNav.SelectSingleNode("/scrabble/technical/port").ValueAsInt;		
 						
-			if( xNav.SelectSingleNode("/scrabble/technical/tests/out/console").GetAttribute("apply", "").ToLower() ==  "true" ) {
-				console = true;	
-				output = string.Empty;
-			} else {
+			if( xNav.SelectSingleNode("/scrabble/technical/debug").ValueAsBoolean ) {
 				console = false;
-				output = "";
+				output = xNav.SelectSingleNode("/scrabble/technical/debug").GetAttribute("path", "") ;
+			} else {
+				console = true;
+				output = string.Empty;
 			}
 		}
 	}
