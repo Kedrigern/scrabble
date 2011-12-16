@@ -18,6 +18,7 @@
 // 
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
 using System;
 using Gtk;
 
@@ -27,6 +28,13 @@ namespace Scrabble.Game
 	{
 		public static void Main ( string[] args )
 		{	
+			#region UNIT TEST
+			if ( Array.Exists<string>( args, (x) => x == "--test" ) ) {
+				Scrabble.Testing.Tests.start();
+				return;
+			}
+			#endregion
+			
 			Gtk.Application.Init( Environment.GetCommandLineArgs()[0] , ref args );
 		
 			#region INIT WINDOW
