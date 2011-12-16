@@ -53,5 +53,12 @@
 	<technical>	
 		<log>true</log>
 		<port>6541</port>
+		<tests>
+			<out>
+				<!-- Always apply only one way -->
+				<console apply="true" />
+				<file apply="false" path="./last.log" />
+			</out>
+		</tests>
 	</technical>
 </scrabble>
