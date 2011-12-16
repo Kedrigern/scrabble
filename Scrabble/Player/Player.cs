@@ -168,7 +168,7 @@ namespace Scrabble.Player
 		}
 		
 		public void Play() {
-			// LOG
+			#region LOG
 			if( Scrabble.Game.InitialConfig.log ) {
 				Scrabble.Game.InitialConfig.logStream.Write("ROUND {1}\tPLAYER {0}\tRACK: ", this.Name, this.game.Round);
 				foreach( char c in this.Rack) {
@@ -176,8 +176,9 @@ namespace Scrabble.Player
 				}
 				Scrabble.Game.InitialConfig.logStream.WriteLine();
 			}
+			#endregion
 			
-			// SEARCH ALGORITHM
+			#region SEARCH ALGORITHM
 			HashSet<Move> movePool = new HashSet<Move>(); 
 			for(int j=0; j < game.desk.Desk.GetLength(1); j++)
 				for(int i=0; i < game.desk.Desk.GetLength(0); i++) {
@@ -185,6 +186,7 @@ namespace Scrabble.Player
 				}
 			
 			char[,] backUp = this.game.desk.Desk.DeepCopy();
+			#endregion
 			
 			// ANALYZE AND CLEAN RESULTS
 			HashSet<Move> toDel = new HashSet<Move>();
@@ -230,20 +232,26 @@ namespace Scrabble.Player
 			Scrabble.Game.InitialConfig.logStreamAI.WriteLine();
 			Scrabble.Game.InitialConfig.logStreamAI.WriteLine("[info]\tVybral jsem: {0:00},{1:00} {2} {3}", max.Start.X, max.Start.Y, max.Word, max.Down ? "↓" : "→");
 #endif
-
-			if( movePool.Count == 0 ) {
-				ReloadRack();
-				return ;
-			}
 			
-			foreach( Move ac in movePool ) {
-				if( this.game.desk.Play( max ) ) break;
-				max = ac;	
-			}
-						
-			if( max.Score > game.bestMove.Score ) game.bestMove = max;
-			if( max.Score > this.bestMove.Score ) this.bestMove = max;
+		Move dec;
+		Repeat:
+			switch ( this.ais.Decide( movePool , max, out dec) ) {
+			case decision.reload:
+				ReloadRack();
+				break;
+			case decision.wait:
+				break;
+			case decision.play:
+				movePool.Remove( dec );
+				if( ! this.game.desk.Play( dec ) ) goto Repeat;
+				break;
+			}					
+					
+			#region report from move
+			if( dec.Score > game.bestMove.Score ) game.bestMove = dec;
+			if( dec.Score > this.bestMove.Score ) this.bestMove = dec;
 			WriteToLog( max );
+			#endregion
 		}
 		
 	}

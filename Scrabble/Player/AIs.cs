@@ -20,23 +20,37 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using Scrabble.Lexicon;
 
 namespace Scrabble.Player {
 
 	public abstract class AI {		
-		public abstract Move Decide( HashSet<Move> pool  );	
+		public abstract decision Decide( HashSet<Move> pool , Move max, out Move dec);	
 	}
 	
 	public class standartAI : AI {
-		public override Move Decide (HashSet<Move> pool)
+		public override decision Decide (HashSet<Move> pool, Move max, out Move dec)
 		{
-			foreach( Move m in pool ) {
-				return m;	
+			dec = new Move("null");
+			dec.Score = -1;
+			
+			if( pool.Count == 0 ) {	// No moves => reloadrack (heuristic)
+				return decision.reload;
 			}
-			throw new NotImplementedException ();
+			
+			if( max == null ) {
+				//TODO: find max
+			} 
+			
+			dec = max;
+			return decision.play;
 		}	
+	}
+	
+	public enum decision {
+		wait, reload, play	
 	}
 	
 }

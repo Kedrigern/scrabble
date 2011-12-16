@@ -35,6 +35,8 @@ namespace Scrabble.Game
 		public static int sizeOfRack;
 		public static int port;
 		public static string dicPath;
+		public static bool console;
+		public static string output;
 		public static Gdk.Pixbuf icon;
 		
 		/* Usually complete start window */
@@ -74,7 +76,7 @@ namespace Scrabble.Game
 				);
 				getConfig(xDoc);
 				if ( log ) {
-					logStream = new StreamWriter("./last.log", false);
+					logStream = new StreamWriter( output );
 					logStream.WriteLine("[INFO]\tPoužívám: defaultConfig z Resources");
 				}
 			} else {
@@ -108,7 +110,15 @@ namespace Scrabble.Game
 			}
 			
 			log = xNav.SelectSingleNode("/scrabble/technical/log").ValueAsBoolean;
-			port = xNav.SelectSingleNode("/scrabble/technical/port").ValueAsInt;			
+			port = xNav.SelectSingleNode("/scrabble/technical/port").ValueAsInt;		
+						
+			if( xNav.SelectSingleNode("/scrabble/technical/tests/out/console").GetAttribute("apply", "").ToLower() ==  "true" ) {
+				console = true;	
+				output = string.Empty;
+			} else {
+				console = false;
+				output = "";
+			}
 		}
 	}
 }
