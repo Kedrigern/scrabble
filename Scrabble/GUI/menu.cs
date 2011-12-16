@@ -119,7 +119,7 @@ namespace Scrabble.GUI {
 				this.uim.AddUiFromResource( "Scrabble.Resources.menu.xml" );
 				this.menuBar = (MenuBar) this.uim.GetWidget("/menubar");
 			} catch (Exception e) {
-				Scrabble.Game.InitialConfig.logStream.WriteLine("[ERROR]\tSomethink wrong during menu init. {0}", e.Message);	
+				Console.Out.WriteLine("[ERROR]\tSomethink wrong during menu init. {0}", e.Message);	
 			}
 		}
 	}

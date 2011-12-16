@@ -53,7 +53,7 @@ namespace Scrabble.Player
 		public void ReloadRack() {
 			Rack =  Scrabble.Game.StonesBag.ReloadAll( Rack );
 			if( Scrabble.Game.InitialConfig.log ) 
-				Scrabble.Game.InitialConfig.logStream.WriteLine("PLAYER {0} REALOAD RACK", this.Name);	
+				Console.Out.WriteLine("PLAYER {0} REALOAD RACK", this.Name);	
 		}
 
 		public override string ToString ()
@@ -78,11 +78,11 @@ namespace Scrabble.Player
 			
 			// LOG
 			if( Scrabble.Game.InitialConfig.log ) {
-				Scrabble.Game.InitialConfig.logStream.Write("ROUND {1}\tPLAYER {0}\tRACK: ", this.Name, this.game.	Round);
+				Console.Out.Write("ROUND {1}\tPLAYER {0}\tRACK: ", this.Name, this.game.	Round);
 				foreach( char c in this.Rack) {
-					Scrabble.Game.InitialConfig.logStream.Write("{0} ", c);				
+					Console.Out.Write("{0} ", c);				
 				}
-				Scrabble.Game.InitialConfig.logStream.WriteLine();
+				Console.Out.WriteLine();
 			}
 			
 			if( ! this.game.desk.Play( m ) ) return false;	
@@ -96,12 +96,12 @@ namespace Scrabble.Player
 		
 		protected void WriteToLog(Move m) {
 			if( Scrabble.Game.InitialConfig.log ) {
-				Scrabble.Game.InitialConfig.logStream.Write("ROUND {5}\tPLAYER {0}\tSCORE +{4}\tAT {2:00},{3:00}\tPUT {1} : ", 
+				Console.Out.Write("ROUND {5}\tPLAYER {0}\tSCORE +{4}\tAT {2:00},{3:00}\tPUT {1} : ", 
 												this.Name, m.Word, m.Start.X, m.Start.Y, m.Score, this.game.Round);
 				foreach( MovedStone ms in m.PutedStones) {
-					Scrabble.Game.InitialConfig.logStream.Write(" [{1},{2}] -> {0} ;", ms.c, ms.i, ms.j);				
+					Console.Out.Write(" [{1},{2}] -> {0} ;", ms.c, ms.i, ms.j);				
 				}
-				Scrabble.Game.InitialConfig.logStream.WriteLine();
+				Console.Out.WriteLine();
 			}	
 		}
 		
@@ -170,11 +170,11 @@ namespace Scrabble.Player
 		public void Play() {
 			#region LOG
 			if( Scrabble.Game.InitialConfig.log ) {
-				Scrabble.Game.InitialConfig.logStream.Write("ROUND {1}\tPLAYER {0}\tRACK: ", this.Name, this.game.Round);
+				Console.Out.Write("ROUND {1}\tPLAYER {0}\tRACK: ", this.Name, this.game.Round);
 				foreach( char c in this.Rack) {
-					Scrabble.Game.InitialConfig.logStream.Write("{0} ", c);				
+					Console.Out.Write("{0} ", c);				
 				}
-				Scrabble.Game.InitialConfig.logStream.WriteLine();
+				Console.Out.WriteLine();
 			}
 			#endregion
 			

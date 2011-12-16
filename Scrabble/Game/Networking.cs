@@ -189,8 +189,7 @@ namespace Scrabble.Game
 					Console.WriteLine("[info]\tNepodařilo se spojit (zbývá {0} pokusů).", 4-n);
 					n++;
 					if( n == 5 ) {
-						Scrabble.Game.InitialConfig.logStream.WriteLine("Nedaří se spojit s: {0}", ip);
-						Scrabble.Game.InitialConfig.logStream.Flush();
+						Console.Out.WriteLine("Nedaří se spojit s: {0}", ip);
 						Environment.Exit(0);
 					}
 					System.Threading.Thread.Sleep( 2000 );

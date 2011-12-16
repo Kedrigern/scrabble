@@ -51,8 +51,8 @@
 	</game>	
 	<!-- Be careful at next lines -->
 	<technical>	
-		<log>true</log>
 		<port>6541</port>
+		<log>true</log>
 		<!-- If set to false then is used console -->
 		<debug path="./last.log">false</debug>
 	</technical>

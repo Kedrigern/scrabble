@@ -37,15 +37,12 @@ namespace Scrabble.Game
 		public static int sizeOfRack;
 		public static int port;
 		public static string dicPath;
-		public static bool console;
-		public static string output;
 		public static Gdk.Pixbuf icon;
 		
 		/* Usually complete start window */
 		public static Lexicon.GADDAG dictionary;	
 		public static Player.Player[] players;
 		public static Scrabble.Game.Game game;
-		public static System.IO.StreamWriter logStream;
 #if DEBUG		
 		public static System.IO.StreamWriter logStreamAI;
 #endif
@@ -78,15 +75,13 @@ namespace Scrabble.Game
 				);
 				getConfig(xDoc);
 				if ( log ) {
-					logStream = new StreamWriter( output );
-					logStream.WriteLine("[INFO]\tPoužívám: defaultConfig z Resources");
+					Console.Out.WriteLine("[INFO]\tPoužívám: defaultConfig z Resources");
 				}
 			} else {
 				XPathDocument xDoc = new XPathDocument( new FileStream( config, FileMode.Open) );
 				getConfig(xDoc);
 				if ( log ) {
-					logStream = new StreamWriter("./last.log", false);
-					logStream.WriteLine("[INFO]\tPoužívám: " + config);
+					Console.Out.WriteLine("[INFO]\tPoužívám: " + config);
 				}
 			}
 			#endregion
@@ -115,12 +110,11 @@ namespace Scrabble.Game
 			port = xNav.SelectSingleNode("/scrabble/technical/port").ValueAsInt;		
 						
 			if( xNav.SelectSingleNode("/scrabble/technical/debug").ValueAsBoolean ) {
-				console = false;
-				output = xNav.SelectSingleNode("/scrabble/technical/debug").GetAttribute("path", "") ;
-			} else {
-				console = true;
-				output = string.Empty;
-			}
+				string path = xNav.SelectSingleNode("/scrabble/technical/debug").GetAttribute("path", "") ;
+				StreamWriter sw = new StreamWriter( path );
+				sw.AutoFlush = true;
+				Console.SetOut( sw );
+			} 
 		}
 	}
 }

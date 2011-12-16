@@ -264,7 +264,7 @@ namespace Scrabble.GUI
 				Scrabble.Game.InitialConfig.game = new Scrabble.Game.Game( true );
 
 				if( Scrabble.Game.InitialConfig.log )
-					Scrabble.Game.InitialConfig.logStream.WriteLine("[INFO]\tNastavení parametrů dokončeno.");
+					Console.Out.WriteLine("[INFO]\tNastavení parametrů dokončeno.");
 
 				this.HideAll();
 				Gtk.Application.Quit();
@@ -286,7 +286,7 @@ namespace Scrabble.GUI
 			}
 
 			if( Scrabble.Game.InitialConfig.log ) {
-				Scrabble.Game.InitialConfig.logStream.WriteLine("[INFO]\tSlovník obsahuje {0} slov.", dic.WordCount);
+				Console.Out.WriteLine("[INFO]\tSlovník obsahuje {0} slov.", dic.WordCount);
 			}	
 			
 			statusb.Push( statusb.GetContextId( "Slovník" ), "Slovník načten");
@@ -330,7 +330,7 @@ namespace Scrabble.GUI
 
 
 			if( Scrabble.Game.InitialConfig.log )
-				Scrabble.Game.InitialConfig.logStream.WriteLine("[INFO]\tNastavení parametrů dokončeno.");
+				Console.Out.WriteLine("[INFO]\tNastavení parametrů dokončeno.");
 
 			this.HideAll();
 			Gtk.Application.Quit();

@@ -135,7 +135,6 @@ namespace Scrabble.Game
 			if( this.OnTurn >= this.players.Length ) {
 				this.OnTurn =0;
 				this.round++;
-				Scrabble.Game.InitialConfig.logStream.Flush();
 #if DEBUG
 				Scrabble.Game.InitialConfig.logStreamAI.Flush();
 #endif
