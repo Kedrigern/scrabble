@@ -65,6 +65,12 @@ namespace Scrabble.Lexicon
 			if( close ) sr.Close();
 		}
 		
+		/// <summary>
+		/// Add the specified string s to GADDAG dictionary structure.
+		/// </summary>
+		/// <param name='s'>
+		/// S.
+		/// </param>
 		public override void Add (string s)
 		{
 			string s2 = s.ToUpperInvariant();

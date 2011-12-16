@@ -179,6 +179,12 @@ namespace Scrabble.Lexicon
 			this.wordCount++;
 		}
 		
+		/// <summary>
+		/// Print the dictionary (alphabetical) to StreamWriter.
+		/// </summary>
+		/// <param name='sw'>
+		/// Sw.
+		/// </param>
 		public virtual void Print(StreamWriter sw) {
 			root.print("",sw);	
 		}
