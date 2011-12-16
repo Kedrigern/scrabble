@@ -1,47 +1,47 @@
 ﻿<Properties GitUserInfo="UsingGIT">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Release|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Scrabble/Resources/defaultConfig.xml">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Scrabble/Game/MainClass.cs">
     <Files>
-      <File FileName="Scrabble/Game/Game.cs" Line="1" Column="1" />
-      <File FileName="Scrabble/Game/Networking.cs" Line="1" Column="1" />
+      <File FileName="Scrabble/Game/Game.cs" Line="138" Column="1" />
+      <File FileName="Scrabble/Game/Networking.cs" Line="193" Column="35" />
       <File FileName="Scrabble/Lexicon/PlayStone.cs" Line="31" Column="35" />
       <File FileName="Scrabble/Lexicon/desk.cs" Line="28" Column="22" />
-      <File FileName="Scrabble/Game/MainClass.cs" Line="36" Column="14" />
+      <File FileName="Scrabble/Game/MainClass.cs" Line="78" Column="15" />
       <File FileName="Scrabble/GUI/ScrabbleWindow.cs" Line="1" Column="1" />
       <File FileName="Scrabble/Game/StonesBag.cs" Line="31" Column="89" />
       <File FileName="Scrabble/GUI/rack.cs" Line="31" Column="7" />
       <File FileName="Scrabble/GUI/desk.cs" Line="1" Column="1" />
-      <File FileName="Scrabble/Game/InitialConfig.cs" Line="79" Column="43" />
+      <File FileName="Scrabble/Game/InitialConfig.cs" Line="113" Column="1" />
       <File FileName="Scrabble/Lexicon/move.cs" Line="53" Column="10" />
       <File FileName="Scrabble/GUI/info.cs" Line="1" Column="1" />
-      <File FileName="Scrabble/GUI/menu.cs" Line="114" Column="6" />
+      <File FileName="Scrabble/GUI/menu.cs" Line="122" Column="16" />
       <File FileName="Scrabble/GUI/Control.cs" Line="1" Column="1" />
       <File FileName="Scrabble/GUI/staticWindows.cs" Line="46" Column="13" />
       <File FileName="Scrabble/Lexicon/searchalgorihm.cs" Line="1" Column="1" />
-      <File FileName="Scrabble/Lexicon/node.cs" Line="95" Column="15" />
+      <File FileName="Scrabble/Lexicon/node.cs" Line="95" Column="31" />
       <File FileName="Scrabble/Lexicon/deskPlus.cs" Line="1" Column="1" />
       <File FileName="Scrabble/Lexicon/GADDAG.cs" Line="28" Column="51" />
       <File FileName="Scrabble/Lexicon/trie.cs" Line="189" Column="23" />
       <File FileName="Scrabble/GUI/menu.xml" Line="1" Column="1" />
-      <File FileName="Scrabble/Resources/defaultConfig.xml" Line="32" Column="42" />
+      <File FileName="Scrabble/Resources/defaultConfig.xml" Line="53" Column="14" />
       <File FileName="Scrabble/Player/AIs.cs" Line="36" Column="27" />
-      <File FileName="Scrabble/Testing/startTests.cs" Line="12" Column="1" />
-      <File FileName="Scrabble/GUI/StartWindow.cs" Line="285" Column="6" />
+      <File FileName="Scrabble/Testing/startTests.cs" Line="14" Column="14" />
+      <File FileName="Scrabble/GUI/StartWindow.cs" Line="289" Column="16" />
       <File FileName="Scrabble/Resources/menu.xml" Line="1" Column="1" />
-      <File FileName="Scrabble/Player/Player.cs" Line="251" Column="61" />
+      <File FileName="Scrabble/Player/Player.cs" Line="83" Column="18" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
           <Node name="Scrabble" expanded="True">
             <Node name="References" expanded="True" />
-            <Node name="Game" expanded="True" />
+            <Node name="Game" expanded="True">
+              <Node name="MainClass.cs" selected="True" />
+            </Node>
             <Node name="GUI" expanded="True" />
             <Node name="Lexicon" expanded="True" />
             <Node name="Player" expanded="True" />
-            <Node name="Resources" expanded="True">
-              <Node name="defaultConfig.xml" selected="True" />
-            </Node>
+            <Node name="Resources" expanded="True" />
             <Node name="Testing" expanded="True" />
           </Node>
         </State>
@@ -68,4 +68,20 @@
     <Watch file="Scrabble/Lexicon/desk.cs" line="193" offsetX="198" offsetY="2788" expression="j" liveUpdate="False" />
     <Watch file="Scrabble/Lexicon/desk.cs" line="197" offsetX="502" offsetY="2856" expression="j" liveUpdate="False" />
   </MonoDevelop.Ide.DebuggingService.PinnedWatches>
+  <MonoDevelop.Ide.ItemProperties.Scrabble>
+    <MonoDevelop.Ide.CustomExecutionModes>
+      <Data Name="UnitTests" Id="a2c006fa-d541-42e0-9195-a2c71df6b06f" ModeId="Default">
+        <CommandData>
+          <Item Key="MonoDevelop.Ide.Execution.CustomArgsCustomizer">
+            <Value Arguments="--test" ctype="CustomArgsExecutionModeData">
+              <EnvironmentVariables />
+            </Value>
+          </Item>
+          <Item Key="MonoDevelop.Ide.Execution.MonoExecutionCustomizer">
+            <Value ctype="MonoExecutionParameters" />
+          </Item>
+        </CommandData>
+      </Data>
+    </MonoDevelop.Ide.CustomExecutionModes>
+  </MonoDevelop.Ide.ItemProperties.Scrabble>
 </Properties>
