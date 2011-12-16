@@ -25,7 +25,7 @@
 
 
 \section{Úvod}
-gScrabble je implementací klasické deskové hry Scrabble, která svou pomáhá rozvíjet slovní zásobu již 50 let. Snahou autora bylo vytvořit jednoduchý program, který zvládne obsluhovat každý a bude dostupný pro co nejvíce OS. Program je volně dostupný ke stažení a k jakémukoliv používání (viz Licence).
+Scrabble je implementací klasické deskové hry Scrabble, která svou pomáhá rozvíjet slovní zásobu již 50 let. Snahou autora bylo vytvořit jednoduchý program, který zvládne obsluhovat každý a bude dostupný pro co nejvíce OS. Program je volně dostupný ke stažení a k jakémukoliv používání (viz Licence).
 
 Pokud by se vám program i přesto nelíbil, tak můžete vyzkoušet konkurenci -- např. \href{http://people.csail.mit.edu/jasonkb/quackle/}{Quackle} (Qt).
 \section{Licence}
@@ -33,20 +33,26 @@ Program je pod GNU General Public License, která zajišťuje uživateli právo 
 \href{http://www.gnugpl.cz/}{gnugpl.cz} (česky, neoficiální překlad) a \href{http://www.gnu.org/licenses/gpl-3.0.txt}{gnu.org/licenses/gpl-3.0.txt} (anglicky, oficiální verze).
 
 \section{Instalace}
-Program není třeba instalovat. Stačí ho spustit v Mono frameworku, popřípadě v .NET frameworku. Pro různé operační systémy a architektury procesory (x86, x64) je stejný binární soubor.
+Na \href{http://github.com/Kedrigern/scrabble/downloads}{stránkách projektu} jsou připraveny instalační balíčky pro různé systémy (např. *.deb). Ty nainstalujete jako jakýkoliv jiný program ve vašem systému.
+
+Program ale není třeba instalovat. Stačí ho spustit v Mono frameworku, popřípadě v .NET frameworku. Pro různé operační systémy a architektury procesory (x86, x64) je stejný binární soubor.
 Jsou dvě možnosti spuštění:
 \begin{itemize}
-\item[Terminál]: \texttt{\$: mono gscrabble.exe} 
+\item[Terminál]: \texttt{\$: mono scrabble.exe} 
 \item[Grafické rozhraní]: Pravým myšítkem klikneme na gscrabble.exe a ve vlastnostech ověříme, že parametr "spustit s..." je nastaven na mono či .NET. Poté již spouštíme normálně dvojklikem (levým myšítkem).
 \end{itemize}
 \subsection{Potřebné knihovny}
 Program potřebuje již zmíněné \texttt{mono} ve verzi 2.10 a novější. Dále potřebuje GTK\# ve verzi 2.12 a novější. Oboje je ke stažení na: \href{http://www.go-mono.com/mono-downloads}{go-mono.com}. Nejnovější informace o podporovaných a testovaných systémech jsou v souboru README.
+
+Pokud máte s knihovnami problém (např. v starší linuxové distribuci), tak zkuste binární soubor \texttt{scrabble-static.exe}, ten si nese všechny potřebné knihovny sebou.
 
 \section{Slovník}
 Program svůj interní slovník nahrává při každém spuštění z prostého textového souboru. V tom jsou jednotlivá slova oddělená čárkou a mezerou, takto:
 \texttt{do, don, dort, dost, dosti, \ldots{}} 
 
 Můžete do něj dopsat či z něj vymazat jakékoliv slovo ve vašem oblíbeném textovém editoru\footnote{Windows: Notepad, Pspad; Linux: Gedit, Geany, Leafpad; \ldots{}} (jen vždy uložte jako prostý text s kodováním UTF-8). 
+
+Nějaké slovníky jsou připraveny také na stránkách projektu.
 
 \subsection{Český}
 Volně ke stažení je slovník Blex-Klasik, který obsahuje 34 263 délky 2--5. Najdete ho na \href{http://scrabble.hrejsi.cz/pravidla/blex.htm}{scrabble.hrejsi.cz}.
@@ -75,9 +81,11 @@ V případě, že hraje více hráčů u jednoho počítače, tak se před zahá
 Nejdůležitější položkou v nabídce je pravděpodobně slovník, která umožňuje ověřovat přítomnost slov ve slovníku (klávesová zkratka \texttt{F5}), přidávat slova do slovníku (\texttt{ctrl+i}), popřípadě nahrát celý nový slovník.
 
 \section{Multiplayer}
+\section{Kontakt}
+V případě problémů či otázek neváhejte kontaktovat autora. Nejjednoduší cestou je email: \texttt{ondrej.profant -at- gmail.com}
 \section{Odkazy}
 \begin{itemize}
-\item \href{http://github.com/Kedrigern/scrabble}{Tento program na github.com} - zde také seženete autora
+\item \href{http://github.com/Kedrigern/scrabble}{Tento program na github.com} -- zde také seženete autora
 \item \href{http://scrabble.hrejsi.cz/pravidla/}{Pravidla Scrabble (cs)}
 \end{itemize}
 \end{document}
