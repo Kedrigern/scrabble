@@ -53,12 +53,7 @@
 	<technical>	
 		<log>true</log>
 		<port>6541</port>
-		<tests>
-			<out>
-				<!-- Always apply only one way -->
-				<console apply="true" />
-				<file apply="false" path="./last.log" />
-			</out>
-		</tests>
+		<!-- If set to false then is used console -->
+		<debug path="./last.log">false</debug>
 	</technical>
 </scrabble>
