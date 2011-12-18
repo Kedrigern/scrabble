@@ -76,6 +76,8 @@ namespace Scrabble.Game
 					e.Message );	
 				md.Run();				
 			} finally {
+				Scrabble.Game.InitialConfig.logStream.Flush();
+				Scrabble.Game.InitialConfig.logStream.Close();
 #if DEBUG
 				if( Scrabble.Game.InitialConfig.logStreamAI != null )
 					Scrabble.Game.InitialConfig.logStreamAI.Close();
