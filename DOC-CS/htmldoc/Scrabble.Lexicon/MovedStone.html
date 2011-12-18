@@ -1,0 +1,451 @@
+<html>
+  <head>
+    <title>Scrabble.Lexicon.MovedStone</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <style>
+      a { text-decoration: none }
+
+      div.SideBar {
+        padding-left: 1em;
+        padding-right: 1em;
+        right: 0;
+        float: right;
+        border: thin solid black;
+        background-color: #f2f2f2;
+      }
+    
+      .CollectionTitle { font-weight: bold }
+      .PageTitle { font-size: 150%; font-weight: bold }
+
+      .Summary { }
+      .Signature { }          
+      .Remarks { }
+      .Members { }
+      .Copyright { }
+      
+      .Section { font-size: 125%; font-weight: bold }
+      p.Summary {
+        margin-left: 1em;
+      }
+      .SectionBox { margin-left: 2em }
+      .NamespaceName { font-size: 105%; font-weight: bold }
+      .NamespaceSumary { }
+      .MemberName { font-size: 115%; font-weight: bold; margin-top: 1em }
+      .Subsection { font-size: 105%; font-weight: bold }
+      .SubsectionBox { margin-left: 2em; margin-bottom: 1em }
+
+      .CodeExampleTable { background-color: #f5f5dd; border: thin solid black; padding: .25em; }
+      
+      .TypesListing {
+        border-collapse: collapse;
+      }
+
+      td {
+        vertical-align: top;
+      }
+      th {
+        text-align: left;
+      }
+
+      .TypesListing td { 
+        margin: 0px;  
+        padding: .25em;
+        border: solid gray 1px;
+      }
+
+      .TypesListing th { 
+        margin: 0px;  
+        padding: .25em;
+        background-color: #f2f2f2;
+        border: solid gray 1px;
+      }
+
+      div.Footer {
+        border-top: 1px solid gray;
+        margin-top: 1.5em;
+        padding-top: 0.6em;
+        text-align: center;
+        color: gray;
+      }
+
+      span.NotEntered /* Documentation for this section has not yet been entered */ {
+        font-style: italic;
+        color: red;	
+      }
+
+      div.Header {
+        background: #B0C4DE;
+        border: double;
+        border-color: white;
+        border-width: 7px;
+        padding: 0.5em;
+      }
+
+      div.Header * {
+        font-size: smaller;
+      }
+
+      div.Note {
+      }
+
+      i.ParamRef {
+      }
+
+      i.subtitle {
+      }
+
+      ul.TypeMembersIndex {
+        text-align: left;
+        background: #F8F8F8;
+      }
+
+      ul.TypeMembersIndex li {
+        display: inline;
+        margin:  0.5em;
+      }
+
+      table.HeaderTable {
+      }
+
+      table.SignatureTable {
+      }
+
+      table.Documentation, table.Enumeration, table.TypeDocumentation {
+        border-collapse: collapse;
+        width: 100%;
+      }
+
+      table.Documentation tr th, table.TypeMembers tr th, table.Enumeration tr th, table.TypeDocumentation tr th {
+        background: whitesmoke;
+        padding: 0.8em;
+        border: 1px solid gray;
+        text-align: left;
+        vertical-align: bottom;
+      }
+
+      table.Documentation tr td, table.TypeMembers tr td, table.Enumeration tr td, table.TypeDocumentation tr td {
+        padding: 0.5em;
+        border: 1px solid gray;
+        text-align: left;
+        vertical-align: top;
+      }
+
+      table.TypeMembers {
+        border: 1px solid #C0C0C0;
+        width: 100%;
+      }
+
+      table.TypeMembers tr td {
+        background: #F8F8F8;
+        border: white;
+      }
+
+      table.Documentation {
+      }
+
+      table.TypeMembers {
+      }
+
+      div.CodeExample {
+        width: 100%;
+        border: 1px solid #DDDDDD;
+        background-color: #F8F8F8;
+      }
+
+      div.CodeExample p {
+        margin: 0.5em;
+        border-bottom: 1px solid #DDDDDD;
+      }
+
+      div.CodeExample div {
+        margin: 0.5em;
+      }
+
+      h4 {
+        margin-bottom: 0;
+      }
+
+      div.Signature {
+        border: 1px solid #C0C0C0;
+        background: #F2F2F2;
+        padding: 1em;
+      }
+    </style>
+    <script type="text/JavaScript">
+      function toggle_display (block) {
+        var w = document.getElementById (block);
+        var t = document.getElementById (block + ":toggle");
+        if (w.style.display == "none") {
+          w.style.display = "block";
+          t.innerHTML = "⊟";
+        } else {
+          w.style.display = "none";
+          t.innerHTML = "⊞";
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div class="CollectionTitle">
+      <a href="../index.html">Scrabble</a> : <a href="index.html">Scrabble.Lexicon Namespace</a></div>
+    <div class="SideBar">
+      <p>
+        <a href="#T:Scrabble.Lexicon.MovedStone">Overview</a>
+      </p>
+      <p>
+        <a href="#T:Scrabble.Lexicon.MovedStone:Signature">Signature</a>
+      </p>
+      <p>
+        <a href="#T:Scrabble.Lexicon.MovedStone:Docs">Remarks</a>
+      </p>
+      <p>
+        <a href="#Members">Members</a>
+      </p>
+      <p>
+        <a href="#T:Scrabble.Lexicon.MovedStone:Members">Member Details</a>
+      </p>
+    </div>
+    <h1 class="PageTitle" id="T:Scrabble.Lexicon.MovedStone">MovedStone  Struct</h1>
+    <p class="Summary" id="T:Scrabble.Lexicon.MovedStone:Summary">
+            Struct that identify conrete position for one new stone.
+            List MovedStone uniqe define all move
+            </p>
+    <div id="T:Scrabble.Lexicon.MovedStone:Signature">
+      <h2>Syntax</h2>
+      <div class="Signature">public struct  <b>MovedStone</b></div>
+    </div>
+    <div class="Remarks" id="T:Scrabble.Lexicon.MovedStone:Docs">
+      <h2 class="Section">Remarks</h2>
+      <div class="SectionBox" id="T:Scrabble.Lexicon.MovedStone:Docs:Remarks">
+        <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+      </div>
+      <h2 class="Section">Requirements</h2>
+      <div class="SectionBox" id="T:Scrabble.Lexicon.MovedStone:Docs:Version Information">
+        <b>Namespace: </b>Scrabble.Lexicon<br /><b>Assembly: </b>Scrabble (in Scrabble.dll)<br /><b>Assembly Versions: </b>0.0.0.0</div>
+      <h2 class="Section" id="Members">Members</h2>
+      <div class="SectionBox" id="_Members">
+        <p>
+								See Also: Inherited members from
+								<a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.ValueType">ValueType</a>.
+							</p>
+        <h2 class="Section">Public Constructors</h2>
+        <div class="SectionBox" id="Public Constructors">
+          <div class="SubsectionBox">
+            <table class="TypeMembers">
+              <tr valign="top">
+                <td>
+                  <div>
+                  </div>
+                </td>
+                <td>
+                  <div>
+                    <b>
+                      <a href="#C:Scrabble.Lexicon.MovedStone(System.Char,System.Drawing.Point)">MovedStone</a>
+                    </b>(<a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Char">char</a>, <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Drawing.Point">System.Drawing.Point</a>)</div>
+                </td>
+                <td>
+                  <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+                </td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>
+                  </div>
+                </td>
+                <td>
+                  <div>
+                    <b>
+                      <a href="#C:Scrabble.Lexicon.MovedStone(System.Char,System.Int32,System.Int32)">MovedStone</a>
+                    </b>(<a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Char">char</a>, <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Int32">int</a>, <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Int32">int</a>)</div>
+                </td>
+                <td>
+                  <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <h2 class="Section">Public Fields</h2>
+        <div class="SectionBox" id="Public Fields">
+          <div class="SubsectionBox">
+            <table class="TypeMembers">
+              <tr valign="top">
+                <td>
+                  <div>
+                  </div>
+                </td>
+                <td>
+                  <b>
+                    <a href="#F:Scrabble.Lexicon.MovedStone.c">c</a>
+                  </b>
+                </td>
+                <td>
+                  <i>
+                    <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Char">char</a>
+                  </i>. <span class="NotEntered">Documentation for this section has not yet been entered.</span></td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>
+                  </div>
+                </td>
+                <td>
+                  <b>
+                    <a href="#F:Scrabble.Lexicon.MovedStone.i">i</a>
+                  </b>
+                </td>
+                <td>
+                  <i>
+                    <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Int32">int</a>
+                  </i>. <span class="NotEntered">Documentation for this section has not yet been entered.</span></td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>
+                  </div>
+                </td>
+                <td>
+                  <b>
+                    <a href="#F:Scrabble.Lexicon.MovedStone.j">j</a>
+                  </b>
+                </td>
+                <td>
+                  <i>
+                    <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Int32">int</a>
+                  </i>. <span class="NotEntered">Documentation for this section has not yet been entered.</span></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="Members" id="T:Scrabble.Lexicon.MovedStone:Members">
+      <h2 class="Section" id="MemberDetails">Member Details</h2>
+      <div class="SectionBox" id="_MemberDetails">
+        <h3 id="C:Scrabble.Lexicon.MovedStone(System.Char,System.Drawing.Point)">MovedStone Constructor</h3>
+        <blockquote id="C:Scrabble.Lexicon.MovedStone(System.Char,System.Drawing.Point):member">
+          <p class="Summary">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </p>
+          <h2>Syntax</h2>
+          <div class="Signature">public  <b>MovedStone</b> (<a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Char">char</a> cc, <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Drawing.Point">System.Drawing.Point</a> p)</div>
+          <h4 class="Subsection">Parameters</h4>
+          <blockquote class="SubsectionBox" id="C:Scrabble.Lexicon.MovedStone(System.Char,System.Drawing.Point):Parameters">
+            <dl>
+              <dt>
+                <i>cc</i>
+              </dt>
+              <dd>
+                <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+              </dd>
+              <dt>
+                <i>p</i>
+              </dt>
+              <dd>
+                <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+              </dd>
+            </dl>
+          </blockquote>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="C:Scrabble.Lexicon.MovedStone(System.Char,System.Drawing.Point):Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="C:Scrabble.Lexicon.MovedStone(System.Char,System.Drawing.Point):Version Information">
+            <b>Namespace: </b>Scrabble.Lexicon<br /><b>Assembly: </b>Scrabble (in Scrabble.dll)<br /><b>Assembly Versions: </b>0.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="C:Scrabble.Lexicon.MovedStone(System.Char,System.Int32,System.Int32)">MovedStone Constructor</h3>
+        <blockquote id="C:Scrabble.Lexicon.MovedStone(System.Char,System.Int32,System.Int32):member">
+          <p class="Summary">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </p>
+          <h2>Syntax</h2>
+          <div class="Signature">public  <b>MovedStone</b> (<a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Char">char</a> cc, <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Int32">int</a> ii, <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Int32">int</a> jj)</div>
+          <h4 class="Subsection">Parameters</h4>
+          <blockquote class="SubsectionBox" id="C:Scrabble.Lexicon.MovedStone(System.Char,System.Int32,System.Int32):Parameters">
+            <dl>
+              <dt>
+                <i>cc</i>
+              </dt>
+              <dd>
+                <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+              </dd>
+              <dt>
+                <i>ii</i>
+              </dt>
+              <dd>
+                <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+              </dd>
+              <dt>
+                <i>jj</i>
+              </dt>
+              <dd>
+                <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+              </dd>
+            </dl>
+          </blockquote>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="C:Scrabble.Lexicon.MovedStone(System.Char,System.Int32,System.Int32):Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="C:Scrabble.Lexicon.MovedStone(System.Char,System.Int32,System.Int32):Version Information">
+            <b>Namespace: </b>Scrabble.Lexicon<br /><b>Assembly: </b>Scrabble (in Scrabble.dll)<br /><b>Assembly Versions: </b>0.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="F:Scrabble.Lexicon.MovedStone.c">c Field</h3>
+        <blockquote id="F:Scrabble.Lexicon.MovedStone.c:member">
+          <p class="Summary">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </p>
+          <h2>Syntax</h2>
+          <div class="Signature">public <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Char">char</a> <b>c</b> </div>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="F:Scrabble.Lexicon.MovedStone.c:Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="F:Scrabble.Lexicon.MovedStone.c:Version Information">
+            <b>Namespace: </b>Scrabble.Lexicon<br /><b>Assembly: </b>Scrabble (in Scrabble.dll)<br /><b>Assembly Versions: </b>0.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="F:Scrabble.Lexicon.MovedStone.i">i Field</h3>
+        <blockquote id="F:Scrabble.Lexicon.MovedStone.i:member">
+          <p class="Summary">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </p>
+          <h2>Syntax</h2>
+          <div class="Signature">public <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Int32">int</a> <b>i</b> </div>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="F:Scrabble.Lexicon.MovedStone.i:Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="F:Scrabble.Lexicon.MovedStone.i:Version Information">
+            <b>Namespace: </b>Scrabble.Lexicon<br /><b>Assembly: </b>Scrabble (in Scrabble.dll)<br /><b>Assembly Versions: </b>0.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="F:Scrabble.Lexicon.MovedStone.j">j Field</h3>
+        <blockquote id="F:Scrabble.Lexicon.MovedStone.j:member">
+          <p class="Summary">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </p>
+          <h2>Syntax</h2>
+          <div class="Signature">public <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Int32">int</a> <b>j</b> </div>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="F:Scrabble.Lexicon.MovedStone.j:Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="F:Scrabble.Lexicon.MovedStone.j:Version Information">
+            <b>Namespace: </b>Scrabble.Lexicon<br /><b>Assembly: </b>Scrabble (in Scrabble.dll)<br /><b>Assembly Versions: </b>0.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+      </div>
+    </div>
+    <hr size="1" />
+    <div class="Copyright">
+    </div>
+  </body>
+</html>
