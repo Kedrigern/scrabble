@@ -27,6 +27,9 @@ using System.Reflection;
 
 namespace Scrabble.Game
 {
+	/// <summary>
+	/// Initial config values, take care about load xml config file etc.
+	/// </summary>
 	public static class InitialConfig
 	{
 		public static bool client = false;

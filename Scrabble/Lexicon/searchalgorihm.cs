@@ -24,16 +24,43 @@ using System.Drawing;
 
 namespace Scrabble.Lexicon
 { 
+	/// <summary>
+	/// Search algorithm for <see cref="GADDAG"/> and <see cref="PlayDesk"/>.
+	/// </summary>
 	public static class SearchAlgorithm {
 		
 		static char[,] desk = new char[0,0];
 		static GADDAG gaddag = new GADDAG();
 		
+		/// <summary>
+		/// Init the specified char[,] d and GADDAG g.
+		/// </summary>
+		/// <param name='d'>
+		/// desk to use
+		/// </param>
+		/// <param name='g'>
+		/// GADDAG dictionary to use
+		/// </param>
 		public static void Init(char[,] d, GADDAG g) {
 			SearchAlgorithm.desk =	d;
 			SearchAlgorithm.gaddag = g;
 		}
 		
+		/// <summary>
+		/// Search at the coordinates x, y. Use letter from rack and result are saved in pool.
+		/// </summary>
+		/// <param name='x'>
+		/// X.
+		/// </param>
+		/// <param name='y'>
+		/// Y.
+		/// </param>
+		/// <param name='rack'>
+		/// Rack.
+		/// </param>
+		/// <param name='pool'>
+		/// Pool.
+		/// </param>
 		public static void Search( int x, int y, List<char> rack, HashSet<Move> pool)	{
 			Node root;
 			/* Run only at point:
@@ -147,7 +174,7 @@ namespace Scrabble.Lexicon
 		/// <returns>
 		/// Is shift posible?
 		/// </returns>
-		/// <param name='p'>
+		/// <param name='m'>
 		/// Point at desk.
 		/// </param>
 		private static bool EndOfDesk(TmpMove m) {

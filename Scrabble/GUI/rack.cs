@@ -13,6 +13,12 @@ namespace Scrabble.GUI
 		private Gtk.Label[] labels;
 		private Gtk.Table labelsHover;
 		
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Scrabble.GUI.Rack"/> class.
+		/// </summary>
+		/// <param name='g'>
+		/// G.
+		/// </param>
 		public Rack ( Scrabble.Game.Game g ) : base ("Zásobník")
 		{
 			this.HeightRequest = 60;

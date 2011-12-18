@@ -28,7 +28,9 @@ using System.Threading;
 
 namespace Scrabble.Game
 {
-	
+	/// <summary>
+	/// Scrabble client.
+	/// </summary>
 	public class scrabbleClient {
 		public bool newData = false;
 		public bool yourTurn = false;
@@ -119,6 +121,9 @@ namespace Scrabble.Game
 		}
 	}
 	
+	/// <summary>
+	/// Scrabble server.
+	/// </summary>
 	public class scrabbleServer {
 		TcpClient client;
 		UTF8Encoding encoder = new UTF8Encoding();
@@ -203,8 +208,14 @@ namespace Scrabble.Game
 	}
 	
 	#region network infrastructure
+	/// <summary>
+	/// Carrier type - determinate transfer structure in network game
+	/// </summary>
 	public enum carrierType { mini, full }
 	
+	/// <summary>
+	/// Only abstract parrent
+	/// </summary>
 	[Serializable]
 	public abstract class NetworkCarrier {}
 	

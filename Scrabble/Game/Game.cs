@@ -25,8 +25,17 @@ using System.Collections.Generic;
 
 using Scrabble.Player;
 
+/// <summary>
+/// Issues about game (change players, networking, ...)
+/// </summary>
 namespace Scrabble.Game
 {	
+	/// <summary>
+	/// Logic instance of game
+	/// </summary>
+	/// <exception cref='NullReferenceException'>
+	/// Is thrown when there is an attempt to dereference a null object reference.
+	/// </exception>
 	public class Game
 	{
 		public const int MaxNumberOfPlayers = 4;
@@ -252,7 +261,6 @@ namespace Scrabble.Game
 			this.OnTurn = ncp.order;
 			this.Window.changePlayer( this.players[ ncp.order] );
 			this.Window.ActiveButtons();
-			
 		}
 		#endregion
 	}

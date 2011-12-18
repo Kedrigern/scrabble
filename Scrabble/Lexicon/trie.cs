@@ -50,7 +50,7 @@ namespace Scrabble.Lexicon
 		/* CONSTRUCTORS */
 		
 		/// <summary>
-		/// Initializes a new instance of the <see cref="trie.Trie"/> class.
+		/// Initializes a new instance of the Trie class.
 		/// </summary>
 		public Trie ()
 		{
@@ -65,7 +65,7 @@ namespace Scrabble.Lexicon
 		public Trie (string[] sar) : this()	{ foreach( string s in sar ) this.Add(s); }
 		
 		/// <summary>
-		/// Initializes a new instance of the <see cref="trie.Trie"/> class.
+		/// Initializes a new instance of the Trie class.
 		/// </summary>
 		/// <param name='sr'>
 		/// Sr - 

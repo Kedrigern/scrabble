@@ -30,9 +30,24 @@ namespace Scrabble.GUI {
 		
 		private bool client;
 		
+		/// <summary>
+		/// The actual game.
+		/// </summary>
 		public Scrabble.Game.Game game;
+		/// <summary>
+		/// Is the end of game?
+		/// </summary>
 		public bool end = false;
 		
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Scrabble.GUI.ScrabbleWindow"/> class.
+		/// </summary>
+		/// <param name='isClient'>
+		/// Is client.
+		/// </param>
+		/// <exception cref='System.NullReferenceException'>
+		/// Is thrown when there is an attempt to dereference a null object reference.
+		/// </exception>
 		public ScrabbleWindow ( bool isClient = false ): base (Gtk.WindowType.Toplevel)
 		{		
 			#region Basic window properties

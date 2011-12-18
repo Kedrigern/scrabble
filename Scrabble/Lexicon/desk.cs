@@ -22,6 +22,9 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 
+/// <summary>
+/// Lexicon isues - PlayDesk, dictionary repsentation (trie, GADDAG), ...
+/// </summary>
 namespace Scrabble.Lexicon
 {
 	///<summary>
@@ -34,8 +37,26 @@ namespace Scrabble.Lexicon
 		byte[,] wordBonus;
 		byte[,] charBonus;
 		
+		/// <summary>
+		/// Gets or sets the desk (char[,]).
+		/// </summary>
+		/// <value>
+		/// The desk.
+		/// </value>
 		public char[,] Desk { get { return desk;} set { this.desk = value; } }
+		/// <summary>
+		/// Gets the word bonus.
+		/// </summary>
+		/// <value>
+		/// The word bonus.
+		/// </value>
 		public byte[,] WordBonus { get { return wordBonus;} }
+		/// <summary>
+		/// Gets the char bonus.
+		/// </summary>
+		/// <value>
+		/// The char bonus.
+		/// </value>
 		public byte[,] CharBonus { get { return charBonus;} }
 		
 		[NonSerialized]
@@ -186,10 +207,10 @@ namespace Scrabble.Lexicon
 		
 		
 		/// <summary>
-		/// Analyze crossword from position [i, j]. Return value: <0 error;; =0 no word;; <0 score
+		/// Analyze crossword from position [i, j]. Return value: lt 0 error;; =0 no word;; lt 0 score; lt == less then
 		/// </summary>
 		/// <returns>
-		/// <0 error;; =0 no word;; <0 score
+		/// lt 0 error;; =0 no word;; lt 0 score
 		/// </returns>
 		/// <param name='i'>
 		/// axis x
@@ -275,7 +296,7 @@ namespace Scrabble.Lexicon
 		/// <returns>
 		/// Correctness of move
 		/// </returns>
-		/// <param name='m'>
+		/// <param name='move'>
 		/// Move
 		/// </param>
 		public bool Play(Move move) {
@@ -322,10 +343,16 @@ namespace Scrabble.Lexicon
 			}
 		}
 		
+		/// <summary>
+		/// Sets the game.
+		/// </summary>
+		/// <param name='g'>
+		/// G.
+		/// </param>
 		public void setGame( Scrabble.Game.Game g ) {
 			this.game = g;
 		}
 	}
 	
-	public enum UI { Terminal, GTK, log }
+	//public enum UI { Terminal, GTK, log }
 }

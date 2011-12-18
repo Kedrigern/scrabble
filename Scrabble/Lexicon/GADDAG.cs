@@ -30,8 +30,17 @@ namespace Scrabble.Lexicon
 	public sealed class GADDAG : Trie
 	{
 		private Node reverse;
+		/// <summary>
+		/// Gets the reverse root (start of reverted word)
+		/// </summary>
+		/// <value>
+		/// The reverse root.
+		/// </value>
 		public Node ReverseRoot { get { return reverse;} }
-
+		
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Scrabble.Lexicon.GADDAG"/> class.
+		/// </summary>
 		public GADDAG ()
 		{
 			this.root = new Node('~');	
@@ -41,8 +50,29 @@ namespace Scrabble.Lexicon
 			this.maxDepth = 0;
 		}
 		
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Scrabble.Lexicon.GADDAG"/> class.
+		/// </summary>
+		/// <param name='s'>
+		/// String s is added to GADDAG
+		/// </param>
 		public GADDAG ( string s ) : this() { this.Add(s); }
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Scrabble.Lexicon.GADDAG"/> class.
+		/// </summary>
+		/// <param name='sar'>
+		/// Strings for sar[] are added to GADDAG
+		/// </param>
 		public GADDAG ( string[] sar ) : this() { foreach(string s in sar) this.Add(s); }
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Scrabble.Lexicon.GADDAG"/> class.
+		/// </summary>
+		/// <param name='sr'>
+		/// Words in proper format are added. Format: word, word2, word3,...
+		/// </param>
+		/// <param name='close'>
+		/// Close the stream after?
+		/// </param>
 		public GADDAG ( StreamReader sr, bool close = true ) : this() { 
 			/* Copy of implementation this constructor in trie, there is call GADDAG ADD */
 			char c;

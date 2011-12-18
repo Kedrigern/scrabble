@@ -24,8 +24,17 @@ using Gtk;
 
 namespace Scrabble.Game
 {
+	/// <summary>
+	/// Main class.
+	/// </summary>
 	public static class MainClass
 	{
+		/// <summary>
+		/// The entry point of the program, where the program control starts and ends.
+		/// </summary>
+		/// <param name='args'>
+		/// The command-line arguments.
+		/// </param>
 		public static void Main ( string[] args )
 		{	
 			#region UNIT TEST
@@ -60,12 +69,14 @@ namespace Scrabble.Game
 							Scrabble.Game.InitialConfig.game.clientTurn();
 						}
 					}
+					#region END
 					if( Scrabble.Game.InitialConfig.game.window.end ) {
 						try {
 							Scrabble.Game.InitialConfig.game.clientThread.Abort();
 						} catch (NullReferenceException) { /* no network players */ }
 						break;
 					}
+					#endregion
 				}
 			} catch (Exception e) {
 				Gtk.MessageDialog md = new Gtk.MessageDialog( 
@@ -76,8 +87,6 @@ namespace Scrabble.Game
 					e.Message );	
 				md.Run();				
 			} finally {
-				Scrabble.Game.InitialConfig.logStream.Flush();
-				Scrabble.Game.InitialConfig.logStream.Close();
 #if DEBUG
 				if( Scrabble.Game.InitialConfig.logStreamAI != null )
 					Scrabble.Game.InitialConfig.logStreamAI.Close();

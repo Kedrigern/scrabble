@@ -12,6 +12,9 @@ using Gtk;
 
 namespace Scrabble.GUI {
 	
+	/// <summary>
+	/// Menu hover - carrier class for all part of menu
+	/// </summary>
 	public class MenuHover {
 		
 		UIManager uim;							// 
@@ -45,9 +48,17 @@ namespace Scrabble.GUI {
 		
 		Gtk.Action about;
 				
-		/* Menu BAR - public, for another class (like Window) */
+		/// <summary>
+		/// Menu BAR - public, for another class (like Window)
+		/// </summary>
 		public MenuBar menuBar;
 		
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Scrabble.GUI.MenuHover"/> class.
+		/// </summary>
+		/// <param name='par'>
+		/// Parrent Gtk.Window
+		/// </param>
 		public MenuHover( ScrabbleWindow par ) {
 			this.parrent = par;
 			this.uim = new UIManager();

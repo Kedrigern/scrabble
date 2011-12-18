@@ -5,6 +5,9 @@ using Gdk;
 
 namespace Scrabble.GUI
 {
+	/// <summary>
+	/// Represent PlayDesk (Gtk.Table of Gtk.Buttons)
+	/// </summary>
 	public class Desk : Gtk.Table
 	{
 		public const uint sizeX = 15;

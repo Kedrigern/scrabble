@@ -21,6 +21,9 @@
 using System;
 using Gtk;
 
+/// <summary>
+/// GUI classes.
+/// </summary>
 namespace Scrabble.GUI
 {
 	public class Control : Gtk.Frame

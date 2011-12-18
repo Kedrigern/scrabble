@@ -4,6 +4,9 @@ using Scrabble.Game;
 
 namespace Scrabble.GUI
 {
+	/// <summary>
+	/// Display info about game
+	/// </summary>
 	public class Info : Gtk.Frame
 	{	
 		Gtk.Table scoresTable;
@@ -11,6 +14,12 @@ namespace Scrabble.GUI
 		
 		Scrabble.Game.Game game;
 		
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Scrabble.GUI.Info"/> class.
+		/// </summary>
+		/// <param name='g'>
+		/// G.
+		/// </param>
 		public Info (Game.Game g)
 		{
 
@@ -41,6 +50,15 @@ namespace Scrabble.GUI
 			this.ShowAll();
 		}
 		
+		/// <summary>
+		/// Change the specified name and players.
+		/// </summary>
+		/// <param name='name'>
+		/// Name.
+		/// </param>
+		/// <param name='players'>
+		/// Players.
+		/// </param>
 		public void Change(string name, Scrabble.Player.Player[] players) {		
 			scoresTable.HideAll();
 			for( int i=0; i < game.players.Length; i++) {
