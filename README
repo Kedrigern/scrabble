@@ -19,7 +19,7 @@ but is required Mono 2.10 + Gtk sharp 2.
 - Fedora 15 		ok		packages: mono-core , gtk-sharp2 (tested on both system)
 - Ubuntu 11.04 		ok (!)		has not Mono 2.10 (only 2.6.7). Way to install 2.10: 
 						http://www.integratedwebsystems.com/2011/05/install-mono-2-10-2-and-monodevelop-2-6-beta-3-on-ubuntu-or-fedora-with-a-bash-script 
-- Ubuntu 11.10:		ok		(deb package is preparing))		
+- Ubuntu 11.10:		ok		There is deb package in download section
 - Windows 7 32bit:	ok		download "Gtk# for .NET" from go-mono.com
 - Windows 7 64bit:	ok (!)		some issue with glib (in GTK# platform), thera are special binary for Win64 (is necessary to use 32bit version)
 - For other Linux, Mac OS and Windows download from: http://www.go-mono.com/mono-downloads/download.html
