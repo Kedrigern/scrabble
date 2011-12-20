@@ -23,6 +23,9 @@ using System.Collections.Generic;
 
 namespace Scrabble.Lexicon
 {
+	/// <summary>
+	/// Play stones infrastructure
+	/// </summary>
 	public static class PlayStone
 	{
 		private static SortedDictionary< char, int > values;
@@ -34,6 +37,15 @@ namespace Scrabble.Lexicon
 			values = new SortedDictionary<char, int>();
 		}
 		
+		/// <summary>
+		/// Add the specified stone with letter c and rank (value) i.
+		/// </summary>
+		/// <param name='c'>
+		/// letter at stone
+		/// </param>
+		/// <param name='i'>
+		/// value/rank of stone
+		/// </param>
 		public static void Add(char c, int i) {
 			values.Add(c, i);	
 		}

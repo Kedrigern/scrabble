@@ -21,11 +21,11 @@
 using System;
 using Gtk;
 
-/// <summary>
-/// GUI classes.
-/// </summary>
 namespace Scrabble.GUI
 {
+	/// <summary>
+	/// Control for game (pause button, reload button)
+	/// </summary>
 	public class Control : Gtk.Frame
 	{
 		private Gtk.VBox mainVbox;
@@ -34,6 +34,12 @@ namespace Scrabble.GUI
 		
 		private Scrabble.Game.Game game;
 		
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Scrabble.GUI.Control"/> class.
+		/// </summary>
+		/// <param name='g'>
+		/// G.
+		/// </param>
 		public Control ( Scrabble.Game.Game g) : base ("Tah")
 		{
 			this.HeightRequest = 60;
@@ -57,14 +63,29 @@ namespace Scrabble.GUI
 			this.Add( mainVbox );
 		}
 		
-				public void DisableButtons() {
+		/// <summary>
+		/// Disables the buttons (delete clicked event).
+		/// </summary>
+		public void DisableButtons() {
 			reload.Clicked -= ReloadRack;	
 		}
 		
+		/// <summary>
+		/// Actives the buttons (add clicked event).
+		/// </summary>
 		public void ActiveButtons() {
 			reload.Clicked += ReloadRack;
 		}
 		
+		/// <summary>
+		/// Reloads the rack.
+		/// </summary>
+		/// <param name='sender'>
+		/// Sender.
+		/// </param>
+		/// <param name='e'>
+		/// E.
+		/// </param>
 		private void ReloadRack(object sender, EventArgs e) {
 			this.game.ReloadRackAndChange();
 		}

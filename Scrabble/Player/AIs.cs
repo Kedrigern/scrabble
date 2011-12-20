@@ -25,11 +25,29 @@ using System.Collections.Generic;
 using Scrabble.Lexicon;
 
 namespace Scrabble.Player {
-
+	
+	/// <summary>
+	/// abstract parent of all AI 
+	/// </summary>
 	public abstract class AI {		
+		/// <summary>
+		/// Decide the specified turn. Use pool of move, max move.
+		/// </summary>
+		/// <param name='pool'>
+		/// Pool of move (posible move)
+		/// </param>
+		/// <param name='max'>
+		/// Move with max score
+		/// </param>
+		/// <param name='dec'>
+		/// Out decision.
+		/// </param>
 		public abstract decision Decide( HashSet<Move> pool , Move max, out Move dec);	
 	}
 	
+	/// <summary>
+	/// Standart AI, use greedy algorithm
+	/// </summary>
 	public class standartAI : AI {
 		public override decision Decide (HashSet<Move> pool, Move max, out Move dec)
 		{

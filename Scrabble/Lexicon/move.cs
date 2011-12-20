@@ -74,6 +74,9 @@ namespace Scrabble.Lexicon
 		}
 	}
 	
+	/// <summary>
+	/// Direction: left, right, down, up
+	/// </summary>
 	enum Direction {
 		left, right, down, up
 	}

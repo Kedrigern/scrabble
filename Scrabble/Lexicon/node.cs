@@ -24,15 +24,32 @@ using System.Collections.Generic;
 
 namespace Scrabble.Lexicon
 {
+	/// <summary>
+	/// Node for <see cref="Trie"/> and <see cref="GADDAG"/>
+	/// </summary>
 	public class Node : IComparer<Node>, IComparer<Char>
 	{
 		private char content;
+		
+		/// <summary>
+		/// Gets the node content.
+		/// </summary>
 		public char Content {
 			get { return content; }	
 		}
+		
+		/// <summary>
+		/// Gets or sets a value indicating whether this <see cref="Scrabble.Lexicon.Node"/> is finite.
+		/// </summary>
+		/// <value>
+		/// <c>true</c> if finite; otherwise, <c>false</c>.
+		/// </value>
 		public bool Finite {get; set;}
 		List<Node> sons;
 		
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Scrabble.Lexicon.Node"/> class.
+		/// </summary>
 		public Node (char c, bool b = false)
 		{
 			this.content = c;
@@ -40,9 +57,15 @@ namespace Scrabble.Lexicon
 			sons = new List<Node>(2);
 		}
 		
+		/// <summary>
+		/// Is n2 son of this node?
+		/// </summary>
 		public bool isSon(Node n2) {
 			return sons.Contains( n2 );	
 		}
+		/// <summary>
+		/// Has this node son with c2?
+		/// </summary>
 		public bool isSon(char c2) {
 			return sons.Exists( delegate ( Node n2	) { return n2.content == c2; } );
 		}
@@ -89,8 +112,7 @@ namespace Scrabble.Lexicon
 		public static bool operator>(Node n1, Node n2) {
 			if( n1.CompareTo( n2 ) > 0 ) return true;
 			else return false;
-		}
-		
+		}		
 
 		public void print(string s, StreamWriter sw) {
 			string sn = s + (content == '~' ? "" : this.content.ToString() );

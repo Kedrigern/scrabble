@@ -30,19 +30,55 @@ namespace Scrabble.Lexicon
 	/// </summary>
 	public class Trie
 	{
+		/// <summary>
+		/// The root.
+		/// </summary>
 		protected Node root;
+		/// <summary>
+		/// Gets the root.
+		/// </summary>
+		/// <value>
+		/// The root node.
+		/// </value>
 		public Node Root { get { return root; } }
 		protected Node end;
 		public Node End { get { return end; } }
+		/// <summary>
+		/// The node count.
+		/// </summary>
 		protected ulong nodeCount;
+		/// <summary>
+		/// Gets the node count.
+		/// </summary>
+		/// <value>
+		/// The node count.
+		/// </value>
 		public ulong NodeCount {
 			get { return nodeCount; }	
 		}
+		/// <summary>
+		/// The word count.
+		/// </summary>
 		protected uint wordCount;
+		/// <summary>
+		/// Gets the word count.
+		/// </summary>
+		/// <value>
+		/// The word count.
+		/// </value>
 		public uint WordCount {
 			get { return wordCount; }	
 		}
+		/// <summary>
+		/// The max depth.
+		/// </summary>
 		protected short maxDepth;
+		/// <summary>
+		/// Gets the max depth.
+		/// </summary>
+		/// <value>
+		/// The max depth.
+		/// </value>
 		public short MaxDepth {
 			get { return maxDepth; }	
 		}
@@ -61,7 +97,19 @@ namespace Scrabble.Lexicon
 			this.wordCount = 0;
 			this.maxDepth = 0;
 		}
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Scrabble.Lexicon.Trie"/> class.
+		/// </summary>
+		/// <param name='s'>
+		/// aded word
+		/// </param>
 		public Trie (string s) : this()	{ this.Add( s ); }
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Scrabble.Lexicon.Trie"/> class.
+		/// </summary>
+		/// <param name='sar'>
+		/// aded words
+		/// </param>
 		public Trie (string[] sar) : this()	{ foreach( string s in sar ) this.Add(s); }
 		
 		/// <summary>
@@ -112,6 +160,9 @@ namespace Scrabble.Lexicon
 			return tmp.Finite;
 		}
 		
+		/// <summary>
+		/// Test content of the s, special version which search directly at desk
+		/// </summary>
 		public bool Content( char[,] de, int i, int j, bool down ) {
 			Node tmp = root;
 			
@@ -127,6 +178,9 @@ namespace Scrabble.Lexicon
 			return tmp.Finite;	
 		}
 		
+		/// <summary>
+		/// Test content of the s, special version which search directly at desk
+		/// </summary>
 		public bool Content( char[,] de, int i, int j, bool down, int i2, int j2, char c ) {
 			Node tmp = root;
 			
@@ -148,6 +202,9 @@ namespace Scrabble.Lexicon
 			return tmp.Finite;	
 		}
 		
+		/// <summary>
+		/// Find the specified word (string) and return node where this word ends.
+		/// </summary>
 		public Node Find( string s ) {
 			string s2 = s.ToUpperInvariant();
 			
@@ -159,6 +216,12 @@ namespace Scrabble.Lexicon
 			return tmp;
 		}
 		
+		/// <summary>
+		/// Add the specified word s.
+		/// </summary>
+		/// <param name='s'>
+		/// word to add
+		/// </param>
 		public virtual void Add( string s  ) {
 			if( s.Length == 0 ) return;
 			string s2 = s.ToUpperInvariant();

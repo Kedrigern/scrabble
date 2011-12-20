@@ -26,6 +26,9 @@ using Scrabble.Lexicon;
 
 namespace Scrabble.Player
 {
+	/// <summary>
+	/// Player.
+	/// </summary>
 	[Serializable]
 	public class Player
 	{
@@ -111,6 +114,9 @@ namespace Scrabble.Player
 		}
 	}
 	
+	/// <summary>
+	/// Generate uniqe number.
+	/// </summary>
 	public static class Uniqe {
 		private static int i = -1;
 		
@@ -120,7 +126,9 @@ namespace Scrabble.Player
 		}
 	}
 	
-	
+	/// <summary>
+	/// Player which use server (this class comunicate with relevant client.
+	/// </summary>
 	[Serializable]
 	public class NetworkPlayer : Player {
 		protected IPEndPoint ep;

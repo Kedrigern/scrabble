@@ -3,10 +3,14 @@ using System.IO;
 
 namespace Scrabble.Testing
 {
+	/// <summary>
+	/// Tests.
+	/// </summary>
 	public static class Tests
-	{		
-		public static StreamWriter sw;
-
+	{			
+		/// <summary>
+		/// Start tests.
+		/// </summary>
 		public static void start ()
 		{					
 			var d = new Dictionary();
@@ -14,15 +18,27 @@ namespace Scrabble.Testing
 		}
 	}
 	
+	
+	/// <summary>
+	/// Dictionary tests
+	/// </summary>
+	/// <exception cref='Exception'>
+	/// Represents errors that occur during application execution.
+	/// </exception>
 	public class Dictionary {
 		
 		Scrabble.Lexicon.GADDAG dic1;
 		Scrabble.Lexicon.GADDAG dic2;
 		
-		public Dictionary() {
-			
-		}
-		
+		/// <summary>
+		/// Makes the tests.
+		/// </summary>
+		/// <returns>
+		/// The tests.
+		/// </returns>
+		/// <exception cref='Exception'>
+		/// Represents errors that occur during application execution.
+		/// </exception>
 		public bool MakeTests() {
 			
 			/* CONSTRUCTORS */
