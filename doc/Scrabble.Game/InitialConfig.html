@@ -1,0 +1,607 @@
+<html>
+  <head>
+    <title>Scrabble.Game.InitialConfig</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <style>
+      a { text-decoration: none }
+
+      div.SideBar {
+        padding-left: 1em;
+        padding-right: 1em;
+        right: 0;
+        float: right;
+        border: thin solid black;
+        background-color: #f2f2f2;
+      }
+    
+      .CollectionTitle { font-weight: bold }
+      .PageTitle { font-size: 150%; font-weight: bold }
+
+      .Summary { }
+      .Signature { }          
+      .Remarks { }
+      .Members { }
+      .Copyright { }
+      
+      .Section { font-size: 125%; font-weight: bold }
+      p.Summary {
+        margin-left: 1em;
+      }
+      .SectionBox { margin-left: 2em }
+      .NamespaceName { font-size: 105%; font-weight: bold }
+      .NamespaceSumary { }
+      .MemberName { font-size: 115%; font-weight: bold; margin-top: 1em }
+      .Subsection { font-size: 105%; font-weight: bold }
+      .SubsectionBox { margin-left: 2em; margin-bottom: 1em }
+
+      .CodeExampleTable { background-color: #f5f5dd; border: thin solid black; padding: .25em; }
+      
+      .TypesListing {
+        border-collapse: collapse;
+      }
+
+      td {
+        vertical-align: top;
+      }
+      th {
+        text-align: left;
+      }
+
+      .TypesListing td { 
+        margin: 0px;  
+        padding: .25em;
+        border: solid gray 1px;
+      }
+
+      .TypesListing th { 
+        margin: 0px;  
+        padding: .25em;
+        background-color: #f2f2f2;
+        border: solid gray 1px;
+      }
+
+      div.Footer {
+        border-top: 1px solid gray;
+        margin-top: 1.5em;
+        padding-top: 0.6em;
+        text-align: center;
+        color: gray;
+      }
+
+      span.NotEntered /* Documentation for this section has not yet been entered */ {
+        font-style: italic;
+        color: red;	
+      }
+
+      div.Header {
+        background: #B0C4DE;
+        border: double;
+        border-color: white;
+        border-width: 7px;
+        padding: 0.5em;
+      }
+
+      div.Header * {
+        font-size: smaller;
+      }
+
+      div.Note {
+      }
+
+      i.ParamRef {
+      }
+
+      i.subtitle {
+      }
+
+      ul.TypeMembersIndex {
+        text-align: left;
+        background: #F8F8F8;
+      }
+
+      ul.TypeMembersIndex li {
+        display: inline;
+        margin:  0.5em;
+      }
+
+      table.HeaderTable {
+      }
+
+      table.SignatureTable {
+      }
+
+      table.Documentation, table.Enumeration, table.TypeDocumentation {
+        border-collapse: collapse;
+        width: 100%;
+      }
+
+      table.Documentation tr th, table.TypeMembers tr th, table.Enumeration tr th, table.TypeDocumentation tr th {
+        background: whitesmoke;
+        padding: 0.8em;
+        border: 1px solid gray;
+        text-align: left;
+        vertical-align: bottom;
+      }
+
+      table.Documentation tr td, table.TypeMembers tr td, table.Enumeration tr td, table.TypeDocumentation tr td {
+        padding: 0.5em;
+        border: 1px solid gray;
+        text-align: left;
+        vertical-align: top;
+      }
+
+      table.TypeMembers {
+        border: 1px solid #C0C0C0;
+        width: 100%;
+      }
+
+      table.TypeMembers tr td {
+        background: #F8F8F8;
+        border: white;
+      }
+
+      table.Documentation {
+      }
+
+      table.TypeMembers {
+      }
+
+      div.CodeExample {
+        width: 100%;
+        border: 1px solid #DDDDDD;
+        background-color: #F8F8F8;
+      }
+
+      div.CodeExample p {
+        margin: 0.5em;
+        border-bottom: 1px solid #DDDDDD;
+      }
+
+      div.CodeExample div {
+        margin: 0.5em;
+      }
+
+      h4 {
+        margin-bottom: 0;
+      }
+
+      div.Signature {
+        border: 1px solid #C0C0C0;
+        background: #F2F2F2;
+        padding: 1em;
+      }
+    </style>
+    <script type="text/JavaScript">
+      function toggle_display (block) {
+        var w = document.getElementById (block);
+        var t = document.getElementById (block + ":toggle");
+        if (w.style.display == "none") {
+          w.style.display = "block";
+          t.innerHTML = "⊟";
+        } else {
+          w.style.display = "none";
+          t.innerHTML = "⊞";
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div class="CollectionTitle">
+      <a href="../index.html">Scrabble</a> : <a href="index.html">Scrabble.Game Namespace</a></div>
+    <div class="SideBar">
+      <p>
+        <a href="#T:Scrabble.Game.InitialConfig">Overview</a>
+      </p>
+      <p>
+        <a href="#T:Scrabble.Game.InitialConfig:Signature">Signature</a>
+      </p>
+      <p>
+        <a href="#T:Scrabble.Game.InitialConfig:Docs">Remarks</a>
+      </p>
+      <p>
+        <a href="#Members">Members</a>
+      </p>
+      <p>
+        <a href="#T:Scrabble.Game.InitialConfig:Members">Member Details</a>
+      </p>
+    </div>
+    <h1 class="PageTitle" id="T:Scrabble.Game.InitialConfig">InitialConfig  Class</h1>
+    <p class="Summary" id="T:Scrabble.Game.InitialConfig:Summary">
+            Initial config values, take care about load xml config file etc.
+            </p>
+    <div id="T:Scrabble.Game.InitialConfig:Signature">
+      <h2>Syntax</h2>
+      <div class="Signature">public static class  <b>InitialConfig</b></div>
+    </div>
+    <div class="Remarks" id="T:Scrabble.Game.InitialConfig:Docs">
+      <h2 class="Section">Remarks</h2>
+      <div class="SectionBox" id="T:Scrabble.Game.InitialConfig:Docs:Remarks">
+        <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+      </div>
+      <h2 class="Section">Requirements</h2>
+      <div class="SectionBox" id="T:Scrabble.Game.InitialConfig:Docs:Version Information">
+        <b>Namespace: </b>Scrabble.Game<br /><b>Assembly: </b>Scrabble (in Scrabble.dll)<br /><b>Assembly Versions: </b>0.0.0.0</div>
+      <h2 class="Section" id="Members">Members</h2>
+      <div class="SectionBox" id="_Members">
+        <p>
+								See Also: Inherited members from
+								<a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Object">object</a>.
+							</p>
+        <h2 class="Section">Public Fields</h2>
+        <div class="SectionBox" id="Public Fields">
+          <div class="SubsectionBox">
+            <table class="TypeMembers">
+              <tr valign="top">
+                <td>
+                  <div>static </div>
+                </td>
+                <td>
+                  <b>
+                    <a href="#F:Scrabble.Game.InitialConfig.client">client</a>
+                  </b>
+                </td>
+                <td>
+                  <i>
+                    <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Boolean">bool</a>
+                  </i>. <span class="NotEntered">Documentation for this section has not yet been entered.</span></td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>static </div>
+                </td>
+                <td>
+                  <b>
+                    <a href="#F:Scrabble.Game.InitialConfig.dicPath">dicPath</a>
+                  </b>
+                </td>
+                <td>
+                  <i>
+                    <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.String">string</a>
+                  </i>. <span class="NotEntered">Documentation for this section has not yet been entered.</span></td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>static </div>
+                </td>
+                <td>
+                  <b>
+                    <a href="#F:Scrabble.Game.InitialConfig.dictionary">dictionary</a>
+                  </b>
+                </td>
+                <td>
+                  <i>
+                    <a href="../Scrabble.Lexicon/GADDAG.html">Scrabble.Lexicon.GADDAG</a>
+                  </i>. <span class="NotEntered">Documentation for this section has not yet been entered.</span></td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>static </div>
+                </td>
+                <td>
+                  <b>
+                    <a href="#F:Scrabble.Game.InitialConfig.game">game</a>
+                  </b>
+                </td>
+                <td>
+                  <i>
+                    <a href="../Scrabble.Game/Game.html">Game</a>
+                  </i>. <span class="NotEntered">Documentation for this section has not yet been entered.</span></td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>static </div>
+                </td>
+                <td>
+                  <b>
+                    <a href="#F:Scrabble.Game.InitialConfig.gui">gui</a>
+                  </b>
+                </td>
+                <td>
+                  <i>
+                    <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Boolean">bool</a>
+                  </i>. <span class="NotEntered">Documentation for this section has not yet been entered.</span></td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>static </div>
+                </td>
+                <td>
+                  <b>
+                    <a href="#F:Scrabble.Game.InitialConfig.icon">icon</a>
+                  </b>
+                </td>
+                <td>
+                  <i>
+                    <a href="javascript:alert(&quot;Documentation not found.&quot;)">Gdk.Pixbuf</a>
+                  </i>. <span class="NotEntered">Documentation for this section has not yet been entered.</span></td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>static </div>
+                </td>
+                <td>
+                  <b>
+                    <a href="#F:Scrabble.Game.InitialConfig.log">log</a>
+                  </b>
+                </td>
+                <td>
+                  <i>
+                    <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Boolean">bool</a>
+                  </i>. <span class="NotEntered">Documentation for this section has not yet been entered.</span></td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>static </div>
+                </td>
+                <td>
+                  <b>
+                    <a href="#F:Scrabble.Game.InitialConfig.network">network</a>
+                  </b>
+                </td>
+                <td>
+                  <i>
+                    <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Boolean">bool</a>
+                  </i>. <span class="NotEntered">Documentation for this section has not yet been entered.</span></td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>static </div>
+                </td>
+                <td>
+                  <b>
+                    <a href="#F:Scrabble.Game.InitialConfig.numberOfStones">numberOfStones</a>
+                  </b>
+                </td>
+                <td>
+                  <i>
+                    <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Int32">int</a>
+                  </i>. <span class="NotEntered">Documentation for this section has not yet been entered.</span></td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>static </div>
+                </td>
+                <td>
+                  <b>
+                    <a href="#F:Scrabble.Game.InitialConfig.players">players</a>
+                  </b>
+                </td>
+                <td>
+                  <i>
+                    <a href="../Scrabble.Player/Player.html">Scrabble.Player.Player</a>[]</i>. <span class="NotEntered">Documentation for this section has not yet been entered.</span></td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>static </div>
+                </td>
+                <td>
+                  <b>
+                    <a href="#F:Scrabble.Game.InitialConfig.port">port</a>
+                  </b>
+                </td>
+                <td>
+                  <i>
+                    <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Int32">int</a>
+                  </i>. <span class="NotEntered">Documentation for this section has not yet been entered.</span></td>
+              </tr>
+              <tr valign="top">
+                <td>
+                  <div>static </div>
+                </td>
+                <td>
+                  <b>
+                    <a href="#F:Scrabble.Game.InitialConfig.sizeOfRack">sizeOfRack</a>
+                  </b>
+                </td>
+                <td>
+                  <i>
+                    <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Int32">int</a>
+                  </i>. <span class="NotEntered">Documentation for this section has not yet been entered.</span></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="Members" id="T:Scrabble.Game.InitialConfig:Members">
+      <h2 class="Section" id="MemberDetails">Member Details</h2>
+      <div class="SectionBox" id="_MemberDetails">
+        <h3 id="F:Scrabble.Game.InitialConfig.client">client Field</h3>
+        <blockquote id="F:Scrabble.Game.InitialConfig.client:member">
+          <p class="Summary">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </p>
+          <h2>Syntax</h2>
+          <div class="Signature">public static <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Boolean">bool</a> <b>client</b> </div>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="F:Scrabble.Game.InitialConfig.client:Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="F:Scrabble.Game.InitialConfig.client:Version Information">
+            <b>Namespace: </b>Scrabble.Game<br /><b>Assembly: </b>Scrabble (in Scrabble.dll)<br /><b>Assembly Versions: </b>0.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="F:Scrabble.Game.InitialConfig.dicPath">dicPath Field</h3>
+        <blockquote id="F:Scrabble.Game.InitialConfig.dicPath:member">
+          <p class="Summary">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </p>
+          <h2>Syntax</h2>
+          <div class="Signature">public static <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.String">string</a> <b>dicPath</b> </div>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="F:Scrabble.Game.InitialConfig.dicPath:Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="F:Scrabble.Game.InitialConfig.dicPath:Version Information">
+            <b>Namespace: </b>Scrabble.Game<br /><b>Assembly: </b>Scrabble (in Scrabble.dll)<br /><b>Assembly Versions: </b>0.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="F:Scrabble.Game.InitialConfig.dictionary">dictionary Field</h3>
+        <blockquote id="F:Scrabble.Game.InitialConfig.dictionary:member">
+          <p class="Summary">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </p>
+          <h2>Syntax</h2>
+          <div class="Signature">public static <a href="../Scrabble.Lexicon/GADDAG.html">Scrabble.Lexicon.GADDAG</a> <b>dictionary</b> </div>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="F:Scrabble.Game.InitialConfig.dictionary:Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="F:Scrabble.Game.InitialConfig.dictionary:Version Information">
+            <b>Namespace: </b>Scrabble.Game<br /><b>Assembly: </b>Scrabble (in Scrabble.dll)<br /><b>Assembly Versions: </b>0.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="F:Scrabble.Game.InitialConfig.game">game Field</h3>
+        <blockquote id="F:Scrabble.Game.InitialConfig.game:member">
+          <p class="Summary">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </p>
+          <h2>Syntax</h2>
+          <div class="Signature">public static <a href="../Scrabble.Game/Game.html">Game</a> <b>game</b> </div>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="F:Scrabble.Game.InitialConfig.game:Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="F:Scrabble.Game.InitialConfig.game:Version Information">
+            <b>Namespace: </b>Scrabble.Game<br /><b>Assembly: </b>Scrabble (in Scrabble.dll)<br /><b>Assembly Versions: </b>0.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="F:Scrabble.Game.InitialConfig.gui">gui Field</h3>
+        <blockquote id="F:Scrabble.Game.InitialConfig.gui:member">
+          <p class="Summary">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </p>
+          <h2>Syntax</h2>
+          <div class="Signature">public static <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Boolean">bool</a> <b>gui</b> </div>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="F:Scrabble.Game.InitialConfig.gui:Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="F:Scrabble.Game.InitialConfig.gui:Version Information">
+            <b>Namespace: </b>Scrabble.Game<br /><b>Assembly: </b>Scrabble (in Scrabble.dll)<br /><b>Assembly Versions: </b>0.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="F:Scrabble.Game.InitialConfig.icon">icon Field</h3>
+        <blockquote id="F:Scrabble.Game.InitialConfig.icon:member">
+          <p class="Summary">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </p>
+          <h2>Syntax</h2>
+          <div class="Signature">public static <a href="javascript:alert(&quot;Documentation not found.&quot;)">Gdk.Pixbuf</a> <b>icon</b> </div>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="F:Scrabble.Game.InitialConfig.icon:Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="F:Scrabble.Game.InitialConfig.icon:Version Information">
+            <b>Namespace: </b>Scrabble.Game<br /><b>Assembly: </b>Scrabble (in Scrabble.dll)<br /><b>Assembly Versions: </b>0.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="F:Scrabble.Game.InitialConfig.log">log Field</h3>
+        <blockquote id="F:Scrabble.Game.InitialConfig.log:member">
+          <p class="Summary">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </p>
+          <h2>Syntax</h2>
+          <div class="Signature">public static <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Boolean">bool</a> <b>log</b> </div>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="F:Scrabble.Game.InitialConfig.log:Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="F:Scrabble.Game.InitialConfig.log:Version Information">
+            <b>Namespace: </b>Scrabble.Game<br /><b>Assembly: </b>Scrabble (in Scrabble.dll)<br /><b>Assembly Versions: </b>0.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="F:Scrabble.Game.InitialConfig.network">network Field</h3>
+        <blockquote id="F:Scrabble.Game.InitialConfig.network:member">
+          <p class="Summary">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </p>
+          <h2>Syntax</h2>
+          <div class="Signature">public static <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Boolean">bool</a> <b>network</b> </div>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="F:Scrabble.Game.InitialConfig.network:Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="F:Scrabble.Game.InitialConfig.network:Version Information">
+            <b>Namespace: </b>Scrabble.Game<br /><b>Assembly: </b>Scrabble (in Scrabble.dll)<br /><b>Assembly Versions: </b>0.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="F:Scrabble.Game.InitialConfig.numberOfStones">numberOfStones Field</h3>
+        <blockquote id="F:Scrabble.Game.InitialConfig.numberOfStones:member">
+          <p class="Summary">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </p>
+          <h2>Syntax</h2>
+          <div class="Signature">public static <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Int32">int</a> <b>numberOfStones</b> </div>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="F:Scrabble.Game.InitialConfig.numberOfStones:Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="F:Scrabble.Game.InitialConfig.numberOfStones:Version Information">
+            <b>Namespace: </b>Scrabble.Game<br /><b>Assembly: </b>Scrabble (in Scrabble.dll)<br /><b>Assembly Versions: </b>0.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="F:Scrabble.Game.InitialConfig.players">players Field</h3>
+        <blockquote id="F:Scrabble.Game.InitialConfig.players:member">
+          <p class="Summary">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </p>
+          <h2>Syntax</h2>
+          <div class="Signature">public static <a href="../Scrabble.Player/Player.html">Scrabble.Player.Player</a>[] <b>players</b> </div>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="F:Scrabble.Game.InitialConfig.players:Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="F:Scrabble.Game.InitialConfig.players:Version Information">
+            <b>Namespace: </b>Scrabble.Game<br /><b>Assembly: </b>Scrabble (in Scrabble.dll)<br /><b>Assembly Versions: </b>0.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="F:Scrabble.Game.InitialConfig.port">port Field</h3>
+        <blockquote id="F:Scrabble.Game.InitialConfig.port:member">
+          <p class="Summary">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </p>
+          <h2>Syntax</h2>
+          <div class="Signature">public static <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Int32">int</a> <b>port</b> </div>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="F:Scrabble.Game.InitialConfig.port:Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="F:Scrabble.Game.InitialConfig.port:Version Information">
+            <b>Namespace: </b>Scrabble.Game<br /><b>Assembly: </b>Scrabble (in Scrabble.dll)<br /><b>Assembly Versions: </b>0.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+        <h3 id="F:Scrabble.Game.InitialConfig.sizeOfRack">sizeOfRack Field</h3>
+        <blockquote id="F:Scrabble.Game.InitialConfig.sizeOfRack:member">
+          <p class="Summary">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </p>
+          <h2>Syntax</h2>
+          <div class="Signature">public static <a href="http://www.go-mono.com/docs/monodoc.ashx?link=T:System.Int32">int</a> <b>sizeOfRack</b> </div>
+          <h2 class="Section">Remarks</h2>
+          <div class="SectionBox" id="F:Scrabble.Game.InitialConfig.sizeOfRack:Remarks">
+            <span class="NotEntered">Documentation for this section has not yet been entered.</span>
+          </div>
+          <h2 class="Section">Requirements</h2>
+          <div class="SectionBox" id="F:Scrabble.Game.InitialConfig.sizeOfRack:Version Information">
+            <b>Namespace: </b>Scrabble.Game<br /><b>Assembly: </b>Scrabble (in Scrabble.dll)<br /><b>Assembly Versions: </b>0.0.0.0</div>
+          <hr size="1" />
+        </blockquote>
+      </div>
+    </div>
+    <hr size="1" />
+    <div class="Copyright">
+    </div>
+  </body>
+</html>
