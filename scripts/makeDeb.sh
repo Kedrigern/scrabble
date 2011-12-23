@@ -7,7 +7,7 @@
 # VARIABLES
 name=scrabble
 version=0.1.0
-homepage=http://kedrigern.github.com/srabble
+homepage=http://kedrigern.github.com/scrabble
 
 function prepareStructure {
 
