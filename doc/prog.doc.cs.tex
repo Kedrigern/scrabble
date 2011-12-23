@@ -8,6 +8,8 @@
 \usepackage{hyperref}
 \usepackage{tikz}
 
+\usepackage{fancyhdr}
+
 \usetikzlibrary{automata}
 
 \title{Scrabble -- Programátorská dokumentace}
@@ -26,6 +28,7 @@
 \fi
 
 \begin{document}
+\pagestyle{headings}
 
 \maketitle
 
@@ -67,7 +70,14 @@ Pokud by vám MonoDevelop nevyhovalo, tak můžeme bez problémů použít jinou
 \subsection{Pomocné skripty}\label{scripts}
 V~adresáři \texttt{scripts} je serie shellových skriptů, které pomáhají při kompilaci (např. různé druhy kompilace), balíčkování, získávání slovníků etc. 
 
+Skripty jsou psané pro spuštění ve složce \texttt{scripts} (relativní cesty).
 
+Vybrané:
+
+\begin{itemize}
+\item \texttt{makeDeb.sh} -- vytvoří deb balík. Potřebuje práva roota a v \texttt{Scrabble/bin/Release} musí být soubor \texttt{scrabble.exe}.
+\item \texttt{makeDoc.sh} -- vytvoří dokumetaci API v HTMl. Potřebuje abyste zkompilovali projekt (Release) a měli nastavené generováníd okumentace (což zapříčíní vytvoření souboru \texttt{scrabble.xml} v~\texttt{Scrabble/bin/Release}.
+\end{itemize}
 
 
 %=================================
@@ -97,6 +107,10 @@ Základní běh programu se řídí tímto automatem:
 			(q4)	edge node [below right] {} (q5)
 					edge [loop below] node {\scriptsize{iteration}} ();	
 \end{tikzpicture}
+
+Ve hře jednoho hráče se víceméně vše řídí událostmi hlavního okna. Hráč klikne na pole kam chce zadat slovo. Následně se ověří zda je to přípustné, pokud ano, tak se slovo položí. Pokud tah přípustný není, tak se nic nestane (v plánu je zvuk pro selhání). 
+
+Když se je tah korektně položen (hráč odehrál), tak se spustí funkce changeplayer(), která aktivuje dalšího hráče. Pokud je další hráč ovládán člověkem, tak se zobrazí dialog "Na tahu je hráč...". Pokud je dalším hráčem počítač tak rovnou odehraje -- vše se odehraje tak rychle, že není nic jiného (blokovat tlačítka) nutné. 
 
 \subsection{GADDAG - motivace a popis}
 
