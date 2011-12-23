@@ -6,8 +6,8 @@
 
 # VARIABLES
 name=scrabble
-version=0.1
-homepage=http://github.com/Kedrigern/srabble
+version=0.1.0
+homepage=http://kedrigern.github.com/srabble
 
 function prepareStructure {
 
@@ -101,10 +101,14 @@ echo "${name} (0.1.0) unstable; urgency=low
 gzip -9 usr/share/doc/${name}/changelog
 
 # DICs
-../download-dictionary.sh
-
-mv ./dic-*.txt ./usr/share/games/${name}/dics/
-
+if ../download-dictionary.sh; then 
+	mv ./dic-*.txt ./usr/share/games/${name}/dics/
+else
+	echo "Fail: download dics"
+	cd ..
+	rm -rf tmp/
+	exit 1;
+fi;
 
 # -- MAKE md5sum --
 find * -type f ! -regex '^DEBIAN/.*' -exec md5sum {} \; > DEBIAN/md5sums
