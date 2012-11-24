@@ -13,6 +13,7 @@ In dictionary scripts is `download-dictionary.sh`, you can use it for download d
 
 You need some dictionary file, for Czech I recommend [blex-klasik](http://scrabble.hrejsi.cz/pravidla/blex.htm)
 Use it is realy simple:
+
 1. download dictionary to text file
 1. delete header and footer (in text file is permitted only words separate by comma and space)
 1. rename to:	`dic-cs.txt`
